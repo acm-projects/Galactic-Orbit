@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="galactic-orbit-campus.gif" alt="gif" width="600" height="400">
+  <img src="galactic-orbit-campus.gif" alt="gif" width="400" height="400">
 </p>
 
 <h1 align="center">Galactic Orbit</h1>
