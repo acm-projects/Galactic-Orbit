@@ -96,11 +96,6 @@ The app enhances **school pride, student engagement, and campus exploration**, e
 
 ---
 
-## ✅ Mitigation Strategies
-- **Tech:** Fallback to QR/NFC tags where GPS fails. Use cloud functions to optimize AI calls.  
-- **Institutional:** Early pilot with **student orgs & housing staff** to show value.  
-- **Engagement:** Seasonal events (midterms, homecoming, finals week), dorm-vs-dorm competitions, and reward loops.
-
  ### Git Commands
 
 | Command                        | What it does                                |
