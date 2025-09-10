@@ -113,9 +113,9 @@ The app enhances **school pride, student engagement, and campus exploration**, e
 ## 💫 The Team
 
 - **Project Manager:** Shreya S Ramani
-- **Industry Mentor:** 
-- **Developer 1:** 
-- **Developer 2:** 
-- **Developer 3:**
-- **Developer 4:**
-- **Developer 5:**
+- **Industry Mentor:** Linh Ly
+- **Developer 1:** Snigdha Tadi
+- **Developer 2:** Linh Nguyen
+- **Developer 3:** Dhruv Yadav
+- **Developer 4:** Hadent Dang
+- **Developer 5:** Vighnesh Nair
