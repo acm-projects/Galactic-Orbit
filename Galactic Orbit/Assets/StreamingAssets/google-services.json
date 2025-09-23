@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "922316515749",
+    "project_id": "galactic-orbit",
+    "storage_bucket": "galactic-orbit.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922316515749:android:d51602009947e8c681604c",
+        "android_client_info": {
+          "package_name": "com.ACMF25.GalacticOrbit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjGFTXr4NiS6AOuimy74rbtFwbumVO5E8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
