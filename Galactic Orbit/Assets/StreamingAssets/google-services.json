@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "922316515749",
+    "firebase_url": "https://galactic-orbit-default-rtdb.firebaseio.com",
     "project_id": "galactic-orbit",
     "storage_bucket": "galactic-orbit.firebasestorage.app"
   },
