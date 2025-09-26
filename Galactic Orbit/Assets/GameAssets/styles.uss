@@ -4,10 +4,31 @@ GradientQuad {
     overflow: hidden;
 }
 
-#MyInput > .unity-label {
+.custom-input {
+    border-radius: 15px;
+}
+
+.custom-input .unity-base-field__input {
+    border-width: 1px;
+    border-radius: 15px;
+    border-color: black;
+    background-color: transparent;
+}
+
+.custom-input .unity-text-input {
+    border-width: 0;
+    border-radius: 0;
+    background-color: white;
+    margin: 0;
+    padding: 4px;
+}
+
+.custom-input .unity-label {
     display: none;
 }
-#MyInput > .unity-text-input {
-    border-width: 0;
+
+.underlined {
+    border-bottom-width: 2px;
+    border-bottom-color: white;
     border-radius: 0;
 }
