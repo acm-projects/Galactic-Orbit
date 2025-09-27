@@ -590,7 +590,7 @@ GameObject:
   - component: {fileID: 199161480}
   - component: {fileID: 199161482}
   m_Layer: 0
-  m_Name: MenuPanel
+  m_Name: SignUpMenuPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
