@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 /// Controls the main menu: handles menu buttons, their selection states,
 /// and dynamically populates sub-items when a menu option is selected.
 /// </summary>
-public class MenuController : MonoBehaviour
+public class DesignMenuController : MonoBehaviour
 {
 
     public GameObject targetObject; // Target object to manipulate (if needed)
