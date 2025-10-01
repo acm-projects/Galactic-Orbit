@@ -1,0 +1,45 @@
+
+
+Button.menu-button {
+    padding: 0px;
+    margin: 0px;
+    margin-left: 10px;
+    background-color: transparent;
+    border-width: 0px;
+    color: white;
+}
+
+.unselected {
+    opacity: 0.5;
+}
+
+.selected {
+    -unity-font-style: bold;
+}
+
+.grid-container {
+    display: flex;          /* UITK is flexbox-based */
+    flex-direction: row;    /* lay out children left → right */
+    flex-wrap: wrap;        /* wrap to next row */
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;              /* spacing between items */
+}
+
+.menu-item {
+    width: 50px;
+    height: 50px;
+    border-width: 1px;
+    border-color: rgba(150, 150, 150, 1);
+    border-style: solid;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin: 10px;
+    padding: 0px;
+    overflow: hidden;
+}
+
+.item-selected {
+    border-width: 2px;
+    border-color: rgba(90, 54, 0, 1);
+    border-style: solid;
+}
