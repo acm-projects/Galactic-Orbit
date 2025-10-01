@@ -1,5 +1,8 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using TMPro;
+using UnityEngine.SceneManagement;
+using Firebase.AI;
 
 public class LogInController : MonoBehaviour
 {
@@ -24,7 +27,7 @@ public class LogInController : MonoBehaviour
         submitButton.clicked += OnSubmit;
     }
 
-    private void OnSubmit()
+    private async void OnSubmit()
     {
         string username = usernameField.value;
         string password = passwordField.value;
@@ -35,5 +38,18 @@ public class LogInController : MonoBehaviour
         Debug.Log($"Submitted! Username: {username}, Password: {password}");
 
         // Here you could add validation, send to server, etc.
+        
+        bool success = await AuthManager.Instance.Login(username, password);
+
+        if (success)
+        {
+            Debug.Log("Login successful.");
+            // bring to next scene
+        }
+        else
+        {
+            Debug.Log("Login failed.");
+        }
+
     }
 }

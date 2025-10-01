@@ -36,7 +36,7 @@ public class AuthManager : MonoBehaviour
 
     void Start()
     {
-        SceneManager.LoadScene("LoginScene");
+        SceneManager.LoadScene("SampleScene");
     }
 
     // Log in user with Firebase
