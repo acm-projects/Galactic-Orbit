@@ -9,7 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1298759598580994210}
-  - component: {fileID: 2121540450728606088}
+  - component: {fileID: 678609354827233593}
+  - component: {fileID: 9072719020893913982}
+  - component: {fileID: 956901173123996204}
+  - component: {fileID: 3947917059726290994}
   m_Layer: 0
   m_Name: FirebaseController
   m_TagString: Untagged
@@ -32,7 +35,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2121540450728606088
+--- !u!114 &678609354827233593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2376910101295634576}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94666b5d3a6637542b5ce08955913880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FirebaseInitializer
+--- !u!114 &9072719020893913982
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,6 +56,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 2376910101295634576}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90b58b52fbc3bb94b985d959a748d1c7, type: 3}
+  m_Script: {fileID: 11500000, guid: 60cc757fd1b51fe44bb28eb63fd3eeff, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SecureFirebaseManager
+  m_EditorClassIdentifier: Assembly-CSharp::FirebaseManager
+--- !u!114 &956901173123996204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2376910101295634576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c3fbca5a95112942a63e3cabee1dcdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FirebaseTester
+--- !u!114 &3947917059726290994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2376910101295634576}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48c5f354f6dc0014990b5001a780bade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UserAccountManager
