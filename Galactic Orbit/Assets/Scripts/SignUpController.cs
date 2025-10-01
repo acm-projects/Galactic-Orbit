@@ -39,6 +39,27 @@ public class SignUpController : MonoBehaviour
 
         Debug.Log($"Submitted! Email: {email}, Username: {username}, Password: {password}");
 
-        // Here you could add validation, send to server, etc.
+        // Check username availability first
+        UserProfileManager.Instance.IsUsernameTaken(username, async (isTaken) =>
+        {
+            if (isTaken)
+            {
+                Debug.Log("Username is already taken");
+                return;
+            }
+
+            // Register the user
+            bool success = await AuthenticationManager.Instance.RegisterAsync(email, password, username, username);
+            
+            if (success)
+            {
+                Debug.Log("Registration successful!");
+                // Navigate to login or main scene
+            }
+            else
+            {
+                Debug.Log("Registration failed.");
+            }
+        });
     }
 }

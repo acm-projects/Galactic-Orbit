@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using TMPro;
+using System.Threading.Tasks;
 
 public class LogInController : MonoBehaviour
 {
@@ -24,7 +26,7 @@ public class LogInController : MonoBehaviour
         submitButton.clicked += OnSubmit;
     }
 
-    private void OnSubmit()
+    private async void OnSubmit()
     {
         string username = usernameField.value;
         string password = passwordField.value;
@@ -34,6 +36,21 @@ public class LogInController : MonoBehaviour
 
         Debug.Log($"Submitted! Username: {username}, Password: {password}");
 
-        // Here you could add validation, send to server, etc.
+        if (FirebaseManager.Instance == null)
+        {
+            Debug.LogError("FirebaseManager not initialized yet!");
+            return;
+        }
+
+        bool success = await FirebaseManager.Instance.LoginAsync(username, password);
+
+        if (success)
+        {
+            Debug.Log("Login successful.");
+        }
+        else
+        {
+            Debug.Log("Login failed.");
+        }
     }
 }
