@@ -102,19 +102,16 @@ public class UserProfileManager : MonoBehaviour
 [System.Serializable]
 public class UserProfile
 {
-    public string username;        // Unique username for the user
-    public string displayName;     // User's display name (can contain spaces, special chars)
-    public long createdTimestamp;  // When the account was created (Unix timestamp)
+    public string username;
+    public string displayName;
+    public string email;
+    public long createdTimestamp;
 
-    // 🔒 SECURITY NOTE: Passwords are NEVER stored here!
-    // Firebase Authentication handles password hashing and security
-
-    // Creates a new user profile
-    public UserProfile(string username, string displayName, long createdTimestamp)
+    public UserProfile(string username, string displayName, string email, long createdTimestamp)
     {
         this.username = username;
         this.displayName = displayName;
-        // The timestamp is stored for time specific features (e.g. account age, verification, rewards, etc)
+        this.email = email;
         this.createdTimestamp = createdTimestamp;
     }
 }

@@ -36,7 +36,7 @@ public class AuthenticationManager : MonoBehaviour
                 FirebaseUser newUser = task.Result.User;
 
                 // Create user profile data (NO PASSWORD - Auth handles that securely)
-                UserProfile profile = new UserProfile(username, displayName, DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+                UserProfile profile = new UserProfile(username, displayName, email, DateTimeOffset.UtcNow.ToUnixTimeSeconds());
                 string json = JsonUtility.ToJson(profile);
 
                 // Save profile to database using the user's unique Firebase ID
