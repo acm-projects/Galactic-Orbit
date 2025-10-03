@@ -17,6 +17,7 @@ public class DesignMenuController : MonoBehaviour
     public List<Material> TertiaryMaterial = new List<Material>();
     public List<Material> AccentMaterial_01 = new List<Material>();
     public List<Material> AccentMaterial_02 = new List<Material>();
+    public List<Material> SkinColor = new List<Material>();
     
 
     // --- Fields ---
@@ -68,12 +69,18 @@ public class DesignMenuController : MonoBehaviour
                 {
                     AccentMaterial_02.Add(mat);
                 }
+                else if (mat.name.StartsWith("SkinColor"))
+                {
+                    SkinColor.Add(mat);
+                }
             }
         }
 
         // Define menu items (could be loaded from external data later)
         menuItems = new Dictionary<string, string[]>
         {
+            { "Skin Color",
+                new string[] { "rgb"} },
             { "Primary Color",
                 new string[] { "rgb"} },
             { "Secondary Color",
@@ -98,23 +105,26 @@ public class DesignMenuController : MonoBehaviour
             Debug.Log("Button created: " + menuItems[button.text]);
             
             List<Material> mat = null;
-            switch (item)
-            {
-                case var _ when item.Key.Contains("Primary"):
-                    mat = PrimaryMaterial;
-                    break;
-                case var _ when item.Key.Contains("Secondary"):
-                    mat = SecondaryMaterial;
-                    break;
-                case var _ when item.Key.Contains("Tertiary"):
-                    mat = TertiaryMaterial;
-                    break;
-                case var _ when item.Key.Contains("Accent Color 1"):
-                    mat = AccentMaterial_01;
-                    break;
-                case var _ when item.Key.Contains("Accent Color 2"):
-                    mat = AccentMaterial_02;
-                    break;
+                switch (item)
+                {
+                    case var _ when item.Key.Contains("Primary"):
+                        mat = PrimaryMaterial;
+                        break;
+                    case var _ when item.Key.Contains("Secondary"):
+                        mat = SecondaryMaterial;
+                        break;
+                    case var _ when item.Key.Contains("Tertiary"):
+                        mat = TertiaryMaterial;
+                        break;
+                    case var _ when item.Key.Contains("Accent Color 1"):
+                        mat = AccentMaterial_01;
+                        break;
+                    case var _ when item.Key.Contains("Accent Color 2"):
+                        mat = AccentMaterial_02;
+                        break;
+                    case var _ when item.Key.Contains("Skin Color"):
+                        mat = SkinColor;
+                        break;
             }
             var option = new MenuOption(button.text, button, menuItems[button.text], root, mat);
 
@@ -174,7 +184,7 @@ public class DesignMenuController : MonoBehaviour
 
                 if (item.StartsWith("rgb"))
                 {
-                    var colorSelector = new RGBColorSelector(Color.white);
+                    var colorSelector = new RGBColorSelector(materials[0].color);
                     colorSelector.AddToClassList("rgb-color-selector");
 
                     var RSlider = colorSelector.rSlider;
