@@ -40,7 +40,7 @@ public class SignUpController : MonoBehaviour
         Debug.Log($"Submitted! Email: {email}, Username: {username}, Password: {password}");
 
         // Check username availability first
-        UserProfileManager.Instance.IsUsernameTaken(username, (isTaken) =>
+        UserProfileManager.Instance.IsUsernameTaken(username, async (isTaken) =>
         {
             if (isTaken)
             {
@@ -48,19 +48,18 @@ public class SignUpController : MonoBehaviour
                 return;
             }
 
-            // Register the user - use the actual method name and signature
-            AuthenticationManager.Instance.RegisterUser(email, password, username, username, (success, message) =>
+            // Register the user
+            bool success = await AuthenticationManager.Instance.RegisterAsync(email, password, username, username);
+            
+            if (success)
             {
-                if (success)
-                {
-                    Debug.Log("Registration successful: " + message);
-                    // TODO: Navigate to login or main scene
-                }
-                else
-                {
-                    Debug.LogError("Registration failed: " + message);
-                }
-            });
+                Debug.Log("Registration successful!");
+                // Navigate to login or main scene
+            }
+            else
+            {
+                Debug.Log("Registration failed.");
+            }
         });
     }
 }
