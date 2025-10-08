@@ -3,6 +3,12 @@ using UnityEngine.UIElements;
 
 public class SignUpController : MonoBehaviour
 {
+    [Header("Panel References")]
+    [SerializeField] private GameObject loginPanelGO;   // assign LoginMenuPanel in Inspector
+    [SerializeField] private GameObject signupPanelGO;  // assign SignupMenuPanel in Inspector
+
+    private Button switchToLoginButton;  // reference for the "Log In" button
+
     private TextField emailField;
     private TextField usernameField;
     private TextField passwordField;
@@ -18,13 +24,26 @@ public class SignUpController : MonoBehaviour
         passwordField = root.Q<TextField>("PasswordInput");
         submitButton = root.Q<Button>("SubmitButton");
 
-        if (emailField ==null) Debug.LogError("EmailInput field not found!");
-        if (usernameField ==null) Debug.LogError("UsernameInput field not found!");
-        if (passwordField ==null) Debug.LogError("PasswordInput field not found!");
-        if (submitButton ==null) Debug.LogError("SubmitButton button not found!");
+        if (emailField == null) Debug.LogError("EmailInput field not found!");
+        if (usernameField == null) Debug.LogError("UsernameInput field not found!");
+        if (passwordField == null) Debug.LogError("PasswordInput field not found!");
+        if (submitButton == null) Debug.LogError("SubmitButton button not found!");
 
         // Hook up the button’s clicked event
         submitButton.clicked += OnSubmit;
+
+        // Query the "Log In" button
+        switchToLoginButton = root.Q<Button>("SwitchToLoginButton");
+
+        if (switchToLoginButton != null)
+        {
+            switchToLoginButton.clicked += OnSwitchToLogin;
+        }
+        else
+        {
+            Debug.LogError("SwitchToLoginButton not found in SignupMenuUI!");
+        }
+
     }
 
     private void OnSubmit()
@@ -50,7 +69,7 @@ public class SignUpController : MonoBehaviour
 
             // Register the user
             bool success = await AuthenticationManager.Instance.RegisterAsync(email, password, username, username);
-            
+
             if (success)
             {
                 Debug.Log("Registration successful!");
@@ -61,5 +80,27 @@ public class SignUpController : MonoBehaviour
                 Debug.Log("Registration failed.");
             }
         });
+    }
+
+    private void OnSwitchToLogin()
+    {
+        if (signupPanelGO != null && loginPanelGO != null)
+        {
+            signupPanelGO.SetActive(false);  // hide signup panel
+            loginPanelGO.SetActive(true);    // show login panel
+        }
+        else
+        {
+            Debug.LogWarning("LoginPanelGO or SignupPanelGO not assigned in Inspector!");
+        }
+    }
+    
+    void OnDisable()
+    {
+        if (submitButton != null)
+            submitButton.clicked -= OnSubmit;
+
+        if (switchToLoginButton != null)
+            switchToLoginButton.clicked -= OnSwitchToLogin;
     }
 }
