@@ -37,7 +37,7 @@ public class AuthenticationManager : MonoBehaviour
                 FirebaseUser newUser = task.Result.User;
 
                 // Create user profile data (NO PASSWORD - Auth handles that securely)
-                UserProfile profile = new UserProfile(username, email, displayName, DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+                UserProfile profile = new UserProfile(username, email, DateTimeOffset.UtcNow.ToUnixTimeSeconds());
                 string json = JsonUtility.ToJson(profile);
 
                 // Save profile to database using the user's unique Firebase ID
@@ -74,7 +74,7 @@ public class AuthenticationManager : MonoBehaviour
             Debug.Log($"Verification email sent to {newUser.Email}");
 
             // Create user profile - INCLUDING EMAIL
-            UserProfile profile = new UserProfile(username, email, displayName, DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+            UserProfile profile = new UserProfile(username, email, DateTimeOffset.UtcNow.ToUnixTimeSeconds());
             string json = JsonUtility.ToJson(profile);
 
             await FirebaseManager.Instance.DbReference.Child("userProfiles").Child(newUser.UserId).SetRawJsonValueAsync(json);
