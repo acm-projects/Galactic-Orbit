@@ -69,12 +69,19 @@ public class AuthenticationManager : MonoBehaviour
             var result = await FirebaseManager.Instance.Auth.CreateUserWithEmailAndPasswordAsync(email, password);
             FirebaseUser newUser = result.User;
 
+            // Send a verification email
+            await newUser.SendEmailVerificationAsync();
+            Debug.Log($"Verification email sent to {newUser.Email}");
+
             // Create user profile - INCLUDING EMAIL
             UserProfile profile = new UserProfile(username, email, displayName, DateTimeOffset.UtcNow.ToUnixTimeSeconds());
             string json = JsonUtility.ToJson(profile);
 
             await FirebaseManager.Instance.DbReference.Child("userProfiles").Child(newUser.UserId).SetRawJsonValueAsync(json);
+
+            Debug.Log("User registered successfully!");
             return true;
+
         }
         catch (System.Exception e)
         {

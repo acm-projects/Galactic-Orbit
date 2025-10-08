@@ -133,7 +133,18 @@ public class FirebaseManager : MonoBehaviour
             
             // Sign in with email
             var result = await Auth.SignInWithEmailAndPasswordAsync(email, password);
+            var user = result.User;
+
+            // Make sure email is verified
+            if (!user.IsEmailVerified)
+            {
+                Debug.LogWarning("Email not verified. Please verify your email before logging in.");
+                Auth.SignOut();
+                return false;
+            }
+
             return true;
+
         }
         catch (System.Exception e)
         {
