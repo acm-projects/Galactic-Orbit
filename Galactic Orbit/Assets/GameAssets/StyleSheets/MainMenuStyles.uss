@@ -1,0 +1,23 @@
+.my-progressbar {
+    background-color: transparent;
+}
+
+.my-progressbar .unity-progress-bar__container {
+    min-height: 0px;
+}
+
+.my-progressbar .unity-progress-bar__background {
+    background-color: rgb(34, 34, 34);
+    min-height: 0px;
+    border-radius: 5px;
+}
+
+.my-progressbar .unity-progress-bar__progress {
+    background-color: rgba(75, 73, 200, 1);
+    min-height: 0px;
+    border-radius: 5px;
+}
+
+.unity-progress-bar {
+    
+}
