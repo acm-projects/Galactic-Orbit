@@ -2,6 +2,7 @@ using Firebase;
 using Firebase.Auth;
 using Firebase.Extensions;
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 // Handles all Firebase Authentication operations
@@ -36,7 +37,7 @@ public class AuthenticationManager : MonoBehaviour
                 FirebaseUser newUser = task.Result.User;
 
                 // Create user profile data (NO PASSWORD - Auth handles that securely)
-                UserProfile profile = new UserProfile(username, displayName, DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+                UserProfile profile = new UserProfile(username, email, displayName, DateTimeOffset.UtcNow.ToUnixTimeSeconds());
                 string json = JsonUtility.ToJson(profile);
 
                 // Save profile to database using the user's unique Firebase ID
@@ -58,6 +59,28 @@ public class AuthenticationManager : MonoBehaviour
                 callback?.Invoke(false, "Registration failed: " + task.Exception?.Message);
             }
         });
+    }
+
+    // Async version of RegisterUser for use with await
+    public async Task<bool> RegisterAsync(string email, string password, string username, string displayName)
+    {
+        try
+        {
+            var result = await FirebaseManager.Instance.Auth.CreateUserWithEmailAndPasswordAsync(email, password);
+            FirebaseUser newUser = result.User;
+
+            // Create user profile - INCLUDING EMAIL
+            UserProfile profile = new UserProfile(username, email, displayName, DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+            string json = JsonUtility.ToJson(profile);
+
+            await FirebaseManager.Instance.DbReference.Child("userProfiles").Child(newUser.UserId).SetRawJsonValueAsync(json);
+            return true;
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Registration failed: " + e.Message);
+            return false;
+        }
     }
 
     // Signs in an existing user with email and password
