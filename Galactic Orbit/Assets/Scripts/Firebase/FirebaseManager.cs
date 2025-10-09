@@ -104,14 +104,20 @@ public class FirebaseManager : MonoBehaviour
         {
             string email = emailOrUsername;
             
+            Debug.Log($"Login attempt with: {emailOrUsername}");
+            
             // Check if input looks like an email (contains @)
             if (!emailOrUsername.Contains("@"))
             {
+                Debug.Log("Input detected as USERNAME. Looking up email...");
+                
                 // It's a username - look up the email from user profile
                 var snapshot = await DbReference.Child("userProfiles")
                     .OrderByChild("username")
                     .EqualTo(emailOrUsername)
                     .GetValueAsync();
+                
+                Debug.Log($"Snapshot exists: {snapshot.Exists}, Children count: {snapshot.ChildrenCount}");
                 
                 if (snapshot.Exists && snapshot.ChildrenCount > 0)
                 {
@@ -119,17 +125,27 @@ public class FirebaseManager : MonoBehaviour
                     foreach (var child in snapshot.Children)
                     {
                         string json = child.GetRawJsonValue();
+                        Debug.Log($"Retrieved JSON: {json}");
+                        
                         UserProfile profile = JsonUtility.FromJson<UserProfile>(json);
                         email = profile.email;
+                        
+                        Debug.Log($"Found email for username '{emailOrUsername}': {email}");
                         break;
                     }
                 }
                 else
                 {
-                    Debug.LogError("Username not found");
+                    Debug.LogError($"Username '{emailOrUsername}' not found in database");
                     return false;
                 }
             }
+            else
+            {
+                Debug.Log("Input detected as EMAIL. Using directly.");
+            }
+            
+            Debug.Log($"Attempting Firebase Auth login with email: {email}");
             
             // Sign in with email
             var result = await Auth.SignInWithEmailAndPasswordAsync(email, password);
@@ -143,6 +159,7 @@ public class FirebaseManager : MonoBehaviour
                 return false;
             }
 
+            Debug.Log("✅ Login successful!");
             return true;
 
         }

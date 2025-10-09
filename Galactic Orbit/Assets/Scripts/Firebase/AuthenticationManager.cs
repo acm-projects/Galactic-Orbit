@@ -66,8 +66,11 @@ public class AuthenticationManager : MonoBehaviour
     {
         try
         {
+            Debug.Log($"Creating user with email: {email}");
             var result = await FirebaseManager.Instance.Auth.CreateUserWithEmailAndPasswordAsync(email, password);
             FirebaseUser newUser = result.User;
+            Debug.Log($"User created! UID: {newUser.UserId}");
+            Debug.Log($"Auth UID: {FirebaseManager.Instance.Auth.CurrentUser.UserId}");
 
             // Send a verification email
             await newUser.SendEmailVerificationAsync();
