@@ -1,11 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-/// <summary>
-/// Comprehensive backend tester for Firebase functionality
-/// Attach to a GameObject in your scene and press keys to run tests
-/// IMPORTANT: You must be logged in for most tests to work!
-/// </summary>
 public class FirebaseBackendTester : MonoBehaviour
 {
     [Header("Test Controls")]
