@@ -102,7 +102,7 @@ ServerData
 **/Firebase/Plugins/**/*.bundle
 **/Firebase/Plugins/**/*.so
 **/Firebase/Plugins/**/*.dll
-**/
+
 
 
 

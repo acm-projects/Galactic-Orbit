@@ -119,74 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &3271513
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1298759598580994210, guid: 3dfa3d7fc377ef347936b7eee4beb23c,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.58704
-      objectReference: {fileID: 0}
-    - target: {fileID: 1298759598580994210, guid: 3dfa3d7fc377ef347936b7eee4beb23c,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1298759598580994210, guid: 3dfa3d7fc377ef347936b7eee4beb23c,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 2.09369
-      objectReference: {fileID: 0}
-    - target: {fileID: 1298759598580994210, guid: 3dfa3d7fc377ef347936b7eee4beb23c,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1298759598580994210, guid: 3dfa3d7fc377ef347936b7eee4beb23c,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1298759598580994210, guid: 3dfa3d7fc377ef347936b7eee4beb23c,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1298759598580994210, guid: 3dfa3d7fc377ef347936b7eee4beb23c,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1298759598580994210, guid: 3dfa3d7fc377ef347936b7eee4beb23c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1298759598580994210, guid: 3dfa3d7fc377ef347936b7eee4beb23c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1298759598580994210, guid: 3dfa3d7fc377ef347936b7eee4beb23c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2376910101295634576, guid: 3dfa3d7fc377ef347936b7eee4beb23c,
-        type: 3}
-      propertyPath: m_Name
-      value: FirebaseController
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 3dfa3d7fc377ef347936b7eee4beb23c, type: 3}
 --- !u!1 &39076633
 GameObject:
   m_ObjectHideFlags: 0
@@ -663,7 +595,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &199161480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -715,6 +647,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a12f225e75857c4eaa05d869eb2ac26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SignUpController
+  loginPanelGO: {fileID: 844832581}
+  signupPanelGO: {fileID: 199161479}
 --- !u!1 &212114235
 GameObject:
   m_ObjectHideFlags: 0
@@ -1250,6 +1184,99 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 274237797}
   m_CullTransparentMesh: 1
+--- !u!1 &296831479
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 296831484}
+  - component: {fileID: 296831483}
+  - component: {fileID: 296831482}
+  - component: {fileID: 296831481}
+  - component: {fileID: 296831480}
+  m_Layer: 0
+  m_Name: FirebaseController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &296831480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296831479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16771dee54f42fa45afa2f252d054d56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FirebaseBackendTester
+  testGetProfileKey: 49
+  testUpdateDisplayNameKey: 50
+  testUpdateBioKey: 51
+  testAddPointsKey: 52
+  testAttendEventKey: 53
+  testCheckAuthKey: 48
+  testDisplayName: TestUser123
+  testBio: This is a test bio!
+  testPointsToAdd: 50
+  testEventId: event_test_001
+--- !u!114 &296831481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296831479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbfdfbb14d99a0341bf4c6cf2b25f695, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FirebaseManager
+--- !u!114 &296831482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296831479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f1ed1bcb7a88224db526de02917f1dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UserProfileManager
+--- !u!114 &296831483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296831479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe846a89fb33974ca9cbf2e46e3d0e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AuthenticationManager
+--- !u!4 &296831484
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296831479}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &331264285
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3356,6 +3383,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eaf7c95ae34c034fbb68f9869eb7382, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LogInController
+  signUpPanel: {fileID: 199161479}
+  logInPanel: {fileID: 844832581}
 --- !u!114 &844832584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8835,3 +8864,4 @@ SceneRoots:
   - {fileID: 2099970469}
   - {fileID: 331264285}
   - {fileID: 1396430845}
+  - {fileID: 296831484}

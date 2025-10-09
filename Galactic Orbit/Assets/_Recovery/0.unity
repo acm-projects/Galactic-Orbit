@@ -1831,6 +1831,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GreetingCTA
       objectReference: {fileID: 0}
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Snigdha
     - target: {fileID: 2819776943908590173, guid: 063cc896506b947c7b2c2ae3beb5868f,
         type: 3}
       propertyPath: m_Sprite
@@ -1842,6 +1847,10 @@ PrefabInstance:
       propertyPath: m_EditorClassIdentifier
       value: UnityEngine.UI::UnityEngine.UI.Image
       objectReference: {fileID: 0}
+<<<<<<< HEAD
+=======
+>>>>>>> 0e5508c1b7ebb518cb2ca30caefd82006a5f66c0
+>>>>>>> Snigdha
     - target: {fileID: 2941317804501384629, guid: 063cc896506b947c7b2c2ae3beb5868f,
         type: 3}
       propertyPath: m_Name
@@ -1962,6 +1971,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+=======
+>>>>>>> Snigdha
     - target: {fileID: 8646661770491606230, guid: 063cc896506b947c7b2c2ae3beb5868f,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -2014,6 +2031,10 @@ PrefabInstance:
         type: 3}
       insertIndex: 3
       addedObject: {fileID: 1882881104}
+<<<<<<< HEAD
+=======
+>>>>>>> 0e5508c1b7ebb518cb2ca30caefd82006a5f66c0
+>>>>>>> Snigdha
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 063cc896506b947c7b2c2ae3beb5868f, type: 3}
 --- !u!224 &591453629 stripped
@@ -2034,7 +2055,15 @@ GameObject:
   m_Layer: 5
   m_Name: Greeting Prompt
   m_TagString: Untagged
+<<<<<<< HEAD
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
+=======
+<<<<<<< HEAD
+  m_Icon: {fileID: 0}
+=======
+  m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
+>>>>>>> 0e5508c1b7ebb518cb2ca30caefd82006a5f66c0
+>>>>>>> Snigdha
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -6747,6 +6776,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1859417367}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Snigdha
 --- !u!1 &1882881103
 GameObject:
   m_ObjectHideFlags: 0
@@ -6822,6 +6856,10 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1882881103}
   m_CullTransparentMesh: 0
+<<<<<<< HEAD
+=======
+>>>>>>> 0e5508c1b7ebb518cb2ca30caefd82006a5f66c0
+>>>>>>> Snigdha
 --- !u!1 &1905935980
 GameObject:
   m_ObjectHideFlags: 0
