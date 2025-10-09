@@ -3,9 +3,19 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
-    public List<Quest> allQuests;
+    public static QuestManager Instance;
 
-    // This is the new function to get a list of unique quests.
+    public List<Quest> allQuests;
+    public Quest selectedQuest { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
+
     public List<Quest> GetUniqueRandomQuests(int count)
     {
         if (count >= allQuests.Count)
@@ -19,23 +29,15 @@ public class QuestManager : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             int randomIndex = Random.Range(0, availableQuests.Count);
-            Quest chosenQuest = availableQuests[randomIndex];
-
-            chosenQuests.Add(chosenQuest);
+            chosenQuests.Add(availableQuests[randomIndex]);
             availableQuests.RemoveAt(randomIndex);
         }
 
         return chosenQuests;
     }
-
-    public Quest GetRandomQuest()
+    
+    public void SelectQuest(Quest quest)
     {
-        if (allQuests == null || allQuests.Count == 0)
-        {
-            Debug.LogError("The quest list is empty!");
-            return null;
-        }
-        int randomIndex = Random.Range(0, allQuests.Count);
-        return allQuests[randomIndex];
+        selectedQuest = quest;
     }
 }
