@@ -1732,7 +1732,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 352578106}
-  - component: {fileID: 352578105}
+  - component: {fileID: 352578107}
   m_Layer: 0
   m_Name: QuestManager
   m_TagString: Untagged
@@ -1740,29 +1740,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &352578105
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 352578104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13a3130e5c44c4dca982a37b3b3d28fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::QuestManager
-  allQuests:
-  - {fileID: 11400000, guid: cedb5146b3a8f441baf907940e0167d1, type: 2}
-  - {fileID: 11400000, guid: f704f062aa1d84f5fa31ce1bacb63bf3, type: 2}
-  - {fileID: 11400000, guid: 14b6c86c8238c4209bc534f00997838d, type: 2}
-  - {fileID: 11400000, guid: 404925ad9f8564181bc7151c584f9d6f, type: 2}
-  - {fileID: 11400000, guid: 759d8e7e54cee4224abfd7647c696ae9, type: 2}
-  - {fileID: 11400000, guid: 0ab9215155451495b86d74ee09cc5f3b, type: 2}
-  - {fileID: 11400000, guid: 01beb9e6da8a648558fde9ec71968406, type: 2}
-  - {fileID: 11400000, guid: 48d03f1de3c9649bfa3b26895eb33c1a, type: 2}
-  - {fileID: 11400000, guid: 717de71baaa224260a82311f773508df, type: 2}
-  - {fileID: 11400000, guid: 44e17e873d17c42cbb946d2364ec548c, type: 2}
 --- !u!4 &352578106
 Transform:
   m_ObjectHideFlags: 0
@@ -1778,6 +1755,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &352578107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352578104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d7d50e5daa41f54bac89d267f88a652, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuestManager
+  allQuests:
+  - {fileID: 11400000, guid: 5fbc56ce6c8a719458a6b65fed8aeb16, type: 2}
+  - {fileID: 11400000, guid: e605dd44164ff9b40a77ee71a7f09180, type: 2}
+  activeQuests:
+  - {fileID: 11400000, guid: 5fbc56ce6c8a719458a6b65fed8aeb16, type: 2}
 --- !u!1001 &364719011
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2459,7 +2453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f84ed2ccaef74522b1b8d5965f675c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestUI
-  questManager: {fileID: 352578105}
+  questManager: {fileID: 0}
   questButtons:
   - {fileID: 1723574930}
   - {fileID: 744747187}
@@ -4383,7 +4377,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1128042636}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 790faf2ed0bbd4f11a6fd875c309e457, type: 3}
+  m_Script: {fileID: 11500000, guid: 42f9c4607856e448a9b3ee369adf2d14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EventManager
   allEvents: []
@@ -4553,8 +4547,8 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_VertexColorAlwaysGammaSpace: 1
+  m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -7029,6 +7023,7 @@ GameObject:
   - component: {fileID: 1764162795}
   - component: {fileID: 1764162794}
   - component: {fileID: 1764162793}
+  - component: {fileID: 1764162796}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -7110,6 +7105,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1764162796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764162792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!1 &1861165479
 GameObject:
   m_ObjectHideFlags: 0
