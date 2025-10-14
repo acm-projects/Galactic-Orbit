@@ -45,10 +45,10 @@ public class ARLocationManager : MonoBehaviour
 
         foreach (Quest quest in QuestManager.Instance.activeQuests)
         {
-            if (!quest.isCompleted)
+            if (!quest.isCompleted && quest.isActive) // Added isActive check
             {
                 float distance = GetDistanceMeters(playerPos, quest.targetLocation);
-                if (distance < completionRadius)
+                if (distance < quest.completionRadius) // Now uses quest's own radius
                 {
                     QuestManager.Instance.CompleteQuest(quest.questID);
                 }

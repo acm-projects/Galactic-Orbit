@@ -1,22 +1,40 @@
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "New Quest", menuName = "Quest")]
 [System.Serializable]
-public class Quest
+public class Quest : ScriptableObject
 {
+    [Header("Quest Identification")]
     public string questID;
-    public string title;
-    public string description;
+    
+    [Header("Quest Info")]
+    public string questTitle;
+    [TextArea(3, 10)]
+    public string questDescription;
+    
+    [Header("Location (for AR quests)")]
     public Vector2 targetLocation; // latitude, longitude
-    public bool isCompleted;
+    public float completionRadius = 20f; // meters
+    
+    [Header("Rewards")]
     public int rewardPoints;
+    
+    [Header("Runtime State - Do Not Edit")]
+    [System.NonSerialized] public bool isCompleted;
+    [System.NonSerialized] public bool isActive;
 
-    public Quest(string id, string title, string desc, Vector2 target, int reward)
+    // Constructor for runtime quest creation (for AI-generated quests later)
+    public static Quest CreateRuntimeQuest(string id, string title, string desc, Vector2 location, int reward)
     {
-        this.questID = id;
-        this.title = title;
-        this.description = desc;
-        this.targetLocation = target;
-        this.rewardPoints = reward;
-        this.isCompleted = false;
+        Quest newQuest = ScriptableObject.CreateInstance<Quest>();
+        newQuest.questID = id;
+        newQuest.questTitle = title;
+        newQuest.questDescription = desc;
+        newQuest.targetLocation = location;
+        newQuest.rewardPoints = reward;
+        newQuest.completionRadius = 20f;
+        newQuest.isCompleted = false;
+        newQuest.isActive = false;
+        return newQuest;
     }
 }
