@@ -8,17 +8,17 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Arms
-    second: {fileID: 2100000, guid: 8337b7dfc8497e444b43eab78ae034de, type: 2}
+    second: {fileID: 2100000, guid: b9cce16dfc3962b4fb86596be38ec220, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: BackFace
-    second: {fileID: 2100000, guid: bf74061b4b6b61242b7a669cb4d4bdff, type: 2}
+    second: {fileID: 2100000, guid: 59e778330414ff74dac0a90ccc5c2f8d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Backpack01
-    second: {fileID: 2100000, guid: 0e76e2affcb2b814db33a2d15f0bb828, type: 2}
+    second: {fileID: 2100000, guid: b9cce16dfc3962b4fb86596be38ec220, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -28,17 +28,17 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Belt
-    second: {fileID: 2100000, guid: 17d05e63ae6a3074abc907a0df70b966, type: 2}
+    second: {fileID: 2100000, guid: 3e2ceaff1390dee4191ad8534d93310d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: BeltSystem
-    second: {fileID: 2100000, guid: 6a402f63307246a49b2f6853e911910a, type: 2}
+    second: {fileID: 2100000, guid: 918e287d11bd29540981ebe562d08e75, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Body
-    second: {fileID: 2100000, guid: f32a88d98e96bb84bad8c4e08a180ad4, type: 2}
+    second: {fileID: 2100000, guid: c58ca9c6480ecd544a21e4893b1e69df, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -48,42 +48,42 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Helmet
-    second: {fileID: 2100000, guid: bc6c893d8cf5814448949465c755c33f, type: 2}
+    second: {fileID: 2100000, guid: c58ca9c6480ecd544a21e4893b1e69df, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: HelmetDecor01
-    second: {fileID: 2100000, guid: 85b5a7d8f9957e24c9cde3e0eb9c752d, type: 2}
+    second: {fileID: 2100000, guid: 3e2ceaff1390dee4191ad8534d93310d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: HelmetDecor02
-    second: {fileID: 2100000, guid: 1b46a920f6ad62e479968bc8193f7124, type: 2}
+    second: {fileID: 2100000, guid: df818f326a5b30446867a370ee41c3df, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: NeckRing
-    second: {fileID: 2100000, guid: 5af742a955f884442b667291eb5de8f7, type: 2}
+    second: {fileID: 2100000, guid: 3e2ceaff1390dee4191ad8534d93310d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Pants
-    second: {fileID: 2100000, guid: 50662048ec171274c87514a68a183d23, type: 2}
+    second: {fileID: 2100000, guid: c58ca9c6480ecd544a21e4893b1e69df, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: ShoeRing
-    second: {fileID: 2100000, guid: d7fc275a7adb40446a322557cb2fbf65, type: 2}
+    second: {fileID: 2100000, guid: 3e2ceaff1390dee4191ad8534d93310d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Shoes01
-    second: {fileID: 2100000, guid: c0aca5ab31c614249b5bdacdc5794488, type: 2}
+    second: {fileID: 2100000, guid: b9cce16dfc3962b4fb86596be38ec220, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Shoes02
-    second: {fileID: 2100000, guid: b70db343e1adbf04f9abf3e098d30d62, type: 2}
+    second: {fileID: 2100000, guid: 3e2ceaff1390dee4191ad8534d93310d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -93,12 +93,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Tube
-    second: {fileID: 2100000, guid: 3df83692f43e0684f98ced701f391c17, type: 2}
+    second: {fileID: 2100000, guid: c58ca9c6480ecd544a21e4893b1e69df, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: TubeRing
-    second: {fileID: 2100000, guid: 42e6b523678c5a248adf2b5814f94a61, type: 2}
+    second: {fileID: 2100000, guid: 3e2ceaff1390dee4191ad8534d93310d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
