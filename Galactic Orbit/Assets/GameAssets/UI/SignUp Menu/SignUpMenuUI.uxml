@@ -20,7 +20,9 @@
                         </ui:Button>
                         <ui:VisualElement name="LabelRow" style="flex-grow: 1; align-items: center; flex-direction: row; justify-content: center;">
                             <ui:Label text="Already have an account?" name="Question" style="font-size: 10px;" />
-                            <ui:Label text="Log In" class="underlined" style="font-size: 10px; color: rgb(48, 128, 249); -unity-font-style: normal; border-bottom-color: rgb(48, 128, 249); border-bottom-width: 1px;" />
+                            <ui:Button name="SwitchToLoginButton" class="underlined" style="font-size: 10px; color: rgb(48, 128, 249); -unity-font-style: normal; border-bottom-color: rgb(48, 128, 249); border-bottom-width: 1px; background-color: transparent; padding: 0; margin: 0;">
+                                <ui:Label text="Log In" style="color: rgb(48, 128, 249);" />
+                            </ui:Button>
                         </ui:VisualElement>
                     </ui:VisualElement>
                 </ui:VisualElement>

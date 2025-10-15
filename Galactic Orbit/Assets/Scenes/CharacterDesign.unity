@@ -382,8 +382,13 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 298af97e96bcb65429bda543a3e6cb5e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MenuController
-  targetObject: {fileID: 92442131}
+  m_EditorClassIdentifier: Assembly-CSharp::DesignMenuController
+  Character: {fileID: 92442131}
+  PrimaryMaterial: []
+  SecondaryMaterial: []
+  TertiaryMaterial: []
+  AccentMaterial_01: []
+  AccentMaterial_02: []
 --- !u!1 &838533202
 GameObject:
   m_ObjectHideFlags: 0

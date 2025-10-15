@@ -6,14 +6,14 @@ Button.menu-button {
     margin-left: 10px;
     background-color: transparent;
     border-width: 0px;
-    color: white;
+    color: #5F4000;
 }
 
-.unselected {
+Button.unselected {
     opacity: 0.5;
 }
 
-.selected {
+Button.selected {
     -unity-font-style: bold;
 }
 
@@ -26,7 +26,7 @@ Button.menu-button {
     gap: 10px;              /* spacing between items */
 }
 
-.menu-item {
+Button.menu-item {
     width: 50px;
     height: 50px;
     border-width: 1px;
@@ -38,8 +38,70 @@ Button.menu-button {
     overflow: hidden;
 }
 
-.item-selected {
+Button.item-selected {
     border-width: 2px;
     border-color: rgba(90, 54, 0, 1);
     border-style: solid;
+}
+
+#ColorPreview {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    margin-top: 10px;
+    background-color: white;
+}
+
+
+.rgb-color-selector {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+
+    border-top-color: gray;
+    border-right-color: gray;
+    border-bottom-color: gray;
+    border-left-color: gray;
+
+    margin-bottom: 6px;
+
+}
+
+.slider-container {
+    width: 50%;
+    height: auto;
+    flex-direction: column;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.color-preview {
+    flex: none;
+    width: 80px;
+    height: 80px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    background-color: white;
+}
+
+.rgb-slider {
+    width: 100%;
+    flex-direction: row;
+}
+.rgb-slider > VisualElement {
+    flex: 1              /* thickness of the track */
+}
+.rgb-slider > Label {
+    width: 30px; 
+    min-width: 0px;
 }

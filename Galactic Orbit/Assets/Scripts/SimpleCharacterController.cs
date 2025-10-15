@@ -27,8 +27,6 @@ public class SimpleCharacterController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("Horizontal: " + Input.GetAxis("Horizontal") + ", Vertical: " + Input.GetAxis("Vertical"));
-
         // Check if grounded
         isGrounded = controller.isGrounded;
         if (isGrounded && velocity.y < 0)
