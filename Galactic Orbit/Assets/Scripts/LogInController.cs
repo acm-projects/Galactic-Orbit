@@ -44,7 +44,7 @@ public class LogInController : MonoBehaviour
         if (success)
         {
             Debug.Log("Login successful.");
-            // bring to next scene
+            SceneManager.LoadScene("WorldMap");
         }
         else
         {
