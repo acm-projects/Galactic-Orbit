@@ -1,20 +1,25 @@
 using UnityEngine;
+using Mapbox.Unity.Map;
+using Mapbox.Utils;
 
 [RequireComponent(typeof(CharacterController))]
-public class SimpleCharacterController : MonoBehaviour
+public class GPSCharacterController : MonoBehaviour
 {
-    [Header("Movement Settings")]
-    public float moveSpeed = 5f;
-    public float rotationSpeed = 720f; // degrees per second
-    public float jumpHeight = 2f;
-    public float gravity = -9.81f;
+    [Header("Mapbox")]
+    public AbstractMap map;
 
-    [Header("Animator")]
+    [Header("GPS Settings")]
+    public Vector2d targetLocation;       // The GPS coordinate you want to move to
+    public float moveSpeed = 5f;          // Movement speed in Unity units
+
+    [Header("Rotation")]
+    public float rotationSpeed = 720f;    // degrees per second
+
+    [Header("Animator (Optional)")]
     public Animator animator;
 
     private CharacterController controller;
-    private Vector3 velocity;
-    private bool isGrounded;
+    private Vector3 targetWorldPos;
 
     void Start()
     {
@@ -23,56 +28,58 @@ public class SimpleCharacterController : MonoBehaviour
         {
             animator = GetComponentInChildren<Animator>();
         }
+
+        // Initialize target position in world space
+        targetWorldPos = map.GeoToWorldPosition(targetLocation, true);
     }
 
     void Update()
     {
-        // Check if grounded
-        isGrounded = controller.isGrounded;
-        if (isGrounded && velocity.y < 0)
-            velocity.y = -2f; // small downward force to keep grounded
+        if (map == null) return;
 
-        // Movement input
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        // Recalculate world target each frame to account for map panning/zooming
+        targetWorldPos = map.GeoToWorldPosition(targetLocation, true);
 
-        Vector3 horizontalVelocity = new Vector3(controller.velocity.x, 0, controller.velocity.z);
-        bool isWalking = horizontalVelocity.magnitude > 0.01f;
+        // Compute movement vector toward the target
+        Vector3 direction = targetWorldPos - transform.position;
+        direction.y = 0; // No vertical movement
 
-        Vector3 move = new Vector3(horizontal, 0, vertical);
-        if (move.magnitude > 1f) move.Normalize();
+        float distance = direction.magnitude;
+        Vector3 move = Vector3.zero;
 
-        // Move relative to camera
-        //move = Camera.main.transform.TransformDirection(move);
-        //move.y = 0f;
-
-        controller.Move(move * moveSpeed * Time.deltaTime);
-
-        // Rotate character toward movement direction
-        if (move != Vector3.zero)
+        if (distance > 0.1f) // Prevent jitter when very close
         {
-            Quaternion targetRotation = Quaternion.LookRotation(move);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            move = direction.normalized * moveSpeed * Time.deltaTime;
+            controller.Move(move);
+
+            // Smooth rotation toward movement direction
+            if (move != Vector3.zero)
+            {
+                Quaternion targetRot = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.RotateTowards(
+                    transform.rotation,
+                    targetRot,
+                    rotationSpeed * Time.deltaTime
+                );
+            }
         }
 
-        // Jumping
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
-
-        // Gravity
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
-
-        // Update Animator
+        // Animator updates
         if (animator)
         {
-            float speedPercent = move.magnitude;
+            float speedPercent = move.magnitude / (moveSpeed * Time.deltaTime);
             animator.SetFloat("Speed", speedPercent);
-            animator.SetBool("IsGrounded", isGrounded);
-            animator.SetBool("IsWalking", isWalking);
-            animator.SetFloat("VerticalVelocity", velocity.y);
+            animator.SetBool("IsWalking", distance > 0.1f);
+            animator.SetBool("IsGrounded", true); // always grounded here
+            animator.SetFloat("VerticalVelocity", 0f);
         }
+    }
+
+    /// <summary>
+    /// Call this to set a new GPS target for the player to move toward.
+    /// </summary>
+    public void SetTargetLocation(Vector2d newLocation)
+    {
+        targetLocation = newLocation;
     }
 }
