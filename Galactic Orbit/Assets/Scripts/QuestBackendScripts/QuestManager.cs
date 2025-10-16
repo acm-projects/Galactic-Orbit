@@ -14,6 +14,10 @@ public class QuestManager : MonoBehaviour
     [Header("Selected Quest (for UI)")]
     public Quest selectedQuest { get; private set; }
 
+    [Header("Auto-Generation Settings")]
+    public bool generateAIQuestsOnStart = true;
+    public int numberOfAIQuests = 5;
+
     void Awake()
     {
         // Singleton pattern
@@ -29,13 +33,42 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    void Start()
+    async void Start()
     {
-        // Optional: Auto-add some test quests at start
-        // You can remove this once you have ScriptableObject quests
-        AddRuntimeQuest("Q001", "Visit the Library", "Go to the main library and scan the AR marker.", new Vector2(40.7128f, -74.0060f), 100);
-        AddRuntimeQuest("Q002", "Attend an Event", "Check out the student fair near the main hall.", new Vector2(40.7135f, -74.0055f), 150);
+        // Optional: Remove test quests if you no longer want them
+        // AddRuntimeQuest("Q001", "Visit the Library", "Go to the main library and scan the AR marker.", new Vector2(40.7128f, -74.0060f), 100);
+        // AddRuntimeQuest("Q002", "Attend an Event", "Check out the student fair near the main hall.", new Vector2(40.7135f, -74.0055f), 150);
+
+        if (generateAIQuestsOnStart)
+        {
+            Debug.Log("⚙️ Auto-generating AI quests on start...");
+
+            for (int i = 0; i < numberOfAIQuests; i++)
+            {
+                Quest aiQuest = await AIQuestGenerator.GenerateUTDQuest();
+
+                if (aiQuest != null)
+                    Debug.Log($"✅ AI Quest {i + 1} generated: {aiQuest.questTitle}");
+                else
+                    Debug.LogError($"❌ Failed to generate AI Quest {i + 1}");
+
+                await System.Threading.Tasks.Task.Delay(300); // Optional small delay between generations
+            }
+
+            // Refresh Quest UI after all quests are generated
+            QuestUI questUI = FindFirstObjectByType<QuestUI>();
+            if (questUI != null)
+            {
+                Debug.Log("🔄 Updating quest UI...");
+                questUI.PullNewQuests();
+            }
+            else
+            {
+                Debug.LogWarning("⚠️ No QuestUI found to refresh UI.");
+            }
+        }
     }
+
 
     // === QUEST POOL MANAGEMENT (for UI) ===
     
@@ -136,9 +169,16 @@ public class QuestManager : MonoBehaviour
     {
         Quest newQuest = Quest.CreateRuntimeQuest(id, title, desc, location, reward);
         allQuests.Add(newQuest);
-        Debug.Log($"📝 Runtime quest added: {title}");
+
+        // ✅ Detect if it’s AI-generated
+        bool isAI = id.StartsWith("AI_");
+        string source = isAI ? "🤖 [AI Generated]" : "📘 [Manual]";
+        
+        Debug.Log($"{source} Quest added: {title}");
+
         return newQuest;
     }
+
 
     // === UTILITY ===
     

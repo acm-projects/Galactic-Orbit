@@ -10,11 +10,29 @@ public class QuestUI : MonoBehaviour
 
     void OnEnable()
     {
-        PullNewQuests();
+        Invoke(nameof(PullNewQuests), 0.1f);
+    }
+
+    void Awake()
+    {
+        if (questManager == null)
+            questManager = QuestManager.Instance;
     }
 
     public void PullNewQuests()
     {
+        if (questManager == null)
+        {
+            Debug.LogError("QuestManager reference is not set in QuestUI");
+            return;
+        }
+
+        if (questButtons == null || questButtons.Count == 0)
+        {
+            Debug.LogError("QuestButtons list not set in QuestUI");
+            return;
+        }
+
         List<Quest> uniqueQuests = questManager.GetUniqueRandomQuests(questButtons.Count);
 
         // This loop now gives each button its quest data

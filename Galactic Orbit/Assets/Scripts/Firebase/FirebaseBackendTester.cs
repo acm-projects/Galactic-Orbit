@@ -18,6 +18,9 @@ public class FirebaseBackendTester : MonoBehaviour
     public int testPointsToAdd = 50;
     public string testEventId = "event_test_001";
 
+    [Header("AI Quest Generation")]
+    public KeyCode generateAIQuestKey = KeyCode.Alpha6;
+
     private void Update()
     {
         // Check auth status
@@ -55,6 +58,12 @@ public class FirebaseBackendTester : MonoBehaviour
         {
             TestAttendEvent();
         }
+
+        // Test AI quest generation
+        if (Input.GetKeyDown(generateAIQuestKey))
+        {
+            TestGenerateAIQuest();
+        }
     }
 
     private void OnGUI()
@@ -64,7 +73,7 @@ public class FirebaseBackendTester : MonoBehaviour
         style.fontSize = 16;
         style.normal.textColor = Color.white;
 
-        GUI.Label(new Rect(10, 10, 500, 300), 
+        GUI.Label(new Rect(10, 10, 500, 300),
             "=== Firebase Backend Tester ===\n\n" +
             $"[{testCheckAuthKey}] Check Auth Status\n" +
             $"[{testGetProfileKey}] Get Current Profile\n" +
@@ -72,6 +81,7 @@ public class FirebaseBackendTester : MonoBehaviour
             $"[{testUpdateBioKey}] Update Bio\n" +
             $"[{testAddPointsKey}] Add {testPointsToAdd} Points\n" +
             $"[{testAttendEventKey}] Attend Test Event\n\n" +
+            $"[{generateAIQuestKey}] Generate AI Quest\n\n" +
             "Check Console for results!", 
             style);
     }
@@ -188,7 +198,7 @@ public class FirebaseBackendTester : MonoBehaviour
     void TestAttendEvent()
     {
         Debug.Log($"=== TEST: Attend Event '{testEventId}' ===");
-        
+
         UserProfileManager.Instance.AttendEvent(testEventId, 100, (success, message) =>
         {
             if (success)
@@ -202,5 +212,24 @@ public class FirebaseBackendTester : MonoBehaviour
                 Debug.LogError($"❌ {message}");
             }
         });
+    }
+    
+    async void TestGenerateAIQuest()
+    {
+        Debug.Log("=== TEST: Generate AI Quest ===");
+        
+        Quest aiQuest = await AIQuestGenerator.GenerateUTDQuest();
+        
+        if (aiQuest != null)
+        {
+            Debug.Log($"✅ AI Quest Generated!");
+            Debug.Log($"   Title: {aiQuest.questTitle}");
+            Debug.Log($"   Description: {aiQuest.questDescription}");
+            Debug.Log($"   Points: {aiQuest.rewardPoints}");
+        }
+        else
+        {
+            Debug.LogError("❌ AI Quest generation failed");
+        }
     }
 }

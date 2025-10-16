@@ -5,10 +5,9 @@ using System.Text;
 
 public class AIQuestGenerator
 {
-    // Ollama API endpoint (runs locally)
-    private const string OLLAMA_API = "http://localhost:11434/api/generate";
-    private const string MODEL = "llama3.2";
-
+    // llama.cpp server endpoint
+    private const string LLAMA_API = "http://127.0.0.1:8080/completion";
+    
     // UTD-specific locations for quest generation
     private static readonly string[] UTD_LOCATIONS = {
         "Eugene McDermott Library",
@@ -50,8 +49,8 @@ Make it engaging and related to {location}!";
         {
             Debug.Log("🤖 Generating quest with Llama...");
             
-            // Call Ollama API
-            string response = await CallOllamaAPI(prompt);
+            // Call llama.cpp API
+            string response = await CallLlamaCppAPI(prompt);
             
             Debug.Log($"📝 AI Response: {response}");
             
@@ -76,20 +75,24 @@ Make it engaging and related to {location}!";
         }
     }
 
-    // Call Ollama's local API
-    private static async Task<string> CallOllamaAPI(string prompt)
+    // Call llama.cpp API
+    private static async Task<string> CallLlamaCppAPI(string prompt)
     {
-        var requestBody = new
+        // llama.cpp completion endpoint format
+        var requestData = new LlamaCppRequest
         {
-            model = MODEL,
             prompt = prompt,
-            stream = false
+            n_predict = 200,  // Max tokens to generate
+            temperature = 0.7f,
+            top_k = 40,
+            top_p = 0.9f,
+            stop = new string[] { "\n\n", "USER:", "ASSISTANT:" }
         };
 
-        string jsonBody = JsonUtility.ToJson(requestBody);
+        string jsonBody = JsonUtility.ToJson(requestData);
         byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonBody);
 
-        using (UnityWebRequest request = new UnityWebRequest(OLLAMA_API, "POST"))
+        using (UnityWebRequest request = new UnityWebRequest(LLAMA_API, "POST"))
         {
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = new DownloadHandlerBuffer();
@@ -106,8 +109,10 @@ Make it engaging and related to {location}!";
             if (request.result == UnityWebRequest.Result.Success)
             {
                 string jsonResponse = request.downloadHandler.text;
-                OllamaResponse response = JsonUtility.FromJson<OllamaResponse>(jsonResponse);
-                return response.response;
+                Debug.Log($"Raw response: {jsonResponse}");
+                
+                LlamaCppResponse response = JsonUtility.FromJson<LlamaCppResponse>(jsonResponse);
+                return response.content;
             }
             else
             {
@@ -160,7 +165,7 @@ Make it engaging and related to {location}!";
                 return null;
             }
 
-            // Create quest with UTD coordinates (using Student Union as default)
+            // Create quest with UTD coordinates
             Vector2 utdLocation = new Vector2(32.9857f, -96.7501f);
 
             return QuestManager.Instance.AddRuntimeQuest(
@@ -200,10 +205,21 @@ Make it engaging and related to {location}!";
         );
     }
 
-    // Helper class for JSON parsing
+    // Helper classes for JSON serialization
     [System.Serializable]
-    private class OllamaResponse
+    private class LlamaCppRequest
     {
-        public string response;
+        public string prompt;
+        public int n_predict;
+        public float temperature;
+        public int top_k;
+        public float top_p;
+        public string[] stop;
+    }
+
+    [System.Serializable]
+    private class LlamaCppResponse
+    {
+        public string content;
     }
 }
