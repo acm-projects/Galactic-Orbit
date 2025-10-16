@@ -38,8 +38,8 @@ public class LogInController : MonoBehaviour
         Debug.Log($"Submitted! Username: {username}, Password: {password}");
 
         // Here you could add validation, send to server, etc.
-        
-        bool success = await AuthManager.Instance.Login(username, password);
+
+        bool success = true; //await AuthManager.Instance.Login(username, password);
 
         if (success)
         {

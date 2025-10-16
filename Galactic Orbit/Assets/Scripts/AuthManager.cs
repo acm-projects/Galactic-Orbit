@@ -23,7 +23,7 @@ public class AuthManager : MonoBehaviour
     {
         
         // Load Main scene additively after this manager scene
-        SceneManager.LoadScene("MapScene", LoadSceneMode.Additive);
+        SceneManager.LoadScene("AuthScene", LoadSceneMode.Additive);
         if (Instance == null)
         {
             Instance = this;
