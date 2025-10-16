@@ -119,6 +119,62 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &329162137
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 329162139}
+  - component: {fileID: 329162138}
+  m_Layer: 0
+  m_Name: GPSRouteTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &329162138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329162137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec55a0bbc60ef1347ba531fd8ea3c834, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GPSRouteTest
+  route:
+  - x: 32.98511756
+    y: -96.74944336
+  - x: 32.98691499
+    y: -96.74762272
+  - x: 32.98668367
+    y: -96.74952794
+  currentLocation:
+    x: 0
+    y: 0
+  latitude: 0
+  longitude: 0
+--- !u!4 &329162139
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329162137}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 44.93865, y: 0.80131, z: -51.45679}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &417982104
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,8 +184,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 417982105}
+  - component: {fileID: 417982106}
   m_Layer: 0
-  m_Name: GpsManager
+  m_Name: GPSManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -150,6 +207,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &417982106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417982104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd5249ea96ebe574881af34c54c71bf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GPSManager
+  latitude: 0
+  longitude: 0
 --- !u!1 &835778005
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,7 +247,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 835778005}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 007605bab510c1e40ba5b0f1054d055b, type: 3}
+  m_Script: {fileID: 11500000, guid: 246b579f75ce1cc4798a0ae063aabb5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AuthManager
   username: 
@@ -303,7 +374,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1124593776}
   - component: {fileID: 1124593775}
-  - component: {fileID: 1124593774}
   - component: {fileID: 1124593777}
   m_Layer: 0
   m_Name: Main Camera
@@ -312,14 +382,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1124593774
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1124593773}
-  m_Enabled: 1
 --- !u!20 &1124593775
 Camera:
   m_ObjectHideFlags: 0
@@ -438,3 +500,4 @@ SceneRoots:
   - {fileID: 1049423514}
   - {fileID: 835778007}
   - {fileID: 417982105}
+  - {fileID: 329162139}

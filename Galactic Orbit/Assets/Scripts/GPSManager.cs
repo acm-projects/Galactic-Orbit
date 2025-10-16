@@ -10,9 +10,11 @@ public class GPSManager : MonoBehaviour
 
     public float latitude;
     public float longitude;
+    public bool HasGPS = true;
 
     void Awake()
     {
+        
         if (Instance == null)
         {
             Instance = this;
@@ -28,6 +30,7 @@ public class GPSManager : MonoBehaviour
     {
         if (!Input.location.isEnabledByUser)
         {
+            HasGPS = false;
             Debug.Log("GPS is not enabled on device.");
             yield break;
         }

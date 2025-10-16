@@ -38,7 +38,7 @@ public class SignUpController : MonoBehaviour
         passwordField.value = "";
 
         Debug.Log($"Submitted! Email: {email}, Username: {username}, Password: {password}");
-
+    
         // Here you could add validation, send to server, etc.
     }
 }
