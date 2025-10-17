@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Event", menuName = "Event")]
-public class Event : ScriptableObject
+public class EventData : ScriptableObject
 {
     public string eventTitle;
     public string eventDay;

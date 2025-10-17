@@ -5,8 +5,8 @@ public class EventManager : MonoBehaviour
 {
     public static EventManager Instance;
 
-    public List<Event> allEvents;
-    public Event selectedEvent { get; private set; }
+    public List<EventData> allEvents;
+    public EventData selectedEvent { get; private set; }
 
     private void Awake()
     {
@@ -16,15 +16,15 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    public List<Event> GetUniqueRandomEvents(int count)
+    public List<EventData> GetUniqueRandomEvents(int count)
     {
         if (count >= allEvents.Count)
         {
-            return new List<Event>(allEvents);
+            return new List<EventData>(allEvents);
         }
 
-        List<Event> availableEvents = new List<Event>(allEvents);
-        List<Event> chosenEvents = new List<Event>();
+        List<EventData> availableEvents = new List<EventData>(allEvents);
+        List<EventData> chosenEvents = new List<EventData>();
 
         for (int i = 0; i < count; i++)
         {
@@ -35,9 +35,10 @@ public class EventManager : MonoBehaviour
 
         return chosenEvents;
     }
-    
-    public void SelectEvent(Event selected)
+
+    public void SelectEvent(EventData selected)
     {
         selectedEvent = selected;
     }
+
 }
