@@ -1,52 +1,58 @@
 using UnityEngine;
-using UnityEngine.InputSystem; // New Input System
+using UnityEngine.InputSystem;
 
 public class CameraOrbitNewInput : MonoBehaviour
 {
+    [Header("Target")]
     public Transform target;
+
+    [Header("Settings")]
     public float rotationSpeed = 0.2f;
+
+    [Header("Vertical Clamp (X rotation)")]
+    public float minVerticalAngle = -30f;   // Look up limit (negative = up)
+    public float maxVerticalAngle = 60f;    // Look down limit
 
     private Vector2 previousPosition;
     private bool isDragging = false;
 
+    private float currentVerticalAngle = 0f; // Tracks X rotation (pitch)
+    private float currentHorizontalAngle = 0f; // Optional: track Y rotation if you want too
+
     void Update()
     {
-        // --- TOUCH INPUT ---
+        Vector2 currentPos;
+        bool pressed;
+
+        // Touch input
         if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
         {
-            Vector2 touchPos = Touchscreen.current.primaryTouch.position.ReadValue();
-
-            if (!isDragging)
-            {
-                previousPosition = touchPos;
-                isDragging = true;
-            }
-            else
-            {
-                Vector2 delta = touchPos - previousPosition;
-                previousPosition = touchPos;
-                RotateCamera(delta);
-            }
+            currentPos = Touchscreen.current.primaryTouch.position.ReadValue();
+            pressed = true;
+        }
+        // Mouse input
+        else if (Mouse.current != null && Mouse.current.leftButton.isPressed)
+        {
+            currentPos = Mouse.current.position.ReadValue();
+            pressed = true;
         }
         else
         {
-            isDragging = false;
+            pressed = false;
+            currentPos = Vector2.zero;
         }
 
-        // --- MOUSE INPUT ---
-        if (Mouse.current.leftButton.isPressed)
+        if (pressed)
         {
-            Vector2 mousePos = Mouse.current.position.ReadValue();
-
             if (!isDragging)
             {
-                previousPosition = mousePos;
+                previousPosition = currentPos;
                 isDragging = true;
             }
             else
             {
-                Vector2 delta = mousePos - previousPosition;
-                previousPosition = mousePos;
+                Vector2 delta = currentPos - previousPosition;
+                previousPosition = currentPos;
                 RotateCamera(delta);
             }
         }
@@ -58,7 +64,20 @@ public class CameraOrbitNewInput : MonoBehaviour
 
     void RotateCamera(Vector2 delta)
     {
-        transform.RotateAround(target.position, Vector3.up, delta.x * rotationSpeed);
-        transform.RotateAround(target.position, transform.right, -delta.y * rotationSpeed);
+        if (target == null) return;
+
+        // --- Horizontal (Y) rotation ---
+        float horizontalAngleDelta = delta.x * rotationSpeed;
+        transform.RotateAround(target.position, Vector3.up, horizontalAngleDelta);
+        currentHorizontalAngle += horizontalAngleDelta;
+
+        // --- Vertical (X) rotation with clamp ---
+        float verticalAngleDelta = -delta.y * rotationSpeed;
+        float newVerticalAngle = Mathf.Clamp(currentVerticalAngle + verticalAngleDelta, minVerticalAngle, maxVerticalAngle);
+
+        // Apply only the difference after clamping
+        float allowedDelta = newVerticalAngle - currentVerticalAngle;
+        transform.RotateAround(target.position, transform.right, allowedDelta);
+        currentVerticalAngle = newVerticalAngle;
     }
 }

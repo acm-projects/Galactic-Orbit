@@ -2391,13 +2391,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1855615391}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.17187457, y: -0, z: -0, w: 0.98511887}
-  m_LocalPosition: {x: 0, y: 12.06, z: -17.86}
+  m_LocalRotation: {x: 0.16060562, y: -0, z: -0, w: 0.98701864}
+  m_LocalPosition: {x: 0, y: 11.3, z: -22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 19.794, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 18.484, y: 0, z: 0}
 --- !u!114 &1855615395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2454,8 +2454,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917b6c38e65a8dd45b0f470a8e8d44e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraOrbit
-  target: {fileID: 0}
+  target: {fileID: 1484026742}
   rotationSpeed: 0.2
+  minVerticalAngle: -10
+  maxVerticalAngle: 45
 --- !u!1 &1996516601
 GameObject:
   m_ObjectHideFlags: 0
