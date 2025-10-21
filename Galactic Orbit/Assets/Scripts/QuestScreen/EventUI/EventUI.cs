@@ -13,6 +13,11 @@ public class EventUI : MonoBehaviour
 
     public void PullNewEvents()
     {
+        Debug.Log("🔄 PullNewEvents called!");
+        Debug.Log($"EventManager: {eventManager != null}");
+        Debug.Log($"EventButtons count: {eventButtons?.Count}");
+        Debug.Log($"Events in manager: {eventManager?.allEvents?.Count}");
+        
         List<EventData> uniqueEvents = eventManager.GetUniqueRandomEvents(eventButtons.Count);
 
         for (int i = 0; i < eventButtons.Count; i++)

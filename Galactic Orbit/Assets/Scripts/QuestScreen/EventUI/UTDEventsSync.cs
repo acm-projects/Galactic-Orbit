@@ -27,11 +27,21 @@ public class UTDEventsSync : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        // Wait a moment for EventManager to initialize, then sync
+        Invoke(nameof(SyncEvents), 1f);
+    }
+
+    void SyncEvents()
+    {
+        SyncEventsToManager(30, 50);
+    }
+
     // Fetch and sync UTD events to EventManager
     public void SyncEventsToManager(int days = 30, int count = 50)
     {
-        FetchUpcomingEvents(days, count, (utdEvents) =>
-        {
+        FetchUpcomingEvents(days, count, (utdEvents) => {
             if (EventManager.Instance == null)
             {
                 Debug.LogError("EventManager not found!");
@@ -40,7 +50,7 @@ public class UTDEventsSync : MonoBehaviour
 
             Debug.Log($"🔄 Syncing {utdEvents.Count} UTD events to EventManager...");
 
-            // Convert UTDEvents to given Event class and add to EventManager
+            // Convert UTDEvents to your EventData class and add to EventManager
             foreach (var utdEvent in utdEvents)
             {
                 EventData gameEvent = ConvertToEvent(utdEvent);
@@ -184,7 +194,7 @@ public class UTDEventsSync : MonoBehaviour
         return -96.7501f; // Default: UTD Student Union
     }
 
-    // Convert UTDEvent to Event class
+    // Convert UTDEvent to your EventData class
     private EventData ConvertToEvent(UTDEvent utdEvent)
     {
         EventData gameEvent = ScriptableObject.CreateInstance<EventData>();
