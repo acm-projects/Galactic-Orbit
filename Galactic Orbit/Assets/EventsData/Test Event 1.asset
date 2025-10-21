@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c43c7b74799654582b2e520e45949139, type: 3}
   m_Name: Test Event 1
   m_EditorClassIdentifier: Assembly-CSharp::EventData
-  eventTitle: 
-  eventDay: 
-  eventTime: 
-  eventLocation: 
+  eventTitle: Symphony
+  eventDay: Monday, October 19
+  eventTime: 8:00 PM
+  eventLocation: SCI Courtyard

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c43c7b74799654582b2e520e45949139, type: 3}
   m_Name: JSON Career Expo
   m_EditorClassIdentifier: Assembly-CSharp::EventData
-  eventTitle: 
-  eventDay: 
-  eventTime: 
-  eventLocation: 
+  eventTitle: JSON Career Expo
+  eventDay: Friday, October 25
+  eventTime: 11:00 AM
+  eventLocation: JSOM Atrium

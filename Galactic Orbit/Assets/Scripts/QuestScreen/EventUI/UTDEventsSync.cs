@@ -3,6 +3,7 @@ using UnityEngine.Networking;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using SimpleJSON;
 
 public class UTDEventsSync : MonoBehaviour
 {
@@ -107,42 +108,80 @@ public class UTDEventsSync : MonoBehaviour
 
         try
         {
-            // Parse the wrapper
-            LocalistResponse response = JsonUtility.FromJson<LocalistResponse>(json);
-
-            if (response != null && response.events != null)
+            var N = JSON.Parse(json);
+            
+            if (N == null || N["events"] == null)
             {
-                foreach (var eventData in response.events)
+                Debug.LogWarning("No events array found in response");
+                return events;
+            }
+
+            var eventsArray = N["events"].AsArray;
+            
+            // FIX: Use for loop instead of foreach
+            for (int i = 0; i < eventsArray.Count; i++)
+            {
+                var eventNode = eventsArray[i];
+                
+                if (eventNode == null) continue;
+                
+                // Check if event has instances
+                if (eventNode["event_instances"] == null || eventNode["event_instances"].Count == 0)
+                    continue;
+
+                var firstInstance = eventNode["event_instances"][0]["event_instance"];
+                
+                UTDEvent utdEvent = new UTDEvent
                 {
-                    if (eventData.event_instances != null && eventData.event_instances.Length > 0)
-                    {
-                        // Use the first instance
-                        var instance = eventData.event_instances[0];
+                    id = eventNode["id"].ToString(),
+                    title = eventNode["title"] ?? "Untitled Event",
+                    description = CleanDescription(eventNode["description"]),
+                    location = GetLocationFromNode(eventNode),
+                    latitude = GetLatitudeFromNode(eventNode),
+                    longitude = GetLongitudeFromNode(eventNode),
+                    startTime = firstInstance["start"] ?? "",
+                    endTime = firstInstance["end"] ?? "",
+                    url = eventNode["localist_url"] ?? ""
+                };
 
-                        UTDEvent utdEvent = new UTDEvent
-                        {
-                            id = eventData.id.ToString(),
-                            title = eventData.title,
-                            description = CleanDescription(eventData.description),
-                            location = GetLocationString(eventData),
-                            latitude = GetLatitude(eventData),
-                            longitude = GetLongitude(eventData),
-                            startTime = instance.event_instance.start,
-                            endTime = instance.event_instance.end,
-                            url = eventData.localist_url
-                        };
-
-                        events.Add(utdEvent);
-                    }
-                }
+                events.Add(utdEvent);
+                Debug.Log($"  📌 Parsed event: {utdEvent.title}");
             }
         }
         catch (Exception e)
         {
-            Debug.LogError($"Error parsing events: {e.Message}");
+            Debug.LogError($"Error parsing events: {e.Message}\n{e.StackTrace}");
         }
 
         return events;
+    }
+
+    // Helper methods for SimpleJSON
+    private string GetLocationFromNode(JSONNode eventNode)
+    {
+        if (eventNode["location"] != null && eventNode["location"]["name"] != null)
+            return eventNode["location"]["name"];
+        
+        if (eventNode["location_name"] != null)
+            return eventNode["location_name"];
+        
+        return "UTD Campus";
+    }
+
+    private float GetLatitudeFromNode(JSONNode eventNode)
+    {
+        if (eventNode["location"] != null && eventNode["location"]["latitude"] != null)
+            return eventNode["location"]["latitude"].AsFloat;
+        
+        return 32.9857f; // Default: UTD Student Union
+    }
+
+    private float GetLongitudeFromNode(JSONNode eventNode)
+    {
+        if (eventNode["location"] != null && eventNode["location"]["longitude"] != null)
+            return eventNode["location"]["longitude"].AsFloat;
+        
+        return -96.7501f; // Default: UTD Student Union
     }
 
     // Clean HTML from description
@@ -158,40 +197,6 @@ public class UTDEventsSync : MonoBehaviour
         text = text.Trim();
 
         return text;
-    }
-
-    // Extract location string
-    private string GetLocationString(LocalistEventData eventData)
-    {
-        if (eventData.location != null && !string.IsNullOrEmpty(eventData.location.name))
-        {
-            return eventData.location.name;
-        }
-        if (!string.IsNullOrEmpty(eventData.location_name))
-        {
-            return eventData.location_name;
-        }
-        return "UTD Campus";
-    }
-
-    // Get latitude
-    private float GetLatitude(LocalistEventData eventData)
-    {
-        if (eventData.location != null && eventData.location.latitude != 0)
-        {
-            return eventData.location.latitude;
-        }
-        return 32.9857f; // Default: UTD Student Union
-    }
-
-    // Get longitude
-    private float GetLongitude(LocalistEventData eventData)
-    {
-        if (eventData.location != null && eventData.location.longitude != 0)
-        {
-            return eventData.location.longitude;
-        }
-        return -96.7501f; // Default: UTD Student Union
     }
 
     // Convert UTDEvent to your EventData class
@@ -217,47 +222,6 @@ public class UTDEventsSync : MonoBehaviour
         
         return gameEvent;
     }
-}
-
-// ===== JSON PARSING CLASSES =====
-
-[Serializable]
-public class LocalistResponse
-{
-    public LocalistEventData[] events;
-}
-
-[Serializable]
-public class LocalistEventData
-{
-    public int id;
-    public string title;
-    public string description;
-    public string location_name;
-    public string localist_url;
-    public LocalistLocation location;
-    public LocalistEventInstanceWrapper[] event_instances;
-}
-
-[Serializable]
-public class LocalistLocation
-{
-    public string name;
-    public float latitude;
-    public float longitude;
-}
-
-[Serializable]
-public class LocalistEventInstanceWrapper
-{
-    public LocalistEventInstance event_instance;
-}
-
-[Serializable]
-public class LocalistEventInstance
-{
-    public string start;
-    public string end;
 }
 
 // ===== EVENT DATA CLASS =====
