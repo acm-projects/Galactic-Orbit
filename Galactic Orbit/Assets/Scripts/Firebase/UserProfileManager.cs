@@ -244,6 +244,7 @@ public class UserProfile
     public string[] completedQuestIds;     // IDs of completed quests
     public string[] visitedBuildingIds;    // IDs of visited buildings
     public string[] attendedEventIds;      // IDs of attended events
+    public string[] teamIds;              // IDs of teams the user is part of
 
     // Constructor - only requires signup data
     public UserProfile(string username, string email, long createdTimestamp)
@@ -269,5 +270,6 @@ public class UserProfile
         this.completedQuestIds = new string[0];
         this.visitedBuildingIds = new string[0];
         this.attendedEventIds = new string[0];
+        this.teamIds = new string[0];
     }
 }
