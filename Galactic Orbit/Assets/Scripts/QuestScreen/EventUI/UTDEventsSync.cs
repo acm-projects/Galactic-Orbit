@@ -42,7 +42,8 @@ public class UTDEventsSync : MonoBehaviour
     // Fetch and sync UTD events to EventManager
     public void SyncEventsToManager(int days = 30, int count = 50)
     {
-        FetchUpcomingEvents(days, count, (utdEvents) => {
+        FetchUpcomingEvents(days, count, (utdEvents) =>
+        {
             if (EventManager.Instance == null)
             {
                 Debug.LogError("EventManager not found!");
@@ -59,7 +60,22 @@ public class UTDEventsSync : MonoBehaviour
             }
 
             Debug.Log($"✅ EventManager now has {EventManager.Instance.allEvents.Count} total events");
+            RefreshEventUI();
         });
+    }
+
+    private void RefreshEventUI()
+    {
+        EventUI eventUI = FindFirstObjectByType<EventUI>();
+        if (eventUI != null)
+        {
+            Debug.Log("🔄 Refreshing EventUI with new events...");
+            eventUI.PullNewEvents();
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ EventUI not found to refresh");
+        }
     }
 
     // Fetch upcoming UTD events
@@ -108,8 +124,10 @@ public class UTDEventsSync : MonoBehaviour
 
         try
         {
+            Debug.Log($"Raw JSON (first 500 chars): {json.Substring(0, Mathf.Min(500, json.Length))}");
+
             var N = JSON.Parse(json);
-            
+
             if (N == null || N["events"] == null)
             {
                 Debug.LogWarning("No events array found in response");
@@ -117,20 +135,27 @@ public class UTDEventsSync : MonoBehaviour
             }
 
             var eventsArray = N["events"].AsArray;
-            
-            // FIX: Use for loop instead of foreach
+            Debug.Log($"Found {eventsArray.Count} event wrappers");
+
             for (int i = 0; i < eventsArray.Count; i++)
             {
-                var eventNode = eventsArray[i];
-                
-                if (eventNode == null) continue;
-                
+                var eventWrapper = eventsArray[i];
+                var eventNode = eventWrapper["event"];
+
+                if (eventNode == null)
+                {
+                    Debug.LogWarning($"Event {i} has no 'event' key");
+                    continue;
+                }
+
                 // Check if event has instances
                 if (eventNode["event_instances"] == null || eventNode["event_instances"].Count == 0)
+                {
+                    Debug.Log($"Skipping event (no instances): {eventNode["title"]}");
                     continue;
-
+                }
                 var firstInstance = eventNode["event_instances"][0]["event_instance"];
-                
+
                 UTDEvent utdEvent = new UTDEvent
                 {
                     id = eventNode["id"].ToString(),
@@ -161,10 +186,10 @@ public class UTDEventsSync : MonoBehaviour
     {
         if (eventNode["location"] != null && eventNode["location"]["name"] != null)
             return eventNode["location"]["name"];
-        
+
         if (eventNode["location_name"] != null)
             return eventNode["location_name"];
-        
+
         return "UTD Campus";
     }
 
@@ -172,7 +197,7 @@ public class UTDEventsSync : MonoBehaviour
     {
         if (eventNode["location"] != null && eventNode["location"]["latitude"] != null)
             return eventNode["location"]["latitude"].AsFloat;
-        
+
         return 32.9857f; // Default: UTD Student Union
     }
 
@@ -180,7 +205,7 @@ public class UTDEventsSync : MonoBehaviour
     {
         if (eventNode["location"] != null && eventNode["location"]["longitude"] != null)
             return eventNode["location"]["longitude"].AsFloat;
-        
+
         return -96.7501f; // Default: UTD Student Union
     }
 
@@ -199,7 +224,7 @@ public class UTDEventsSync : MonoBehaviour
         return text;
     }
 
-    // Convert UTDEvent to your EventData class
+    // Convert UTDEvent to local EventData class
     private EventData ConvertToEvent(UTDEvent utdEvent)
     {
         EventData gameEvent = ScriptableObject.CreateInstance<EventData>();
@@ -207,15 +232,21 @@ public class UTDEventsSync : MonoBehaviour
         gameEvent.eventTitle = utdEvent.title;
         gameEvent.eventLocation = utdEvent.location;
         
+        Debug.Log($"Converting event: {utdEvent.title}");
+        Debug.Log($"  Start time from API: '{utdEvent.startTime}'");
+        
         // Parse and format the date/time
         try
         {
             System.DateTime dateTime = System.DateTime.Parse(utdEvent.startTime);
             gameEvent.eventDay = dateTime.ToString("dddd, MMMM dd"); // e.g., "Monday, October 15"
             gameEvent.eventTime = dateTime.ToString("h:mm tt"); // e.g., "2:30 PM"
+            
+            Debug.Log($"  Parsed to: {gameEvent.eventDay} at {gameEvent.eventTime}");
         }
-        catch
+        catch (System.Exception e)
         {
+            Debug.LogError($"  Failed to parse date: {e.Message}");
             gameEvent.eventDay = "TBA";
             gameEvent.eventTime = "TBA";
         }

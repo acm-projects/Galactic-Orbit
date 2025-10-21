@@ -12,7 +12,7 @@ public class EventButton : MonoBehaviour
     public void Setup(EventData eventData)
     {
         myEvent = eventData;
-        eventTitleText.text = $"{myEvent.eventTitle}\n{myEvent.eventLocation} at {myEvent.eventTime}";
+        eventTitleText.text = $"{myEvent.eventTitle}\n{myEvent.eventDay}, {myEvent.eventTime}\n📍 {myEvent.eventLocation}";
     }
 
     public void OnButtonClick()
