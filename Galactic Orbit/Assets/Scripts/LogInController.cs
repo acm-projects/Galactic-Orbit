@@ -1,15 +1,16 @@
 using UnityEngine;
 using UnityEngine.UIElements;
-using System.Collections;
-using UnityEngine.SceneManagement;
-using Firebase.AI;
+using TMPro;
+using System.Threading.Tasks;
 
 public class LogInController : MonoBehaviour
 {
+    [Header("Panel References")]
+    [SerializeField] private GameObject signUpPanel; // Reference to the Sign-Up panel
+    [SerializeField] private GameObject logInPanel;  // Reference to the Log-In panel
     private TextField usernameField;
     private TextField passwordField;
     private Button submitButton;
-    public GameObject SignUpPanel;
 
     void OnEnable()
     {
@@ -24,18 +25,23 @@ public class LogInController : MonoBehaviour
         if (passwordField == null) Debug.LogError("PasswordInput field not found!");
         if (submitButton == null) Debug.LogError("SubmitButton button not found!");
 
-        var switchButton = root.Q<Button>("SwitchScreenButton");
-        switchButton.clicked += switchPanels;
-        
         // Hook up the button’s clicked event
         submitButton.clicked += OnSubmit;
+
+        // Query the Sign Up button
+        var switchToSignupButton = root.Q<Button>("SwitchToSignupButton");
+
+        if (switchToSignupButton != null)
+        {
+            switchToSignupButton.clicked += OnSwitchToSignup;
+        }
+        else
+        {
+            Debug.LogError("SwitchToSignupButton not found in the UXML!");
+        }
+
     }
 
-    private void switchPanels()
-    {
-        SignUpPanel.SetActive(true);
-        gameObject.SetActive(false);
-    }
     private async void OnSubmit()
     {
         string username = usernameField.value;
@@ -46,33 +52,35 @@ public class LogInController : MonoBehaviour
 
         Debug.Log($"Submitted! Username: {username}, Password: {password}");
 
-        StartCoroutine(SubmitSection());
-        // Here you could add validation, send to server, etc.
+        if (FirebaseManager.Instance == null)
+        {
+            Debug.LogError("FirebaseManager not initialized yet!");
+            return;
+        }
 
-        bool success = true; //await AuthManager.Instance.Login(username, password);
+        bool success = await FirebaseManager.Instance.LoginAsync(username, password);
 
         if (success)
         {
             Debug.Log("Login successful.");
-            SceneManager.LoadScene("MapScene");
         }
         else
         {
             Debug.Log("Login failed.");
         }
-
     }
     
-    IEnumerator SubmitSection()
+    private void OnSwitchToSignup()
     {
-        var root = GetComponent<UIDocument>().rootVisualElement;
-        var colorSection = root.Q<VisualElement>("Pressing");
-        colorSection.AddToClassList("selected");
-
-        yield return new WaitForSeconds(0.5f);
-
-        colorSection.RemoveFromClassList("selected");
-
+        if (logInPanel != null && signUpPanel != null)
+        {
+            logInPanel.SetActive(false);   // hide login panel
+            signUpPanel.SetActive(true);   // show signup panel
+        }
+        else
+        {
+            Debug.LogWarning("LoginPanelGO or SignupPanelGO not assigned in inspector!");
+        }
     }
-}
 
+}

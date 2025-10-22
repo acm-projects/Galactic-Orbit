@@ -1,14 +1,18 @@
 using UnityEngine;
 using UnityEngine.UIElements;
-using System.Collections;
 
 public class SignUpController : MonoBehaviour
 {
+    [Header("Panel References")]
+    [SerializeField] private GameObject loginPanelGO;   // assign LoginMenuPanel in Inspector
+    [SerializeField] private GameObject signupPanelGO;  // assign SignupMenuPanel in Inspector
+
+    private Button switchToLoginButton;  // reference for the "Log In" button
+
     private TextField emailField;
     private TextField usernameField;
     private TextField passwordField;
     private Button submitButton;
-    public GameObject LogInPanel;
 
     void OnEnable()
     {
@@ -20,17 +24,26 @@ public class SignUpController : MonoBehaviour
         passwordField = root.Q<TextField>("PasswordInput");
         submitButton = root.Q<Button>("SubmitButton");
 
-        if (emailField ==null) Debug.LogError("EmailInput field not found!");
-        if (usernameField ==null) Debug.LogError("UsernameInput field not found!");
-        if (passwordField ==null) Debug.LogError("PasswordInput field not found!");
+        if (emailField == null) Debug.LogError("EmailInput field not found!");
+        if (usernameField == null) Debug.LogError("UsernameInput field not found!");
+        if (passwordField == null) Debug.LogError("PasswordInput field not found!");
         if (submitButton == null) Debug.LogError("SubmitButton button not found!");
 
         // Hook up the button’s clicked event
-        
-        var switchButton = root.Q<Button>("SwitchScreenButton");
-        switchButton.clicked += switchPanels;
-
         submitButton.clicked += OnSubmit;
+
+        // Query the "Log In" button
+        switchToLoginButton = root.Q<Button>("SwitchToLoginButton");
+
+        if (switchToLoginButton != null)
+        {
+            switchToLoginButton.clicked += OnSwitchToLogin;
+        }
+        else
+        {
+            Debug.LogError("SwitchToLoginButton not found in SignupMenuUI!");
+        }
+
     }
 
     private void OnSubmit()
@@ -44,24 +57,50 @@ public class SignUpController : MonoBehaviour
         passwordField.value = "";
 
         Debug.Log($"Submitted! Email: {email}, Username: {username}, Password: {password}");
-        StartCoroutine(SubmitSection());
-        // Here you could add validation, send to server, etc.
+
+        // Check username availability first
+        UserProfileManager.Instance.IsUsernameTaken(username, async (isTaken) =>
+        {
+            if (isTaken)
+            {
+                Debug.Log("Username is already taken");
+                return;
+            }
+
+            // Register the user
+            bool success = await AuthenticationManager.Instance.RegisterAsync(email, password, username, username);
+
+            if (success)
+            {
+                Debug.Log("Registration successful!");
+                // Navigate to login or main scene
+            }
+            else
+            {
+                Debug.Log("Registration failed.");
+            }
+        });
+    }
+
+    private void OnSwitchToLogin()
+    {
+        if (signupPanelGO != null && loginPanelGO != null)
+        {
+            signupPanelGO.SetActive(false);  // hide signup panel
+            loginPanelGO.SetActive(true);    // show login panel
+        }
+        else
+        {
+            Debug.LogWarning("LoginPanelGO or SignupPanelGO not assigned in Inspector!");
+        }
     }
     
-     private void switchPanels()
+    void OnDisable()
     {
-        LogInPanel.SetActive(true);
-        gameObject.SetActive(false);
-    }
-    IEnumerator SubmitSection()
-    {
-        var root = GetComponent<UIDocument>().rootVisualElement;
-        var colorSection = root.Q<VisualElement>("Pressing");
-        colorSection.AddToClassList("selected");
+        if (submitButton != null)
+            submitButton.clicked -= OnSubmit;
 
-        yield return new WaitForSeconds(0.5f);
-
-        colorSection.RemoveFromClassList("selected");
-
+        if (switchToLoginButton != null)
+            switchToLoginButton.clicked -= OnSwitchToLogin;
     }
 }

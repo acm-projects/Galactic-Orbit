@@ -1,0 +1,5 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/GameAssets/Quest/Quest%20Background.png?fileID=2800000&amp;guid=f760c754a0c5f42ccb427f9262c750ab&amp;type=3#Quest Background&quot;);">
+        <ui:Button text="Button" style="border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;" />
+    </ui:VisualElement>
+</ui:UXML>
