@@ -39,7 +39,8 @@ public class LogInController : MonoBehaviour
 
         // Here you could add validation, send to server, etc.
 
-        bool success = true; //await AuthManager.Instance.Login(username, password);
+        bool success = true; 
+        //bool success = await AuthManager.Instance.Login(username, password);
 
         if (success)
         {

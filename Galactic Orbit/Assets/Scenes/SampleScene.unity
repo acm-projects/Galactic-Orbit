@@ -1268,6 +1268,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: XR Origin (AR Rig)
       objectReference: {fileID: 0}
+    - target: {fileID: 2512387470528047719, guid: 48cb3fb68c91eb94999fd99957eb0cae,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2512387470528047737, guid: 48cb3fb68c91eb94999fd99957eb0cae,
         type: 3}
       propertyPath: m_PlanePrefab
@@ -2300,7 +2305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9366e0b2d00c6647a26494ebed6f30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BackgroundSpriteAnimator
-  spriteSheet: {fileID: -2022295398, guid: c06dd710d7e51b742a9df832b8e414fa, type: 3}
+  spriteSheetName: 
   frameRate: 12
   lastFrameHold: 10
   loop: 1
@@ -2483,7 +2488,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &702413257
 MonoBehaviour:
   m_ObjectHideFlags: 0

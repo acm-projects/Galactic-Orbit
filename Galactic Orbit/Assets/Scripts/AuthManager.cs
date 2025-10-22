@@ -23,7 +23,7 @@ public class AuthManager : MonoBehaviour
     {
         
         // Load Main scene additively after this manager scene
-        SceneManager.LoadScene("AuthScene", LoadSceneMode.Additive);
+        SceneManager.LoadScene("LoginScene", LoadSceneMode.Additive);
         if (Instance == null)
         {
             Instance = this;
@@ -39,7 +39,7 @@ public class AuthManager : MonoBehaviour
 
     void Start()
     {
-        //SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("LoginScene");
     }
 
     // Log in user with Firebase
