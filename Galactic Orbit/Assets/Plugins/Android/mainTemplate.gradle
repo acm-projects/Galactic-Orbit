@@ -55,8 +55,10 @@ android {
     ndkPath "**NDKPATH**"
     ndkVersion "**NDKVERSION**"
 
-    compileSdk **APIVERSION**
-    buildToolsVersion = "**BUILDTOOLS**"
+    //compileSdk **APIVERSION**
+    //buildToolsVersion = "**BUILDTOOLS**"
+    compileSdk 34
+    //buildToolsVersion = "34.0.0"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -64,8 +66,10 @@ android {
     }
 
     defaultConfig {
-        minSdk **MINSDK**
-        targetSdk **TARGETSDK**
+        //minSdk **MINSDK**
+        //targetSdk **TARGETSDK**
+        minSdk 24        // or whatever your project requires
+        targetSdk 34
         ndk {
             abiFilters **ABIFILTERS**
             debugSymbolLevel **DEBUGSYMBOLLEVEL**
