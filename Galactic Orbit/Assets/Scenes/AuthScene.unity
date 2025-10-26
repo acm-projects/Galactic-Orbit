@@ -164,7 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eaf7c95ae34c034fbb68f9869eb7382, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LogInController
-  SignUpPanel: {fileID: 726409831}
+  signUpPanel: {fileID: 0}
+  logInPanel: {fileID: 0}
 --- !u!114 &26576684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,7 +270,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a12f225e75857c4eaa05d869eb2ac26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SignUpController
-  LogInPanel: {fileID: 26576681}
+  loginPanelGO: {fileID: 26576681}
+  signupPanelGO: {fileID: 726409831}
 --- !u!114 &726409834
 MonoBehaviour:
   m_ObjectHideFlags: 0

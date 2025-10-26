@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEngine.UIElements;
-using TMPro;
-using System.Threading.Tasks;
 
 public class LogInController : MonoBehaviour
 {
@@ -29,7 +27,7 @@ public class LogInController : MonoBehaviour
         submitButton.clicked += OnSubmit;
 
         // Query the Sign Up button
-        var switchToSignupButton = root.Q<Button>("SwitchToSignupButton");
+        var switchToSignupButton = root.Q<Button>("SwitchScreenButton");
 
         if (switchToSignupButton != null)
         {
@@ -51,7 +49,7 @@ public class LogInController : MonoBehaviour
         passwordField.value = "";
 
         Debug.Log($"Submitted! Username: {username}, Password: {password}");
-
+    
         if (FirebaseManager.Instance == null)
         {
             Debug.LogError("FirebaseManager not initialized yet!");
@@ -59,17 +57,19 @@ public class LogInController : MonoBehaviour
         }
 
         bool success = await FirebaseManager.Instance.LoginAsync(username, password);
-
+        // for debugging
+        success = true;
         if (success)
         {
             Debug.Log("Login successful.");
+            SceneController.Instance.LoadLevel("MapScene");
         }
         else
         {
             Debug.Log("Login failed.");
         }
     }
-    
+
     private void OnSwitchToSignup()
     {
         if (logInPanel != null && signUpPanel != null)

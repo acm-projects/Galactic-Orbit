@@ -33,7 +33,7 @@ public class SignUpController : MonoBehaviour
         submitButton.clicked += OnSubmit;
 
         // Query the "Log In" button
-        switchToLoginButton = root.Q<Button>("SwitchToLoginButton");
+        switchToLoginButton = root.Q<Button>("SwitchScreenButton");
 
         if (switchToLoginButton != null)
         {
