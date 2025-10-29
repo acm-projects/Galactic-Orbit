@@ -2,43 +2,52 @@ using UnityEngine;
 
 /// <summary>
 /// Test script for proximity-based quest/event activation
-/// Press keys to test backend functionality before hooking up UI
+/// DISABLE THIS SCRIPT if you don't want to test - it's optional!
+/// Or use the buttons in Inspector instead of keyboard
 /// </summary>
 public class ProximityTester : MonoBehaviour
 {
-    [Header("Test Controls")]
-    public KeyCode testQuestProximityKey = KeyCode.Q;
-    public KeyCode testEventProximityKey = KeyCode.E;
-    public KeyCode testStartQuestKey = KeyCode.S;
-    public KeyCode testCheckInEventKey = KeyCode.C;
-
     [Header("Test Data")]
     public string testQuestID = ""; // Fill in a quest ID from your game
     public string testEventID = ""; // Fill in an event ID from your game
 
-    void Update()
+    [Header("Click These Buttons to Test")]
+    [Tooltip("Click in Inspector to test quest proximity")]
+    public bool testQuestProximity = false;
+    [Tooltip("Click in Inspector to test event proximity")]
+    public bool testEventProximity = false;
+    [Tooltip("Click in Inspector to test starting quest")]
+    public bool testStartQuest = false;
+    [Tooltip("Click in Inspector to test checking in")]
+    public bool testCheckInEvent = false;
+
+    void OnValidate()
     {
         // Test quest proximity
-        if (Input.GetKeyDown(testQuestProximityKey))
+        if (testQuestProximity)
         {
+            testQuestProximity = false;
             TestQuestProximity();
         }
 
         // Test event proximity
-        if (Input.GetKeyDown(testEventProximityKey))
+        if (testEventProximity)
         {
+            testEventProximity = false;
             TestEventProximity();
         }
 
         // Test starting quest
-        if (Input.GetKeyDown(testStartQuestKey))
+        if (testStartQuest)
         {
+            testStartQuest = false;
             TestStartQuest();
         }
 
         // Test checking in to event
-        if (Input.GetKeyDown(testCheckInEventKey))
+        if (testCheckInEvent)
         {
+            testCheckInEvent = false;
             TestCheckInEvent();
         }
     }
@@ -58,11 +67,12 @@ public class ProximityTester : MonoBehaviour
         GUI.Label(new Rect(10, 10, 600, 400),
             "=== Proximity Backend Tester ===\n\n" +
             $"{gpsStatus}\n\n" +
-            $"[{testQuestProximityKey}] Check Quest Proximity\n" +
-            $"[{testEventProximityKey}] Check Event Proximity\n" +
-            $"[{testStartQuestKey}] Try Start Quest\n" +
-            $"[{testCheckInEventKey}] Try Check In Event\n\n" +
-            "Set testQuestID and testEventID in Inspector!\n" +
+            "Use Inspector checkboxes to test:\n" +
+            "- Test Quest Proximity\n" +
+            "- Test Event Proximity\n" +
+            "- Test Start Quest\n" +
+            "- Test Check In Event\n\n" +
+            "Set testQuestID and testEventID first!\n" +
             "Check Console for results!",
             style);
     }
