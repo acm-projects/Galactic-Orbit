@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c43c7b74799654582b2e520e45949139, type: 3}
   m_Name: New Event 2
   m_EditorClassIdentifier: Assembly-CSharp::EventData
+  eventID: 
   eventTitle: 'Fitness & Wellness: Yoga on the Green'
   eventDay: Monday, October 28
   eventTime: 8:00 AM
   eventLocation: SU Green Lawn
+  gpsCoordinates: {x: 32.9857, y: -96.7501}
+  activationRadius: 50
+  rewardPoints: 100
