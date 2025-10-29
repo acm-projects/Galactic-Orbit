@@ -4403,7 +4403,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae42bb6d96213040878e15c03f14527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoordinateHelperTool
-  autoFillEventCoordinates: 0
   locationName: Student Union
   foundCoordinates: {x: 32.9857, y: -96.7501}
 --- !u!4 &883475598
@@ -9030,7 +9029,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f9c4607856e448a9b3ee369adf2d14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EventManager
-  allEvents: []
+  allEvents:
+  - {fileID: 11400000, guid: a41a386c02c8655428d235ce72ba5250, type: 2}
+  - {fileID: 11400000, guid: aaaa75dcf912ec54f8d03ccdfca59bd3, type: 2}
+  - {fileID: 11400000, guid: a889f5a845e9eea4b935000ac0962d56, type: 2}
+  - {fileID: 11400000, guid: 140886e92bdbd1d4cac835bfba44d109, type: 2}
+  - {fileID: 11400000, guid: 99d5461623637c546938d91495da0578, type: 2}
+  - {fileID: 11400000, guid: 6ff671a8e53940e4b88dd5a5efef0d15, type: 2}
 --- !u!4 &2045015088
 Transform:
   m_ObjectHideFlags: 0
