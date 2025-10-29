@@ -164,8 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eaf7c95ae34c034fbb68f9869eb7382, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LogInController
-  signUpPanel: {fileID: 0}
-  logInPanel: {fileID: 0}
+  signUpPanel: {fileID: 726409831}
+  logInPanel: {fileID: 26576681}
 --- !u!114 &26576684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -679,10 +679,35 @@ PrefabInstance:
       propertyPath: m_Name
       value: FirebaseController
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 2376910101295634576, guid: 3dfa3d7fc377ef347936b7eee4beb23c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 678609354827233593, guid: 3dfa3d7fc377ef347936b7eee4beb23c, type: 3}
+    - {fileID: 9072719020893913982, guid: 3dfa3d7fc377ef347936b7eee4beb23c, type: 3}
+    - {fileID: 956901173123996204, guid: 3dfa3d7fc377ef347936b7eee4beb23c, type: 3}
+    - {fileID: 3947917059726290994, guid: 3dfa3d7fc377ef347936b7eee4beb23c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2376910101295634576, guid: 3dfa3d7fc377ef347936b7eee4beb23c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1893494133}
+    - targetCorrespondingSourceObject: {fileID: 2376910101295634576, guid: 3dfa3d7fc377ef347936b7eee4beb23c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1893494132}
+    - targetCorrespondingSourceObject: {fileID: 2376910101295634576, guid: 3dfa3d7fc377ef347936b7eee4beb23c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1893494131}
+    - targetCorrespondingSourceObject: {fileID: 2376910101295634576, guid: 3dfa3d7fc377ef347936b7eee4beb23c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1893494130}
   m_SourcePrefab: {fileID: 100100000, guid: 3dfa3d7fc377ef347936b7eee4beb23c, type: 3}
 --- !u!1 &1576740491
 GameObject:
@@ -812,6 +837,60 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &1893494129 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2376910101295634576, guid: 3dfa3d7fc377ef347936b7eee4beb23c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1395263059}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1893494130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893494129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15022769eac0ffd4b8bd3cca453ca096, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeamManager
+--- !u!114 &1893494131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893494129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f1ed1bcb7a88224db526de02917f1dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UserProfileManager
+--- !u!114 &1893494132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893494129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbfdfbb14d99a0341bf4c6cf2b25f695, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FirebaseManager
+--- !u!114 &1893494133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893494129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe846a89fb33974ca9cbf2e46e3d0e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AuthenticationManager
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -84,6 +84,7 @@ public class SignUpController : MonoBehaviour
 
     private void OnSwitchToLogin()
     {
+        Debug.Log("Switching to Log-In panel.");
         if (signupPanelGO != null && loginPanelGO != null)
         {
             signupPanelGO.SetActive(false);  // hide signup panel

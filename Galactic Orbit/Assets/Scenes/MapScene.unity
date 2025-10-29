@@ -2325,6 +2325,7 @@ Transform:
   - {fileID: 1996516603}
   - {fileID: 1300446634}
   - {fileID: 1855615394}
+  - {fileID: 8732660106683211818}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!21 &1432945562
@@ -5092,14 +5093,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7326708760ef558499a743eecae909bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimpleARController
-  normalCamera: {fileID: 1855615391}
-  arSessionOrigin: {fileID: 5559786355707313419}
-  arSession: {fileID: 2963720151217060145}
-  arObjectPrefab: {fileID: 7961772135564881704, guid: eb85ca2a576fce340836560508e5ee02,
-    type: 3}
-  spawnDistance: 2
-  spawnDistanceMax: 4
-  spawnHeight: 0
 --- !u!114 &1035357059692915432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6146,8 +6139,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8830460661763008791}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.82218, y: 23.98346, z: -26.33752}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.47184, y: -79.48189, z: -33.11978}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6156,7 +6149,7 @@ Transform:
   - {fileID: 5732843654920142347}
   - {fileID: 8546673766719592981}
   - {fileID: 6075743577886189597}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1394877569}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8813416483145509132
 MonoBehaviour:

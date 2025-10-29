@@ -49,7 +49,7 @@ public class LogInController : MonoBehaviour
         passwordField.value = "";
 
         Debug.Log($"Submitted! Username: {username}, Password: {password}");
-    
+        
         if (FirebaseManager.Instance == null)
         {
             Debug.LogError("FirebaseManager not initialized yet!");
@@ -57,6 +57,7 @@ public class LogInController : MonoBehaviour
         }
 
         bool success = await FirebaseManager.Instance.LoginAsync(username, password);
+        //bool success = true;
         // for debugging
         success = true;
         if (success)
@@ -72,6 +73,7 @@ public class LogInController : MonoBehaviour
 
     private void OnSwitchToSignup()
     {
+        Debug.Log("Switching to Sign-Up panel.");
         if (logInPanel != null && signUpPanel != null)
         {
             logInPanel.SetActive(false);   // hide login panel
