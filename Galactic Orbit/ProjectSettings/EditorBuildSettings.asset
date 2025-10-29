@@ -7,7 +7,10 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Managers.unity
-    guid: 78abb58d16461464da1a1702a6b9ea73
+    guid: ce1961a3bf524c54fbd78f81ea250a9c
+  - enabled: 0
+    path: Assets/Scenes/LoginScene.unity
+    guid: 7301346980df1a342a37ed1ff5b91d7f
   - enabled: 1
     path: Assets/Scenes/AuthScene.unity
     guid: b524f01f01e126b4c923d8bd58182572
@@ -17,9 +20,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 4755b35b590504809a7525fd2109c2e2
-  - enabled: 0
-    path: Assets/Scenes/LoginScene.unity
-    guid: 7301346980df1a342a37ed1ff5b91d7f
   - enabled: 0
     path: Assets/Scenes/WorldMap.unity
     guid: 6cbfe1f337201ad4bb1c2bfe307f63fc
