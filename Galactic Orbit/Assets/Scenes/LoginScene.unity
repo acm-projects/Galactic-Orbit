@@ -145,12 +145,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 94464016}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 540, y: 1140, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1079719379}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &94464018
 MonoBehaviour:
@@ -330,30 +330,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 255452285}
   m_CullTransparentMesh: 1
---- !u!114 &266589208 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2060958700988463277, guid: a8e6ecb45d475514da5d020d8ad4af80,
-    type: 3}
-  m_PrefabInstance: {fileID: 1740750048}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TMP_InputField
---- !u!114 &285501121 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6228119922715584175, guid: a8e6ecb45d475514da5d020d8ad4af80,
-    type: 3}
-  m_PrefabInstance: {fileID: 1740750048}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &574614515
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,13 +427,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!224 &1079719379 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3941226510337491918, guid: a8e6ecb45d475514da5d020d8ad4af80,
-    type: 3}
-  m_PrefabInstance: {fileID: 1740750048}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1648247657 stripped
+--- !u!114 &1004226012 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1660295157017612159, guid: a8e6ecb45d475514da5d020d8ad4af80,
     type: 3}
@@ -469,6 +439,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TMP_InputField
+--- !u!224 &1079719379 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3941226510337491918, guid: a8e6ecb45d475514da5d020d8ad4af80,
+    type: 3}
+  m_PrefabInstance: {fileID: 1740750048}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1233333807 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6228119922715584175, guid: a8e6ecb45d475514da5d020d8ad4af80,
+    type: 3}
+  m_PrefabInstance: {fileID: 1740750048}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1702195855
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,6 +593,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1702195855}
   m_CullTransparentMesh: 1
+--- !u!114 &1714904687 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2060958700988463277, guid: a8e6ecb45d475514da5d020d8ad4af80,
+    type: 3}
+  m_PrefabInstance: {fileID: 1740750048}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TMP_InputField
 --- !u!1001 &1740750048
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -758,6 +758,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LoginCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 9076313552418485174, guid: a8e6ecb45d475514da5d020d8ad4af80,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2740738333376835039, guid: a8e6ecb45d475514da5d020d8ad4af80, type: 3}
     m_RemovedGameObjects: []
@@ -766,10 +771,6 @@ PrefabInstance:
         type: 3}
       insertIndex: 3
       addedObject: {fileID: 255452286}
-    - targetCorrespondingSourceObject: {fileID: 3941226510337491918, guid: a8e6ecb45d475514da5d020d8ad4af80,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 94464017}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8e6ecb45d475514da5d020d8ad4af80, type: 3}
 --- !u!1 &1825179251
@@ -918,30 +919,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1933642420}
-  - component: {fileID: 1933642419}
+  - component: {fileID: 1933642421}
   m_Layer: 0
   m_Name: LoginUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1933642419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1933642418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e65aa64b8da12f140a90973ea3bb98b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LoginManager
-  emailField: {fileID: 1648247657}
-  passwordField: {fileID: 266589208}
-  loginButton: {fileID: 255452287}
-  loginTitle: {fileID: 285501121}
+  m_IsActive: 0
 --- !u!4 &1933642420
 Transform:
   m_ObjectHideFlags: 0
@@ -957,6 +942,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1933642421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1933642418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4c91a2211a887f43b26bacdb755c9f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LoginManager
+  emailField: {fileID: 1004226012}
+  passwordField: {fileID: 1714904687}
+  loginButton: {fileID: 255452287}
+  loginTitle: {fileID: 1233333807}
 --- !u!1 &2115902292
 GameObject:
   m_ObjectHideFlags: 0
@@ -1001,7 +1002,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
   m_PanelSettings: {fileID: 11400000, guid: f3d77ed0ec7e8fd47b917ef25b144b44, type: 2}
   m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: 163bd79bfaecf18448f9a74e1c589911,
+  sourceAsset: {fileID: 9197481963319205126, guid: 1b83cb50eb10e9544a01d24d4354d8b0,
     type: 3}
   m_SortingOrder: 0
   m_Position: 0
@@ -1034,4 +1035,5 @@ SceneRoots:
   - {fileID: 574614517}
   - {fileID: 1740750048}
   - {fileID: 1933642420}
+  - {fileID: 94464017}
   - {fileID: 2115902295}
