@@ -1498,7 +1498,9 @@ PrefabInstance:
       value: planet-collectible
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 65702495048144492, guid: fdafafc56d298bf43b25efca4c82204a, type: 3}
+    - {fileID: -8700617353114198275, guid: fdafafc56d298bf43b25efca4c82204a, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fdafafc56d298bf43b25efca4c82204a,
@@ -2281,8 +2283,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1832040367}
+  m_Children: []
   m_Father: {fileID: 1396430845}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2407,12 +2408,6 @@ MonoBehaviour:
   frameRate: 12
   lastFrameHold: 10
   loop: 1
---- !u!1 &637151521 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5963138107579739024, guid: 02644bbd28622410a84cf154fc436b8a,
-    type: 3}
-  m_PrefabInstance: {fileID: 5214591598045136834}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &637151525 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5551017266776680517, guid: 02644bbd28622410a84cf154fc436b8a,
@@ -6150,6 +6145,7 @@ Transform:
   m_Children:
   - {fileID: 199161481}
   - {fileID: 844832582}
+  - {fileID: 615301736}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1402119436

@@ -3,6 +3,7 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using UnityEngine.UIElements;
 
 public class SimpleARController : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class SimpleARController : MonoBehaviour
     public GameObject normalCamera; // the regular game (map view) camera
     public GameObject arSessionOrigin; // XR Origin (Mobile AR)
     public GameObject arSession; // AR Session GameObject
+    public GameObject MainMenuOObject; // Reference to the main UI Document
     
     [Header("AR Objects to Spawn")]
     public GameObject arObjectPrefab; // The object that appears in AR
@@ -55,6 +57,11 @@ public class SimpleARController : MonoBehaviour
     public void ToggleARMode()
     {
         SetARMode(!isARMode);
+        // toggle MainMenu UI
+        if (MainMenuOObject != null)
+        {
+            MainMenuOObject.SetActive(!isARMode);
+        }
     }
     
     public void OpenARMode()

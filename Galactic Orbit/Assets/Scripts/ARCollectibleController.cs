@@ -22,7 +22,7 @@ public class ARCollectible : MonoBehaviour
         if (GetComponent<Collider>() == null)
         {
             BoxCollider col = gameObject.AddComponent<BoxCollider>();
-            col.size = new Vector3(1.2f, 1.2f, 1.2f); // Slightly bigger for easier tapping
+            col.size = new Vector3(1.5f, 1.5f, 1.5f); // Slightly bigger for easier tapping
         }
         
         Debug.Log($"AR Collectible spawned: {itemName}");
@@ -46,34 +46,43 @@ public class ARCollectible : MonoBehaviour
     {
         bool tapped = false;
         Vector2 screenPos = Vector2.zero;
-        
-        // touch input
+
         if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
         {
             tapped = true;
             screenPos = Touchscreen.current.primaryTouch.position.ReadValue();
         }
-        // mouse input (testing in editor)
         else if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
             tapped = true;
             screenPos = Mouse.current.position.ReadValue();
         }
-        
+
         if (tapped)
         {
-            Ray ray = Camera.main.ScreenPointToRay(screenPos);
-            RaycastHit hit;
-            
-            if (Physics.Raycast(ray, out hit, 50f))
+            Debug.Log($"Tapped at {screenPos}");
+            if (Camera.main == null)
             {
+                Debug.LogError("No camera tagged as MainCamera!");
+                return;
+            }
+
+            Ray ray = Camera.main.ScreenPointToRay(screenPos);
+            Debug.DrawRay(ray.origin, ray.direction * 10f, Color.red, 1f);
+            Debug.Log(ray.direction);
+            if (Physics.Raycast(ray, out RaycastHit hit, 50f))
+            {
+                Debug.Log($"Hit: {hit.collider.name}");
                 if (hit.collider.gameObject == gameObject)
-                {
                     Collect();
-                }
+            }
+            else
+            {
+                Debug.Log("No hit detected.");
             }
         }
     }
+
 
     void Collect()
     {
