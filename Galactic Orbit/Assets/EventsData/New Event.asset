@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c43c7b74799654582b2e520e45949139, type: 3}
   m_Name: New Event
   m_EditorClassIdentifier: Assembly-CSharp::EventData
+  eventID: 
   eventTitle: 'Cultural Night: Diwali Dhamaka'
   eventDay: Saturday, October 26
   eventTime: 6:00 PM
   eventLocation: SU Galaxy Rooms
+  gpsCoordinates: {x: 32.9857, y: -96.7501}
+  activationRadius: 50
+  rewardPoints: 100

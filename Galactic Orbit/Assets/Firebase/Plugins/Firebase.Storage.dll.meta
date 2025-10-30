@@ -1,9 +1,9 @@
 fileFormatVersion: 2
-guid: 9d9ab4f839364d958d9cd704e26316e3
+guid: 2e3ea3ac9d6d409a92d41e9b9627470f
 labels:
 - gvh
 - gvh_version-13.2.0
-- gvhp_exportpath-Firebase/Plugins/x86_64/FirebaseCppRemoteConfig.dll
+- gvhp_exportpath-Firebase/Plugins/Firebase.RemoteConfig.dll
 timeCreated: 1480838400
 PluginImporter:
   serializedVersion: 1
@@ -12,7 +12,7 @@ PluginImporter:
   isPreloaded: 0
   platformData:
     Android:
-      enabled: 0
+      enabled: 1
       settings:
         CPU: AnyCPU
     Any:
@@ -25,29 +25,29 @@ PluginImporter:
         DefaultValueInitialized: true
         OS: AnyOS
     Linux:
-      enabled: 0
+      enabled: 1
       settings:
-        CPU: None
+        CPU: x86
     Linux64:
-      enabled: 0
+      enabled: 1
       settings:
-        CPU: None
+        CPU: x86_64
     LinuxUniversal:
-      enabled: 0
+      enabled: 1
       settings:
-        CPU: None
+        CPU: AnyCPU
     OSXIntel:
-      enabled: 0
+      enabled: 1
       settings:
-        CPU: None
+        CPU: x86
     OSXIntel64:
-      enabled: 0
+      enabled: 1
       settings:
-        CPU: None
+        CPU: x86_64
     OSXUniversal:
-      enabled: 0
+      enabled: 1
       settings:
-        CPU: None
+        CPU: AnyCPU
     Web:
       enabled: 0
       settings: {}
@@ -55,9 +55,9 @@ PluginImporter:
       enabled: 0
       settings: {}
     Win:
-      enabled: 0
+      enabled: 1
       settings:
-        CPU: None
+        CPU: x86
     Win64:
       enabled: 1
       settings:

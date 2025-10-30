@@ -4,7 +4,7 @@ using TMPro;
 public class EventButton : MonoBehaviour
 {
     public TextMeshProUGUI eventTitleText;
-    // public GameObject eventDetailsScreen; // Uncomment if you add a details screen
+    public GameObject eventDetailsScreen;
 
     private EventData myEvent;
 
@@ -17,10 +17,10 @@ public class EventButton : MonoBehaviour
 
     public void OnButtonClick()
     {
-        if (EventManager.Instance != null)
-        {
-            EventManager.Instance.SelectEvent(myEvent);
-        }
-        // if (eventDetailsScreen != null) { eventDetailsScreen.SetActive(true); }
+
+        EventManager.Instance.SelectEvent(myEvent);
+        eventDetailsScreen.SetActive(true);
+
+
     }
 }
