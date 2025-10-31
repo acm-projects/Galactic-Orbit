@@ -22,7 +22,7 @@ public class ARCollectible : MonoBehaviour
         if (GetComponent<Collider>() == null)
         {
             BoxCollider col = gameObject.AddComponent<BoxCollider>();
-            col.size = new Vector3(1.5f, 1.5f, 1.5f); // Slightly bigger for easier tapping
+            col.size = new Vector3(0.02f, 0.02f, 0.02f); // Slightly bigger for easier tapping
         }
         
         Debug.Log($"AR Collectible spawned: {itemName}");
@@ -33,7 +33,7 @@ public class ARCollectible : MonoBehaviour
         if (isCollected) return;
         
         // rotate continuously
-        transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+        transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
         
         // bob up and down animation
         float newY = startPosition.y + Mathf.Sin(Time.time * bobSpeed) * bobHeight;

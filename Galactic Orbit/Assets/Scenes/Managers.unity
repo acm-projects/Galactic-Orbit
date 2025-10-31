@@ -784,6 +784,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SceneController
   persistentScene: Managers
   loadingCanvas: {fileID: 1905753723}
+  PersistentCamera: {fileID: 1124593773}
 --- !u!4 &2089979573
 Transform:
   m_ObjectHideFlags: 0

@@ -99,7 +99,7 @@ public class RGBColorSelector : VisualElement
     private void UpdateColor()
     {
         SelectedColor = new Color(rSlider.value, gSlider.value, bSlider.value);
-
+        
         colorPreview.style.backgroundColor = new StyleColor(SelectedColor);
     }
 }

@@ -8,6 +8,7 @@ public class SceneController : MonoBehaviour
 
     [SerializeField] private string persistentScene = "Managers";
     [SerializeField] private GameObject loadingCanvas;
+    [SerializeField] private GameObject PersistentCamera;
 
     private string currentLevel;
 
@@ -36,6 +37,7 @@ public class SceneController : MonoBehaviour
     {
         // ✅ Step 1: Load the loading scene additively and wait for activation
         loadingCanvas.SetActive(true);
+        PersistentCamera.SetActive(true);
 
         // Wait one frame so UI fully renders (important!)
         yield return null;
@@ -68,5 +70,6 @@ public class SceneController : MonoBehaviour
 
         // ✅ Step 4: Unload the loading scene
         loadingCanvas.SetActive(false);
+        PersistentCamera.SetActive(false);
     }
 }

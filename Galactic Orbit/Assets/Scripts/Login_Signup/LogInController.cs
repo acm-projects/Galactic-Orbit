@@ -63,7 +63,7 @@ public class LogInController : MonoBehaviour
         if (success)
         {
             Debug.Log("Login successful.");
-            SceneController.Instance.LoadLevel("MapScene");
+            SceneController.Instance.LoadLevel("MainScene");
         }
         else
         {

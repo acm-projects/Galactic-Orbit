@@ -11,7 +11,6 @@ public class SimpleARController : MonoBehaviour
     public GameObject normalCamera; // the regular game (map view) camera
     public GameObject arSessionOrigin; // XR Origin (Mobile AR)
     public GameObject arSession; // AR Session GameObject
-    public GameObject MainMenuOObject; // Reference to the main UI Document
     
     [Header("AR Objects to Spawn")]
     public GameObject arObjectPrefab; // The object that appears in AR
@@ -23,10 +22,21 @@ public class SimpleARController : MonoBehaviour
     private ARRaycastManager raycastManager;
     private ARPlaneManager planeManager;
     private Camera arCamera;
-    
+
     private bool isARMode = false;
-    private List<GameObject> spawnedObjects = new List<GameObject>();
     
+    private List<GameObject> spawnedObjects = new List<GameObject>();
+    public static SimpleARController Instance { get; private set; }
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
     void Start()
     {
         // Get AR components from XR Origin
@@ -57,11 +67,6 @@ public class SimpleARController : MonoBehaviour
     public void ToggleARMode()
     {
         SetARMode(!isARMode);
-        // toggle MainMenu UI
-        if (MainMenuOObject != null)
-        {
-            MainMenuOObject.SetActive(!isARMode);
-        }
     }
     
     public void OpenARMode()
