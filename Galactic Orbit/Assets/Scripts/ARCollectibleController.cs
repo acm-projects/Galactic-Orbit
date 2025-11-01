@@ -1,5 +1,7 @@
+using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR.ARFoundation;
 
 public class ARCollectible : MonoBehaviour
 {
@@ -7,91 +9,87 @@ public class ARCollectible : MonoBehaviour
     public float rotationSpeed = 50f;
     public float bobSpeed = 2f;
     public float bobHeight = 0.1f;
-    
+
     [Header("Collection")]
     public string itemName = "Cube";
-    
+
     private Vector3 startPosition;
     private bool isCollected = false;
-    
+    private Camera arCamera;
+
     void Start()
     {
         startPosition = transform.position;
-        
-        // add collider for raycasting
+
+        // find AR camera instead of Camera.main
+        var arOrigin = FindFirstObjectByType<XROrigin>();
+        if (arOrigin != null)
+            arCamera = arOrigin.Camera;
+        else
+            arCamera = Camera.main; // fallback for non-AR
+
+        // add collider if missing
         if (GetComponent<Collider>() == null)
         {
-            BoxCollider col = gameObject.AddComponent<BoxCollider>();
-            col.size = new Vector3(0.02f, 0.02f, 0.02f); // Slightly bigger for easier tapping
+            var col = gameObject.AddComponent<BoxCollider>();
+            col.size = Vector3.one * 0.05f;
         }
-        
-        Debug.Log($"AR Collectible spawned: {itemName}");
+
+        Debug.Log($"AR Collectible spawned: {itemName} using camera: {arCamera?.name}");
     }
-    
+
     void Update()
     {
         if (isCollected) return;
-        
-        // rotate continuously
+
+        // rotate & bob
         transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
-        
-        // bob up and down animation
         float newY = startPosition.y + Mathf.Sin(Time.time * bobSpeed) * bobHeight;
         transform.position = new Vector3(transform.position.x, newY, transform.position.z);
-        
+
         CheckForTap();
     }
-    
+
     void CheckForTap()
     {
         bool tapped = false;
         Vector2 screenPos = Vector2.zero;
 
-        if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
+        if (Touchscreen.current?.primaryTouch.press.wasPressedThisFrame ?? false)
         {
             tapped = true;
             screenPos = Touchscreen.current.primaryTouch.position.ReadValue();
         }
-        else if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+        else if (Mouse.current?.leftButton.wasPressedThisFrame ?? false)
         {
             tapped = true;
             screenPos = Mouse.current.position.ReadValue();
         }
 
-        if (tapped)
-        {
-            Debug.Log($"Tapped at {screenPos}");
-            if (Camera.main == null)
-            {
-                Debug.LogError("No camera tagged as MainCamera!");
-                return;
-            }
+        if (!tapped || arCamera == null)
+            return;
 
-            Ray ray = Camera.main.ScreenPointToRay(screenPos);
-            Debug.DrawRay(ray.origin, ray.direction * 10f, Color.red, 1f);
-            Debug.Log(ray.direction);
-            if (Physics.Raycast(ray, out RaycastHit hit, 50f))
-            {
-                Debug.Log($"Hit: {hit.collider.name}");
-                if (hit.collider.gameObject == gameObject)
-                    Collect();
-            }
-            else
-            {
-                Debug.Log("No hit detected.");
-            }
+        Ray ray = arCamera.ScreenPointToRay(screenPos);
+        Debug.DrawRay(ray.origin, ray.direction * 5f, Color.green, 1f);
+        Debug.Log($"Ray from {arCamera.name} at {ray.origin}");
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 10f))
+        {
+            Debug.Log($"Hit: {hit.collider.name}");
+            if (hit.collider.gameObject == gameObject)
+                Collect();
+        }
+        else
+        {
+            Debug.Log("No hit detected.");
         }
     }
-
 
     void Collect()
     {
         if (isCollected) return;
-
         isCollected = true;
-        Debug.Log($"✅ Collected: {itemName}!");
-
-        // destroy with slight delay
+        Debug.Log($"✅ Collected: {itemName}");
         Destroy(gameObject, 0.2f);
     }
 }

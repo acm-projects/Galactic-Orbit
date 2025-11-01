@@ -221,7 +221,8 @@ public class SimpleARController : MonoBehaviour
     }
 
     void OnGUI()
-{
+    {
+    if (true) return;
     if (!isARMode) return;
     
     GUIStyle style = new GUIStyle();
