@@ -3,6 +3,7 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using UnityEngine.UIElements;
 
 public class SimpleARController : MonoBehaviour
 {
@@ -21,10 +22,21 @@ public class SimpleARController : MonoBehaviour
     private ARRaycastManager raycastManager;
     private ARPlaneManager planeManager;
     private Camera arCamera;
-    
+
     private bool isARMode = false;
-    private List<GameObject> spawnedObjects = new List<GameObject>();
     
+    private List<GameObject> spawnedObjects = new List<GameObject>();
+    public static SimpleARController Instance { get; private set; }
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
     void Start()
     {
         // Get AR components from XR Origin
@@ -209,7 +221,8 @@ public class SimpleARController : MonoBehaviour
     }
 
     void OnGUI()
-{
+    {
+    if (true) return;
     if (!isARMode) return;
     
     GUIStyle style = new GUIStyle();

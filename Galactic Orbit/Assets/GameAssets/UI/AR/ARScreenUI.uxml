@@ -1,0 +1,8 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/GameAssets/StyleSheets/CharacterDesignStyles.uss?fileID=7433441132597879392&amp;guid=c8bcd630d59f6854d87f99347d7febc7&amp;type=3#CharacterDesignStyles" />
+    <GradientQuad top-color="#000000DF" bottom-color="#00000000" style="flex-grow: 0; padding-left: 0; padding-top: 0;">
+        <ui:VisualElement name="Padding" style="flex-grow: 1; padding-left: 10px; padding-top: 10px;">
+            <ui:Button parse-escape-sequences="true" name="ARBackButton" style="background-image: url(&quot;project://database/Assets/GameAssets/Galactic%20Orbit%20Assets/back-arrow.png?fileID=2800000&amp;guid=01e8adf0d9a8a1b4c92e19ee65b4ec25&amp;type=3#back-arrow&quot;); background-size: 100% 100%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-left: 0; padding-bottom: 0; padding-right: 0; flex-grow: 0; width: 25px; height: 25px; background-color: rgba(188, 188, 188, 0); border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+        </ui:VisualElement>
+    </GradientQuad>
+</ui:UXML>
