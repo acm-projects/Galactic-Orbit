@@ -1,0 +1,102 @@
+Button.menu-button {
+    padding: 0;
+    margin: 0;
+    margin-left: 10px;
+    background-color: transparent;
+    border-width: 0;
+    color: rgb(95, 64, 0);
+}
+
+Button.unselected {
+    opacity: 0.5;
+}
+
+Button.selected {
+    -unity-font-style: bold;
+}
+
+.grid-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+Button.menu-item {
+    width: 50px;
+    height: 50px;
+    border-width: 1px;
+    border-color: rgb(150, 150, 150);
+    border-style: solid;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin: 10px;
+    padding: 0;
+    overflow: hidden;
+}
+
+Button.item-selected {
+    border-width: 2px;
+    border-color: rgb(90, 54, 0);
+    border-style: solid;
+}
+
+#ColorPreview {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    margin-top: 10px;
+    background-color: white;
+}
+
+.rgb-color-selector {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-top-color: gray;
+    border-right-color: gray;
+    border-bottom-color: gray;
+    border-left-color: gray;
+    margin-bottom: 6px;
+}
+
+.slider-container {
+    width: 50%;
+    height: auto;
+    flex-direction: column;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.color-preview {
+    flex: none;
+    width: 80px;
+    height: 80px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    background-color: white;
+}
+
+.rgb-slider {
+    width: 100%;
+    flex-direction: row;
+}
+
+.rgb-slider > VisualElement {
+    flex: 1;
+}
+
+.rgb-slider > Label {
+    width: 30px;
+    min-width: 0;
+}

@@ -1,0 +1,18 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/GameAssets/StyleSheets/CharacterDesignStyles.uss?fileID=7433441132597879392&amp;guid=c8bcd630d59f6854d87f99347d7febc7&amp;type=3#CharacterDesignStyles" />
+    <GradientQuad top-color="#000000DF" bottom-color="#00000000" style="flex-grow: 0; padding-left: 0; padding-top: 0;">
+        <ui:VisualElement name="Padding" style="flex-grow: 1; padding-left: 10px; padding-top: 10px;">
+            <ui:Button parse-escape-sequences="true" name="BackButton" style="background-image: url(&quot;project://database/Assets/GameAssets/Galactic%20Orbit%20Assets/back-arrow.png?fileID=2800000&amp;guid=01e8adf0d9a8a1b4c92e19ee65b4ec25&amp;type=3#back-arrow&quot;); background-size: 100% 100%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-left: 0; padding-bottom: 0; padding-right: 0; flex-grow: 0; width: 25px; height: 25px; background-color: rgba(188, 188, 188, 0); border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+        </ui:VisualElement>
+    </GradientQuad>
+    <ui:VisualElement style="flex-grow: 1; margin-bottom: 5px; margin-left: 5px; margin-right: 5px;">
+        <ui:VisualElement name="Menu" style="flex-grow: 0; height: 40%; position: absolute; bottom: 0; width: 100%; background-color: rgba(247, 244, 225, 0.02); border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; border-top-left-radius: 5px; border-top-right-radius: 5px; overflow: hidden; border-left-color: rgba(255, 255, 255, 0.24); border-top-color: rgb(255, 255, 255); border-right-color: rgba(255, 255, 255, 0.24); border-bottom-color: rgba(255, 255, 255, 0.24); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;">
+            <ui:ScrollView mode="Horizontal" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" style="width: 100%; height: 25px; background-color: rgba(255, 255, 255, 0.93); padding-left: 0; padding-right: 10px; flex-direction: row; justify-content: flex-start; border-top-left-radius: 0; border-top-right-radius: 0; border-left-width: 0; border-top-width: 0; border-right-width: 0; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0);">
+                <ui:VisualElement name="MenuTitleContainer" style="flex-grow: 1; white-space: nowrap; flex-direction: row; align-items: center;" />
+            </ui:ScrollView>
+            <ui:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden">
+                <ui:VisualElement name="MenuItemsContainer" style="flex-grow: 1; justify-content: center; flex-direction: row; flex-wrap: wrap; align-items: flex-start; align-content: flex-start;" />
+            </ui:ScrollView>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

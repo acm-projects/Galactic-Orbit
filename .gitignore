@@ -12,6 +12,12 @@
 [Uu]ser[Ss]ettings/
 *.log
 
+# OS
+.DS_Store
+__MACOSX/
+Thumbs.db
+desktop.ini
+
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1
 *.blend1.meta
@@ -102,4 +108,22 @@ ServerData
 **/Firebase/Plugins/**/*.bundle
 **/Firebase/Plugins/**/*.so
 **/Firebase/Plugins/**/*.dll
-**/Firebase/Plugins/**/*.dylib
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Firebase/Plugins/**/*.dylib
+Galactic Orbit/.DS_Store

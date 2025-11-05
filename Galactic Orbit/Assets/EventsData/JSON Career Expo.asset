@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c43c7b74799654582b2e520e45949139, type: 3}
+  m_Name: JSON Career Expo
+  m_EditorClassIdentifier: Assembly-CSharp::EventData
+  eventID: 
+  eventTitle: JSON Career Expo
+  eventDay: Friday, October 25
+  eventTime: 11:00 AM
+  eventLocation: JSOM Atrium
+  gpsCoordinates: {x: 32.9863, y: -96.7489}
+  activationRadius: 50
+  rewardPoints: 100
