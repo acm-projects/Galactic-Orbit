@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7da2ac7e82af47bd8ec23e7691d8a247
+guid: 2e3ea3ac9d6d409a92d41e9b9627470f
 labels:
 - gvh
 PluginImporter:
@@ -19,24 +19,11 @@ PluginImporter:
     Editor:
       enabled: 0
       settings:
-        CPU: x86_64
         DefaultValueInitialized: true
-    Linux64:
-      enabled: 1
-      settings:
-        CPU: x86_64
-    OSXUniversal:
-      enabled: 1
-      settings:
-        CPU: x86_64
-    Win:
+    WindowsStoreApps:
       enabled: 0
       settings:
-        CPU: None
-    Win64:
-      enabled: 1
-      settings:
-        CPU: x86_64
+        CPU: AnyCPU
   userData: 
   assetBundleName: 
   assetBundleVariant: 
