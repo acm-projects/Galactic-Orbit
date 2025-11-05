@@ -9,7 +9,7 @@ public class ARInitializer : MonoBehaviour
     async void OnEnable()
     {
         await WaitForARControllerReady();
-        await Task.Delay(200);
+        await Task.Delay(50);
         SimpleARController.Instance.ToggleARMode();
     }
 

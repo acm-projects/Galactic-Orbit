@@ -7,6 +7,7 @@ public class ButtonController : MonoBehaviour
     [SerializeField] private GameObject ProfileScreen;
     [SerializeField] private GameObject CharacterCustomizationScreen;
     [SerializeField] private GameObject MainScreen;
+    [SerializeField] private GameObject Map;
     [SerializeField] private GameObject ARScreen;
 
 
@@ -75,18 +76,21 @@ public class ButtonController : MonoBehaviour
     {
         ARScreen.SetActive(true);
         MainScreen.SetActive(false);
+        Map.SetActive(false);
         OnEnable();
     }
     private void OnProfileButton()
     {
         ProfileScreen.SetActive(true);
         MainScreen.SetActive(false);
+        Map.SetActive(false);
         OnEnable();
     }
     private void OnExitButton()
     {
         ProfileScreen.SetActive(false);
         MainScreen.SetActive(true);
+        Map.SetActive(true);
         OnEnable();
     }
     private void OnCustomizeButton()

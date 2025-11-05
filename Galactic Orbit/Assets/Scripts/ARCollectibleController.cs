@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Threading.Tasks;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,10 +14,13 @@ public class ARCollectible : MonoBehaviour
 
     [Header("Collection")]
     public string itemName = "Cube";
+    public float shrinkDuration = 0.4f;
 
     private Vector3 startPosition;
     private bool isCollected = false;
     private Camera arCamera;
+    
+    private bool shrinkCompleted = false;
 
     void Start()
     {
@@ -32,7 +37,7 @@ public class ARCollectible : MonoBehaviour
         if (GetComponent<Collider>() == null)
         {
             var col = gameObject.AddComponent<BoxCollider>();
-            col.size = Vector3.one * 0.05f;
+            col.size = Vector3.one * 2f;
         }
 
         Debug.Log($"AR Collectible spawned: {itemName} using camera: {arCamera?.name}");
@@ -43,14 +48,14 @@ public class ARCollectible : MonoBehaviour
         if (isCollected) return;
 
         // rotate & bob
-        transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
+        transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
         float newY = startPosition.y + Mathf.Sin(Time.time * bobSpeed) * bobHeight;
         transform.position = new Vector3(transform.position.x, newY, transform.position.z);
 
         CheckForTap();
     }
 
-    void CheckForTap()
+    async Task CheckForTap()
     {
         bool tapped = false;
         Vector2 screenPos = Vector2.zero;
@@ -71,13 +76,12 @@ public class ARCollectible : MonoBehaviour
 
         Ray ray = arCamera.ScreenPointToRay(screenPos);
         Debug.DrawRay(ray.origin, ray.direction * 5f, Color.green, 1f);
-        Debug.Log($"Ray from {arCamera.name} at {ray.origin}");
 
         if (Physics.Raycast(ray, out RaycastHit hit, 10f))
         {
             Debug.Log($"Hit: {hit.collider.name}");
             if (hit.collider.gameObject == gameObject)
-                Collect();
+                await Collect();
         }
         else
         {
@@ -85,11 +89,33 @@ public class ARCollectible : MonoBehaviour
         }
     }
 
-    void Collect()
+    async Task Collect()
     {
         if (isCollected) return;
         isCollected = true;
         Debug.Log($"✅ Collected: {itemName}");
-        Destroy(gameObject, 0.2f);
+        shrinkCompleted = false;
+        StartCoroutine(LerpShrink()); // Shrinks until deleted
+        while (!shrinkCompleted)
+        {
+            await Task.Yield();
+        }
+        Destroy(gameObject);
+    }
+
+    IEnumerator LerpShrink()
+    {
+        Vector3 startScale = transform.localScale;
+        Vector3 targetScale = Vector3.zero;
+        float t = 0f;
+
+        while (t < 1f)
+        {
+            t += Time.deltaTime / shrinkDuration;
+            transform.localScale = Vector3.Lerp(startScale, targetScale, t);
+            yield return null;
+        }
+
+        shrinkCompleted = true;
     }
 }

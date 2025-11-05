@@ -384,7 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9366e0b2d00c6647a26494ebed6f30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BackgroundSpriteAnimator
-  spriteSheetName: bg-spritesheet
+  spriteSheetName: spritesheet-bg
   frameRate: 24
   lastFrameHold: 10
   loop: 1
@@ -408,7 +408,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 729790298, guid: 09838dbea3e39bd43b45eafa6015f850, type: 3}
+  m_Sprite: {fileID: 651853298, guid: eaa44de0dc702a941990e188b6acd2e2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
