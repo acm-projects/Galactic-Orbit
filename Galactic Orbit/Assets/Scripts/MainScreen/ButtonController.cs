@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class ButtonController : MonoBehaviour
 {
@@ -9,7 +10,6 @@ public class ButtonController : MonoBehaviour
     [SerializeField] private GameObject MainScreen;
     [SerializeField] private GameObject Map;
     [SerializeField] private GameObject ARScreen;
-
 
     void OnEnable()
     {
@@ -79,13 +79,37 @@ public class ButtonController : MonoBehaviour
         Map.SetActive(false);
         OnEnable();
     }
-    private void OnProfileButton()
+    public void OnProfileButton()
     {
-        ProfileScreen.SetActive(true);
-        MainScreen.SetActive(false);
-        Map.SetActive(false);
-        OnEnable();
+        // Make sure the scene is in the active build profile!
+        AsyncOperation loadOp = SceneManager.LoadSceneAsync("UserProfile", LoadSceneMode.Additive);
+
+        if (loadOp == null)
+        {
+            Debug.LogError("❌ Failed to start loading UserProfile. Check that it is in the active build profile.");
+            return;
+        }
+
+        loadOp.completed += (op) =>
+        {
+            // Wait until the scene is fully loaded
+            Debug.Log("✅ UserProfile loaded successfully.");
+
+            // Now we can safely find the UserProfileController
+            var userProfile = Object.FindAnyObjectByType<UserProfileController>(FindObjectsInactive.Include);
+            if (userProfile != null)
+            {
+                userProfile.InitializeUI();
+            }
+            else
+            {
+                Debug.LogWarning("❌ No UserProfileController found on ProfileScreen");
+            }
+        };
     }
+
+
+
     private void OnExitButton()
     {
         ProfileScreen.SetActive(false);
