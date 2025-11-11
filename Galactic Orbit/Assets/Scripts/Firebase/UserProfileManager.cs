@@ -95,12 +95,12 @@ public class UserProfileManager : MonoBehaviour
             }
         });
     }
-    
+
     // Award points to the current user
     public void AddPoints(int points, Action<bool, string> callback)
     {
         FirebaseUser currentUser = FirebaseManager.Instance.CurrentUser;
-        
+
         if (currentUser == null)
         {
             callback?.Invoke(false, "Not signed in");
@@ -114,7 +114,7 @@ public class UserProfileManager : MonoBehaviour
             {
                 int newTotal = profile.totalPoints + points;
                 int newLevel = CalculateLevel(newTotal);
-                
+
                 // Update both points and level
                 var updates = new System.Collections.Generic.Dictionary<string, object>
                 {
@@ -151,7 +151,7 @@ public class UserProfileManager : MonoBehaviour
     public void UpdateProfileField(string fieldName, object value, Action<bool, string> callback)
     {
         FirebaseUser currentUser = FirebaseManager.Instance.CurrentUser;
-        
+
         if (currentUser == null)
         {
             callback?.Invoke(false, "Not signed in");
@@ -173,7 +173,7 @@ public class UserProfileManager : MonoBehaviour
     public void AttendEvent(string eventId, int pointsEarned, Action<bool, string> callback)
     {
         FirebaseUser currentUser = FirebaseManager.Instance.CurrentUser;
-        
+
         if (currentUser == null)
         {
             callback?.Invoke(false, "Not signed in");
@@ -214,62 +214,197 @@ public class UserProfileManager : MonoBehaviour
             }
         });
     }
+
+    // ===== CURRENCY METHODS =====
+
+    /// <summary>
+    /// Add coins to the current user
+    /// </summary>
+    public void AddCoins(int amount, Action<bool, string> callback)
+    {
+        FirebaseUser currentUser = FirebaseManager.Instance.CurrentUser;
+        
+        if (currentUser == null)
+        {
+            callback?.Invoke(false, "Not signed in");
+            return;
+        }
+
+        GetCurrentUserProfile((profile) =>
+        {
+            if (profile != null)
+            {
+                int newTotal = profile.coins + amount;
+                
+                var updates = new System.Collections.Generic.Dictionary<string, object>
+                {
+                    { "coins", newTotal }
+                };
+
+                FirebaseManager.Instance.DbReference.Child("userProfiles").Child(currentUser.UserId)
+                    .UpdateChildrenAsync(updates)
+                    .ContinueWithOnMainThread(task =>
+                    {
+                        if (task.IsCompleted)
+                            callback?.Invoke(true, $"Added {amount} coins! Total: {newTotal}");
+                        else
+                            callback?.Invoke(false, "Failed to add coins: " + task.Exception?.Message);
+                    });
+            }
+            else
+            {
+                callback?.Invoke(false, "Profile not found");
+            }
+        });
+    }
+
+    /// <summary>
+    /// Add items to the current user
+    /// </summary>
+    public void AddItems(int amount, Action<bool, string> callback)
+    {
+        FirebaseUser currentUser = FirebaseManager.Instance.CurrentUser;
+        
+        if (currentUser == null)
+        {
+            callback?.Invoke(false, "Not signed in");
+            return;
+        }
+
+        GetCurrentUserProfile((profile) =>
+        {
+            if (profile != null)
+            {
+                int newTotal = profile.items + amount;
+                
+                var updates = new System.Collections.Generic.Dictionary<string, object>
+                {
+                    { "items", newTotal }
+                };
+
+                FirebaseManager.Instance.DbReference.Child("userProfiles").Child(currentUser.UserId)
+                    .UpdateChildrenAsync(updates)
+                    .ContinueWithOnMainThread(task =>
+                    {
+                        if (task.IsCompleted)
+                            callback?.Invoke(true, $"Added {amount} items! Total: {newTotal}");
+                        else
+                            callback?.Invoke(false, "Failed to add items: " + task.Exception?.Message);
+                    });
+            }
+            else
+            {
+                callback?.Invoke(false, "Profile not found");
+            }
+        });
+    }
+
+    /// <summary>
+    /// Spend coins (deduct from balance)
+    /// </summary>
+    public void SpendCoins(int amount, Action<bool, string> callback)
+    {
+        FirebaseUser currentUser = FirebaseManager.Instance.CurrentUser;
+        
+        if (currentUser == null)
+        {
+            callback?.Invoke(false, "Not signed in");
+            return;
+        }
+
+        GetCurrentUserProfile((profile) =>
+        {
+            if (profile != null)
+            {
+                // Check if user has enough coins
+                if (profile.coins < amount)
+                {
+                    callback?.Invoke(false, $"Not enough coins! Have {profile.coins}, need {amount}");
+                    return;
+                }
+
+                int newTotal = profile.coins - amount;
+                
+                var updates = new System.Collections.Generic.Dictionary<string, object>
+                {
+                    { "coins", newTotal }
+                };
+
+                FirebaseManager.Instance.DbReference.Child("userProfiles").Child(currentUser.UserId)
+                    .UpdateChildrenAsync(updates)
+                    .ContinueWithOnMainThread(task =>
+                    {
+                        if (task.IsCompleted)
+                            callback?.Invoke(true, $"Spent {amount} coins! Remaining: {newTotal}");
+                        else
+                            callback?.Invoke(false, "Failed to spend coins: " + task.Exception?.Message);
+                    });
+            }
+            else
+            {
+                callback?.Invoke(false, "Profile not found");
+            }
+        });
+    }
 }
 
-// User profile data stored in Firebase Realtime Database
-// IMPORTANT: NO PASSWORD stored here - Firebase Auth handles that securely
-// User profile data stored in Firebase Realtime Database
-// IMPORTANT: NO PASSWORD stored here - Firebase Auth handles that securely
+// ===== USER PROFILE DATA CLASS =====
+
 [System.Serializable]
 public class UserProfile
 {
     // === REQUIRED AT SIGNUP ===
-    public string username;           // Unique username
-    public string email;              // Email address
-    public long createdTimestamp;     // Account creation time
-    
+    public string username;
+    public string email;
+    public long createdTimestamp;
+
     // === OPTIONAL - CAN BE EDITED LATER ===
-    public string displayName;        // Display name (starts as username)
-    public string bio;                // User bio/description
-    public string avatarUrl;          // Profile picture URL
-    
+    public string displayName;
+    public string bio;
+    public string avatarUrl;
+
     // === GAME PROGRESS - STARTS AT ZERO ===
-    public int totalPoints;           // Total points earned
-    public int level;                 // Player level (calculated from points)
-    public int eventsAttended;        // Number of events attended
-    public int questsCompleted;       // Number of quests completed
-    public int buildingsVisited;      // Number of campus buildings visited
-    
+    public int totalPoints;
+    public int level;
+    public int eventsAttended;
+    public int questsCompleted;
+    public int buildingsVisited;
+
+    // === CURRENCY & ITEMS ===
+    public int coins;
+    public int items;
+
     // === LISTS - TRACK DETAILED PROGRESS ===
-    public string[] completedQuestIds;     // IDs of completed quests
-    public string[] visitedBuildingIds;    // IDs of visited buildings
-    public string[] attendedEventIds;      // IDs of attended events
-    public string[] teamIds;              // IDs of teams the user is part of
+    public string[] completedQuestIds;
+    public string[] visitedBuildingIds;
+    public string[] attendedEventIds;
+    public string[] teamIds;
+    public string[] scannedObjectIds;
 
     // Constructor - only requires signup data
     public UserProfile(string username, string email, long createdTimestamp)
     {
-        // Required fields from signup
         this.username = username;
         this.email = email;
         this.createdTimestamp = createdTimestamp;
-        
-        // Optional fields - start with defaults
-        this.displayName = username;  // Start as username
+
+        this.displayName = username;
         this.bio = "";
         this.avatarUrl = "";
-        
-        // Game progress - start at zero
+
         this.totalPoints = 0;
         this.level = 1;
         this.eventsAttended = 0;
         this.questsCompleted = 0;
         this.buildingsVisited = 0;
-        
-        // Lists - start empty
+
+        this.coins = 0;
+        this.items = 0;
+
         this.completedQuestIds = new string[0];
         this.visitedBuildingIds = new string[0];
         this.attendedEventIds = new string[0];
         this.teamIds = new string[0];
+        this.scannedObjectIds = new string[0];
     }
 }

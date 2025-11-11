@@ -1,222 +1,353 @@
+using System;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
 /// <summary>
-/// Controls the main menu: handles menu buttons, their selection states,
-/// and dynamically populates sub-items when a menu option is selected.
+/// Controls the main design menu UI: 
+/// - Collects materials from the character
+/// - Creates and manages menu options + sub-items
+/// - Handles color editing and selection logic
 /// </summary>
 public class DesignMenuController : MonoBehaviour
 {
+    [Header("Character Reference")]
+    public GameObject Character;
 
-    public GameObject targetObject; // Target object to manipulate (if needed)
-    // --- Fields ---
-    private List<MenuOption> menuButtons;        // All top-level menu options
-    private MenuOption selectedOption;           // Currently selected menu option
-    private Dictionary<string, string[]> menuItems; // Mapping of menu option name -> sub-items
+    // --- Material Groups ---
+    private readonly List<Material> PrimaryMaterial = new();
+    private readonly List<Material> SecondaryMaterial = new();
+    private readonly List<Material> TertiaryMaterial = new();
+    private readonly List<Material> AccentMaterial_01 = new();
+    private readonly List<Material> AccentMaterial_02 = new();
+    private readonly List<Material> SkinColor = new();
+    private Material Face;
 
-    private VisualElement itemContainer;         // Container that holds menu sub-items
+    // --- Menu Data ---
+    private List<MenuOption> menuButtons;
+    private MenuOption selectedOption;
+    private Dictionary<string, string[]> menuItems;
 
     // --- Unity Lifecycle ---
     private void Start()
     {
-        if (targetObject == null)
-        {
-            Debug.LogWarning("Target object not assigned in the inspector.");
-        }
+        ValidateMaterials();
     }
 
     private void OnEnable()
     {
-        // Get root element from UIDocument
         var root = GetComponent<UIDocument>().rootVisualElement;
-
-        // Initialize collections
         menuButtons = new List<MenuOption>();
-        itemContainer = root.Q<VisualElement>("MenuItemsContainer");
 
-        // Define menu items (could be loaded from external data later)
+        CollectCharacterMaterials();
+        InitializeMenuItems();
+        CreateMenuOptions(root);
+    }
+
+    // =======================================================================
+    #region --- Initialization Helpers ---
+    // =======================================================================
+
+    private void ValidateMaterials()
+    {
+        if (PrimaryMaterial == null ||
+            SecondaryMaterial == null ||
+            TertiaryMaterial == null ||
+            AccentMaterial_01 == null ||
+            AccentMaterial_02 == null)
+        {
+            Debug.LogWarning("Some material lists are not initialized.");
+        }
+    }
+
+    private void CollectCharacterMaterials()
+    {
+        if (Character == null)
+        {
+            Debug.LogError("Character GameObject is not assigned!");
+            return;
+        }
+
+        foreach (var renderer in Character.GetComponentsInChildren<Renderer>())
+        {
+            foreach (var mat in renderer.materials)
+            {
+                if (mat.name.StartsWith("Primary")) PrimaryMaterial.Add(mat);
+                else if (mat.name.StartsWith("Secondary")) SecondaryMaterial.Add(mat);
+                else if (mat.name.StartsWith("Tertiary")) TertiaryMaterial.Add(mat);
+                else if (mat.name.StartsWith("Accent1")) AccentMaterial_01.Add(mat);
+                else if (mat.name.StartsWith("Accent2")) AccentMaterial_02.Add(mat);
+                else if (mat.name.StartsWith("SkinColor")) SkinColor.Add(mat);
+                else if (mat.name.Contains("Face")) Face = mat;
+            }
+        }
+    }
+
+    private void InitializeMenuItems()
+    {
         menuItems = new Dictionary<string, string[]>
         {
-            { "One",   new string[] { "1" } },
-            { "Two",   new string[] { "1", "2" } },
-            { "Three", new string[] { "1", "2", "3" } }
+            { "Skin Color",     new[] { "rgb" } },
+            { "Primary Color",  new[] { "rgb" } },
+            { "Secondary Color",new[] { "rgb" } },
+            { "Tertiary Color", new[] { "rgb" } },
+            { "Accent Color 1", new[] { "rgb" } },
+            { "Accent Color 2", new[] { "rgb" } },
+            { "Eyes",           new[] { "Eyes1", "Eyes2", "Eyes3", "Eyes4" } },
+            { "Mouth",          new[] { "Mouth1", "Mouth2", "Mouth3", "Mouth4" } },
+            { "Face Decoration",new[] { "Decor1", "Decor2", "Decor3", "Decor4" } },
         };
+    }
 
-        // Find all top-level buttons with class "menu-button"
-        var buttons = root.Query<Button>(className: "menu-button").ToList();
-
-        // Wrap each button into a MenuOption and hook events
-        foreach (var button in buttons)
+    private void CreateMenuOptions(VisualElement root)
+    {
+        foreach (var item in menuItems)
         {
-            // Create a MenuOption for this button
-            var option = new MenuOption(button.text, button, menuItems[button.text], targetObject);
+            // Create button
+            var button = new Button { text = item.Key };
 
-            // Auto-select the first option by default
+            button.AddToClassList("menu-button");
+            button.AddToClassList("unselected");
+
+            // Determine material list for this menu option
+            var matList = GetMaterialListForOption(item.Key);
+
+            // Create MenuOption
+            var option = new MenuOption(item.Key, button, item.Value, root, matList);
+
+            // Select first option by default
             if (selectedOption == null)
             {
-                option.Select(itemContainer);
+                option.Select();
                 selectedOption = option;
             }
 
             menuButtons.Add(option);
 
-            // Attach click handler for the button
+            // Hook click
             button.clicked += () => OnMenuButtonClicked(option);
         }
     }
 
-    // --- Event Handlers ---
+    private List<Material> GetMaterialListForOption(string optionName)
+    {
+        if (optionName.Contains("Primary"))       return PrimaryMaterial;
+        if (optionName.Contains("Secondary"))     return SecondaryMaterial;
+        if (optionName.Contains("Tertiary"))      return TertiaryMaterial;
+        if (optionName.Contains("Accent Color 1"))return AccentMaterial_01;
+        if (optionName.Contains("Accent Color 2"))return AccentMaterial_02;
+        if (optionName.Contains("Skin Color")) return SkinColor;
+        if (optionName.Contains("Eyes")) return new List<Material>{Face};
+        if (optionName.Contains("Mouth")) return new List<Material>{Face};
+        if (optionName.Contains("Decor")) return new List<Material>{Face};
+        return null;
+    }
+
+    #endregion
+
+    // =======================================================================
+    #region --- Event Handlers ---
+    // =======================================================================
+
     private void OnMenuButtonClicked(MenuOption option)
     {
-        // Deselect current option and select the new one
         selectedOption?.Deselect();
-        option.Select(itemContainer);
+        option.Select();
         selectedOption = option;
     }
 
-    // --- Nested Classes ---
+    #endregion
+
+    // =======================================================================
+    #region --- Nested Classes ---
+    // =======================================================================
 
     /// <summary>
-    /// Represents a top-level menu option.
+    /// Represents a top-level menu option (button + sub-items).
     /// </summary>
     private class MenuOption
     {
-        public string Name;                       // Name of the option
-        public Button ButtonElement;              // UI Button for this option
-        public List<MenuItem> Items;              // Sub-items belonging to this option
-        public bool IsSelected;                   // Whether this option is currently selected
-        public MenuItem SelectedItem;             // Currently selected sub-item
+        public string Name;
+        public Button ButtonElement;
+        public List<MenuItem> Items;
+        public bool IsSelected;
+        public MenuItem SelectedItem;
+        public VisualElement root;
+        public List<Material> Materials;
+        public Texture2D[] BackgroundTextures;
 
-        public MenuOption(string name, Button buttonElement, string[] items, GameObject target)
+        public MenuOption(string name, Button buttonElement, string[] items, VisualElement rootNode, List<Material> materials = null)
         {
+            BackgroundTextures = Resources.LoadAll<Texture2D>("Faces"); 
             Name = name;
             ButtonElement = buttonElement;
             Items = new List<MenuItem>();
+            root = rootNode;
+            Materials = materials;
 
-            // Create sub-items as buttons
+            // Add button to UI
+            root.Q<VisualElement>("MenuTitleContainer").Add(buttonElement);
+
+            // Create sub-items
             foreach (var item in items)
             {
-                var subButton = new Button { text = item };
-                subButton.AddToClassList("menu-item");
+                var menuItem = CreateMenuItem(item);
+                Items.Add(menuItem);
 
-                var menuItem = new MenuItem(item, subButton);
-
-                // Auto-select the first sub-item
+                // Auto-select first sub-item
                 if (SelectedItem == null)
                 {
                     SelectedItem = menuItem;
                     menuItem.Select();
                 }
+            }
+        }
 
-                // Hook click event for sub-item
+        private MenuItem CreateMenuItem(string item)
+        {
+            if (item.StartsWith("rgb") && Materials != null && Materials.Count > 0)
+            {
+                var selector = new RGBColorSelector(Materials[0].color);
+                selector.AddToClassList("rgb-color-selector");
+
+                RegisterRGBEvents(selector);
+                return new MenuItem(item, selector);
+            }
+            else
+            {
+                var subButton = new Button { text = item };
+                subButton.AddToClassList("menu-item");
+
+                
+                foreach (var texture in BackgroundTextures)
+                {
+                
+                    if (texture.name.Equals(item))
+                    {
+                        Sprite backgroundSprite = Sprite.Create(
+                            texture,
+                            new Rect(0, 0, texture.width, texture.height),
+                            new UnityEngine.Vector2(0.5f, 0.5f), // pivot in the center
+                            100f                     // pixels per unit (doesn't really matter for UI)
+                        );
+                        subButton.text = "";
+                        
+                        subButton.style.backgroundImage = new StyleBackground(backgroundSprite);
+                        subButton.style.backgroundSize = new BackgroundSize(
+                            new Length(150, LengthUnit.Percent),
+                            new Length(150, LengthUnit.Percent)
+                        );
+
+                        subButton.style.backgroundPositionX = new BackgroundPosition(BackgroundPositionKeyword.Center);
+                        subButton.style.backgroundPositionY = new BackgroundPosition(BackgroundPositionKeyword.Center);
+                        subButton.style.backgroundRepeat = new BackgroundRepeat(Repeat.NoRepeat, Repeat.NoRepeat);
+                    }
+                }
+            
+
+                var menuItem = new MenuItem(item, subButton);
                 subButton.clicked += () =>
                 {
-                    switch (Name)
-                    {
-                        case "One":
-                            Debug.Log("Action for One - Item " + item);
-                            break;
-                        case "Two":
-                            Debug.Log("Action for Two - Item " + item);
-                            switch (item)
-                            {
-                                case "1":
-                                    Debug.Log("Action for Two - Item 1");
-                                    target.SetActive(true);
-                                    break;
-                                case "2":
-                                    Debug.Log("Action for Two - Item 2");
-                                    target.SetActive(false);
-                                    break;
-                            }
-                            break;
-                        case "Three":
-                            switch (item)
-                            {
-                                case "1":
-                                    Debug.Log("Action for Three - Item 1");
-                                    target.transform.Rotate(0, 45, 0);
-                                    break;
-                                case "2":
-                                    Debug.Log("Action for Three - Item 2");
-                                    target.transform.Rotate(45, 0, 0);
-                                    break;
-                                case "3":
-                                    Debug.Log("Action for Three - Item 3");
-                                    target.transform.Rotate(0, 0, 45);
-                                    break;
-                            }
-                            Debug.Log("Action for Three - Item " + item);
-                            break;
-                    }
+                    DoMenuEvent(item, Materials[0]);
                     SelectedItem?.Deselect();
                     SelectedItem = menuItem;
                     menuItem.Select();
                 };
 
-                Items.Add(menuItem);
+                return menuItem;
             }
-
-            IsSelected = false;
         }
 
-        /// <summary>
-        /// Select this menu option and display its sub-items.
-        /// </summary>
-        public void Select(VisualElement itemContainer)
+        private void RegisterRGBEvents(RGBColorSelector selector)
         {
-            Debug.Log("Selecting " + Name);
-            IsSelected = true;
+            foreach (var mat in Materials)
+            {
+                selector.rSlider.RegisterValueChangedCallback(evt =>
+                    mat.color = new Color(selector.rSlider.value, selector.gSlider.value, selector.bSlider.value));
 
+                selector.gSlider.RegisterValueChangedCallback(evt =>
+                    mat.color = new Color(selector.rSlider.value, selector.gSlider.value, selector.bSlider.value));
+
+                selector.bSlider.RegisterValueChangedCallback(evt =>
+                    mat.color = new Color(selector.rSlider.value, selector.gSlider.value, selector.bSlider.value));
+            }
+        }
+
+        private void DoMenuEvent(string item, Material mat)
+        {
+            Texture2D tex = Array.Find(BackgroundTextures, t => t.name == item);
+            
+            if (item.Contains("Eyes"))
+            {
+                mat.SetTexture("_Eyes", tex);
+            }
+            else if (item.Contains("Mouth"))
+            {
+                mat.SetTexture("_Mouth", tex);
+            }
+            else if (item.Contains("Decor"))
+            {
+                mat.SetTexture("_Decoration", tex);
+            }
+        }
+
+        public void Select()
+        {
+            IsSelected = true;
             ButtonElement.AddToClassList("selected");
             ButtonElement.RemoveFromClassList("unselected");
-
-            // Clear previous items and display this option's sub-items
-            itemContainer.Clear();
-            foreach (var item in Items)
-            {
-                itemContainer.Add(item.ButtonElement);
-            }
+            RedrawItems();
         }
 
-        /// <summary>
-        /// Deselect this menu option.
-        /// </summary>
         public void Deselect()
         {
             IsSelected = false;
             ButtonElement.RemoveFromClassList("selected");
             ButtonElement.AddToClassList("unselected");
         }
+
+        private void RedrawItems()
+        {
+            var container = root.Q<VisualElement>("MenuItemsContainer");
+            container.Clear();
+            foreach (var item in Items)
+            {
+                container.Add(item.Element);
+            }
+        }
     }
 
     /// <summary>
-    /// Represents a sub-item within a MenuOption.
+    /// Represents a sub-item inside a menu option (button or RGB selector).
     /// </summary>
     private class MenuItem
     {
-        public string ID;                // Identifier of the sub-item
-        public Button ButtonElement;     // UI Button for this sub-item
-        public bool IsSelected;          // Whether this sub-item is selected
+        public string ID;
+        public Image Preview;
+        public VisualElement Element;
+        public bool IsSelected;
 
-        public MenuItem(string name, Button buttonElement)
+        public MenuItem(string id, VisualElement element, Image Preview=null)
         {
-            ID = name;
-            ButtonElement = buttonElement;
+            ID = id;
+            Element = element;
             IsSelected = false;
         }
 
         public void Select()
         {
             IsSelected = true;
-            ButtonElement.AddToClassList("item-selected");
+            Element.AddToClassList("item-selected");
         }
 
         public void Deselect()
         {
             IsSelected = false;
-            ButtonElement.RemoveFromClassList("item-selected");
+            Element.RemoveFromClassList("item-selected");
         }
     }
+
+    #endregion
 }

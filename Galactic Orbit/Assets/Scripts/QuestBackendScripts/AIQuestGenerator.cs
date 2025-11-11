@@ -165,14 +165,14 @@ Make it engaging and related to {location}!";
                 return null;
             }
 
-            // Create quest with UTD coordinates
-            Vector2 utdLocation = new Vector2(32.9857f, -96.7501f);
+            // Create quest with UTD coordinatesVector2 realCoordinates = UTDLocationDatabase.GetCoordinates(location);
+            Vector2 realCoordinates = UTDLocationDatabase.GetCoordinates(location);
 
             return QuestManager.Instance.AddRuntimeQuest(
                 $"AI_{System.Guid.NewGuid().ToString().Substring(0, 8)}",
                 title,
                 description,
-                utdLocation,
+                realCoordinates,
                 points
             );
         }
@@ -194,13 +194,13 @@ Make it engaging and related to {location}!";
 
         string title = templates[Random.Range(0, templates.Length)];
         string description = $"Visit {location} and complete the challenge to earn points!";
-        Vector2 utdLocation = new Vector2(32.9857f, -96.7501f);
+        Vector2 realCoordinates = UTDLocationDatabase.GetCoordinates(location);
 
         return QuestManager.Instance.AddRuntimeQuest(
             $"FALL_{System.Guid.NewGuid().ToString().Substring(0, 8)}",
             title,
             description,
-            utdLocation,
+            realCoordinates,
             Random.Range(50, 200)
         );
     }

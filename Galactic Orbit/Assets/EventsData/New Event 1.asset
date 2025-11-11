@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c43c7b74799654582b2e520e45949139, type: 3}
   m_Name: New Event 1
   m_EditorClassIdentifier: Assembly-CSharp::EventData
+  eventID: 
   eventTitle: Women Who Compute - Tech Talk with Alumni
   eventDay: Tuesday, October 22
   eventTime: 4:00 PM
   eventLocation: SCI 1.210
+  gpsCoordinates: {x: 32.9887, y: -96.7508}
+  activationRadius: 50
+  rewardPoints: 100

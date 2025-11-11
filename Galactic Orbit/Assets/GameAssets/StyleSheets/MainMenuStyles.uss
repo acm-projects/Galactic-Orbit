@@ -1,0 +1,61 @@
+.xp-bar {
+    background-color: transparent;
+}
+
+.xp-bar .unity-progress-bar__container {
+    min-height: 0;
+}
+
+.xp-bar .unity-progress-bar__background {
+    background-color: rgb(34, 34, 34);
+    min-height: 0;
+    border-radius: 5px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.xp-bar .unity-progress-bar__progress {
+    background-color: rgb(75, 73, 200);
+    min-height: 0;
+    border-radius: 5px;
+}
+
+.quest-bar {
+    background-color: transparent;
+}
+
+.quest-bar .unity-progress-bar__container {
+    min-height: 0;
+}
+
+.quest-bar .unity-progress-bar__background {
+    background-color: rgba(255, 255, 255, 0.16);
+    min-height: 0;
+    border-radius: 5px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.quest-bar .unity-progress-bar__progress {
+    background-color: rgb(255, 255, 210);
+    min-height: 0;
+    border-radius: 5px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}

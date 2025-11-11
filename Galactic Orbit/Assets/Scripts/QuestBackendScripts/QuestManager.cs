@@ -163,7 +163,7 @@ public class QuestManager : MonoBehaviour
     }
 
     // === RUNTIME QUEST CREATION (for AI-generated quests) ===
-    
+
     // Add a quest created at runtime (for AI generation)
     public Quest AddRuntimeQuest(string id, string title, string desc, Vector2 location, int reward)
     {
@@ -173,10 +173,101 @@ public class QuestManager : MonoBehaviour
         // ✅ Detect if it’s AI-generated
         bool isAI = id.StartsWith("AI_");
         string source = isAI ? "🤖 [AI Generated]" : "📘 [Manual]";
-        
+
         Debug.Log($"{source} Quest added: {title}");
 
         return newQuest;
+    }
+
+    // ===== Proximity/Real Location checking =====
+
+    /// <summary>
+    /// Check if player is near enough to start a quest
+    /// </summary>
+    public bool IsQuestNearby(string questID)
+    {
+        Quest quest = allQuests.Find(q => q.questID == questID);
+        if (quest == null)
+        {
+            Debug.LogWarning($"Quest {questID} not found");
+            return false;
+        }
+
+        if (ProximityChecker.Instance == null)
+        {
+            Debug.LogWarning("ProximityChecker not found in scene");
+            return false;
+        }
+
+        return ProximityChecker.Instance.IsPlayerNearQuest(quest);
+    }
+
+    /// <summary>
+    /// Get distance to a quest location in meters
+    /// </summary>
+    public float GetDistanceToQuest(string questID)
+    {
+        Quest quest = allQuests.Find(q => q.questID == questID);
+        if (quest == null) return float.MaxValue;
+
+        if (ProximityChecker.Instance == null) return float.MaxValue;
+
+        return ProximityChecker.Instance.GetDistanceToQuest(quest);
+    }
+
+    /// <summary>
+    /// Start a quest (only works if player is nearby)
+    /// </summary>
+    public bool StartQuest(string questID)
+    {
+        Quest quest = allQuests.Find(q => q.questID == questID);
+        
+        if (quest == null)
+        {
+            Debug.LogWarning($"Quest {questID} not found");
+            return false;
+        }
+
+        // Check if already active
+        if (quest.isActive)
+        {
+            Debug.LogWarning($"Quest '{quest.questTitle}' is already active");
+            return false;
+        }
+
+        // Check if already completed
+        if (quest.isCompleted)
+        {
+            Debug.LogWarning($"Quest '{quest.questTitle}' is already completed");
+            return false;
+        }
+
+        // Check proximity
+        if (!IsQuestNearby(questID))
+        {
+            float distance = GetDistanceToQuest(questID);
+            Debug.LogWarning($"Too far from quest location. Distance: {distance:F0}m, Required: {quest.completionRadius}m");
+            return false;
+        }
+
+        // All checks passed - activate quest
+        ActivateQuest(quest);
+        Debug.Log($"✅ Started quest: {quest.questTitle}");
+        return true;
+    }
+
+    /// <summary>
+    /// Check if a quest can be started (is nearby and not active/completed)
+    /// </summary>
+    public bool CanStartQuest(string questID)
+    {
+        Quest quest = allQuests.Find(q => q.questID == questID);
+        
+        if (quest == null) return false;
+        if (quest.isActive) return false;
+        if (quest.isCompleted) return false;
+        
+        return IsQuestNearby(questID);
     }
 
 

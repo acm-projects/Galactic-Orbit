@@ -1,12 +1,10 @@
-
-
 Button.menu-button {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     margin-left: 10px;
     background-color: transparent;
-    border-width: 0px;
-    color: #5F4000;
+    border-width: 0;
+    color: rgb(95, 64, 0);
 }
 
 Button.unselected {
@@ -18,29 +16,29 @@ Button.selected {
 }
 
 .grid-container {
-    display: flex;          /* UITK is flexbox-based */
-    flex-direction: row;    /* lay out children left → right */
-    flex-wrap: wrap;        /* wrap to next row */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 10px;              /* spacing between items */
+    gap: 10px;
 }
 
 Button.menu-item {
     width: 50px;
     height: 50px;
     border-width: 1px;
-    border-color: rgba(150, 150, 150, 1);
+    border-color: rgb(150, 150, 150);
     border-style: solid;
     background-color: rgba(255, 255, 255, 0.2);
     margin: 10px;
-    padding: 0px;
+    padding: 0;
     overflow: hidden;
 }
 
 Button.item-selected {
     border-width: 2px;
-    border-color: rgba(90, 54, 0, 1);
+    border-color: rgb(90, 54, 0);
     border-style: solid;
 }
 
@@ -52,25 +50,20 @@ Button.item-selected {
     background-color: white;
 }
 
-
 .rgb-color-selector {
     width: 100%;
     height: auto;
     flex-direction: row;
     align-items: center;
-
-    border-top-width: 1px;
-    border-right-width: 1px;
-    border-bottom-width: 1px;
-    border-left-width: 1px;
-
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
     border-top-color: gray;
     border-right-color: gray;
     border-bottom-color: gray;
     border-left-color: gray;
-
     margin-bottom: 6px;
-
 }
 
 .slider-container {
@@ -98,10 +91,12 @@ Button.item-selected {
     width: 100%;
     flex-direction: row;
 }
+
 .rgb-slider > VisualElement {
-    flex: 1              /* thickness of the track */
+    flex: 1;
 }
+
 .rgb-slider > Label {
-    width: 30px; 
-    min-width: 0px;
+    width: 30px;
+    min-width: 0;
 }
