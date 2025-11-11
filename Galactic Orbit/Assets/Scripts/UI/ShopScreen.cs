@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class MenuScript : MonoBehaviour
+public class ShopScreen : MonoBehaviour
 {
     private void Start()
     {

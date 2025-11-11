@@ -37,13 +37,15 @@ public class LogInController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("SwitchToSignupButton not found in the UXML!");
+            Debug.LogWarning("SwitchToSignupButton not found in the UXML!");
         }
 
     }
 
     private async void OnSubmit()
     {
+        SceneController.Instance.LoadLevel("MapScene");
+
         string username = usernameField.value;
         string password = passwordField.value;
 
@@ -59,6 +61,8 @@ public class LogInController : MonoBehaviour
         }
 
         bool success = await FirebaseManager.Instance.LoginAsync(username, password);
+
+        //bool success = true;
 
         if (success)
         {
