@@ -51,8 +51,8 @@ Toggle Label {
 
 Toggle #unity-checkmark {
     position: absolute;
-    top: 25%;
-    left: 0%;
+    top: 10%;
+    left: 15%;
     width: 50%;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
