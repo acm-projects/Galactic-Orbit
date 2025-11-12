@@ -95,12 +95,12 @@ public class UserProfileManager : MonoBehaviour
             }
         });
     }
-    
+
     // Award points to the current user
     public void AddPoints(int points, Action<bool, string> callback)
     {
         FirebaseUser currentUser = FirebaseManager.Instance.CurrentUser;
-        
+
         if (currentUser == null)
         {
             callback?.Invoke(false, "Not signed in");
@@ -114,7 +114,7 @@ public class UserProfileManager : MonoBehaviour
             {
                 int newTotal = profile.totalPoints + points;
                 int newLevel = CalculateLevel(newTotal);
-                
+
                 // Update both points and level
                 var updates = new System.Collections.Generic.Dictionary<string, object>
                 {
@@ -151,7 +151,7 @@ public class UserProfileManager : MonoBehaviour
     public void UpdateProfileField(string fieldName, object value, Action<bool, string> callback)
     {
         FirebaseUser currentUser = FirebaseManager.Instance.CurrentUser;
-        
+
         if (currentUser == null)
         {
             callback?.Invoke(false, "Not signed in");
@@ -217,6 +217,12 @@ public class UserProfileManager : MonoBehaviour
 
     // Save complete character customization
     public void SaveCharacterCustomization(CharacterCustomization customization, Action<bool, string> callback)
+    // ===== CURRENCY METHODS =====
+
+    /// <summary>
+    /// Add coins to the current user
+    /// </summary>
+    public void AddCoins(int amount, Action<bool, string> callback)
     {
         FirebaseUser currentUser = FirebaseManager.Instance.CurrentUser;
         
@@ -321,15 +327,15 @@ public class UserProfile
     public int buildingsVisited;      // Number of campus buildings visited
 
     // === LISTS - TRACK DETAILED PROGRESS ===
-    public string[] completedQuestIds;     // IDs of completed quests
-    public string[] visitedBuildingIds;    // IDs of visited buildings
-    public string[] attendedEventIds;      // IDs of attended events
-    public string[] teamIds;              // IDs of teams the user is part of
+    public string[] completedQuestIds;
+    public string[] visitedBuildingIds;
+    public string[] attendedEventIds;
+    public string[] teamIds;
+    public string[] scannedObjectIds;
 
     // Constructor - only requires signup data
     public UserProfile(string username, string email, long createdTimestamp)
     {
-        // Required fields from signup
         this.username = username;
         this.email = email;
         this.createdTimestamp = createdTimestamp;
@@ -360,10 +366,14 @@ public class UserProfile
         this.buildingsVisited = 0;
 
         // Lists - start empty
+        this.coins = 0;
+        this.items = 0;
+
         this.completedQuestIds = new string[0];
         this.visitedBuildingIds = new string[0];
         this.attendedEventIds = new string[0];
         this.teamIds = new string[0];
+        this.scannedObjectIds = new string[0];
     }
 }
 

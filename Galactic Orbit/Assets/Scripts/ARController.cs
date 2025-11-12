@@ -222,7 +222,7 @@ public class SimpleARController : MonoBehaviour
 
     void OnGUI()
     {
-    if (true) return;
+        // if (true) return; // uncomment for now bc makes everything after unreachable
     if (!isARMode) return;
     
     GUIStyle style = new GUIStyle();
