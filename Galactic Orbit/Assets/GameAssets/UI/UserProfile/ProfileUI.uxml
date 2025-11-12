@@ -8,7 +8,9 @@
             <ui:Button text="Profile&#10;" class="selected" style="font-size: 14px; margin-top: 0; margin-bottom: 0; margin-left: 0; padding-left: 0; padding-top: 0; padding-bottom: 0; padding-right: 0; margin-right: 0; flex-grow: 1; background-color: rgba(255, 255, 255, 0); -unity-font-style: bold; color: rgb(255, 255, 255);" />
             <ui:Button text="Group" class="unselected" style="font-size: 14px; margin-top: 0; margin-bottom: 0; margin-left: 0; padding-left: 0; padding-top: 0; padding-bottom: 0; padding-right: 0; margin-right: 0; flex-grow: 1; background-color: rgba(255, 255, 255, 0); -unity-font-style: bold; color: rgb(255, 255, 255); visibility: hidden;" />
         </ui:VisualElement>
-        <ui:VisualElement name="Character" style="flex-grow: 0; width: 100px; height: 120px; background-color: rgb(220, 220, 220); margin-bottom: 0; visibility: hidden; flex-shrink: 0;" />
+        <ui:VisualElement name="CharacterContainer" style="flex-grow: 0; width: 100px; height: 120px; margin-bottom: 0; visibility: visible; flex-shrink: 0; opacity: 1; -unity-background-scale-mode: scale-and-crop; background-size: 100% 100%; background-position-y: center;">
+            <ui:VisualElement style="flex-grow: 0; background-image: url(&quot;project://database/Assets/GameAssets/UI/UserProfile/ModelPreviewRT.renderTexture?fileID=8400000&amp;guid=f345a9d661e644540ac92925db1675d7&amp;type=2#ModelPreviewRT&quot;); -unity-background-scale-mode: scale-and-crop; width: 240%; height: 240%; left: -70%;" />
+        </ui:VisualElement>
         <ui:VisualElement name="ExperienceContainer" style="flex-grow: 0; width: 80%; height: 40px; flex-direction: column; margin-top: 10px;">
             <ui:VisualElement name="ExperienceLevel" style="flex-grow: 1; flex-direction: row;">
                 <ui:Label style="-unity-font-definition: url(&quot;project://database/Assets/Fonts/Eagle_Lake/EagleLake-Regular.ttf?fileID=12800000&amp;guid=291cdbee5253a654a956abc6e4c6e100&amp;type=3#EagleLake-Regular&quot;); font-size: 30px; -unity-text-align: lower-left; -unity-font-style: bold;" />

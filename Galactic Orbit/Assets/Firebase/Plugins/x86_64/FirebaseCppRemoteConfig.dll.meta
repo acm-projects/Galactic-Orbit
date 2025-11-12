@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7e0d636394aa43cd80440641a013d37c
+guid: 9d9ab4f839364d958d9cd704e26316e3
 labels:
 - gvh
 PluginImporter:
@@ -13,10 +13,6 @@ PluginImporter:
   isExplicitlyReferenced: 0
   validateReferences: 1
   platformData:
-    Android:
-      enabled: 0
-      settings:
-        Is16KbAligned: false
     Any:
       enabled: 1
       settings: {}

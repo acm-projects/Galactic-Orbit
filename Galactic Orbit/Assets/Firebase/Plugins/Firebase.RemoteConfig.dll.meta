@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7e0d636394aa43cd80440641a013d37c
+guid: bd957c2d83f9492ea77f2254904699b5
 labels:
 - gvh
 PluginImporter:
@@ -13,34 +13,17 @@ PluginImporter:
   isExplicitlyReferenced: 0
   validateReferences: 1
   platformData:
-    Android:
-      enabled: 0
-      settings:
-        Is16KbAligned: false
     Any:
       enabled: 1
       settings: {}
     Editor:
       enabled: 0
       settings:
-        CPU: x86_64
         DefaultValueInitialized: true
-    Linux64:
-      enabled: 1
-      settings:
-        CPU: x86_64
-    OSXUniversal:
-      enabled: 1
-      settings:
-        CPU: x86_64
-    Win:
+    WindowsStoreApps:
       enabled: 0
       settings:
-        CPU: None
-    Win64:
-      enabled: 1
-      settings:
-        CPU: x86_64
+        CPU: AnyCPU
   userData: 
   assetBundleName: 
   assetBundleVariant: 
