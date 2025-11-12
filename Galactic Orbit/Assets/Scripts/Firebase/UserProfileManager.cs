@@ -216,63 +216,111 @@ public class UserProfileManager : MonoBehaviour
     }
 
     // Save complete character customization
-    public void SaveCharacterCustomization(CharacterCustomization customization, Action<bool, string> callback)
+// Save complete character customization
+public void SaveCharacterCustomization(CharacterCustomization customization, Action<bool, string> callback)
+{
+    FirebaseUser currentUser = FirebaseManager.Instance.CurrentUser;
+    
+    if (currentUser == null)
+    {
+        callback?.Invoke(false, "Not signed in");
+        return;
+    }
+    
+    var updates = new System.Collections.Generic.Dictionary<string, object>
+    {
+        { "primaryColorR", customization.primaryColor.r },
+        { "primaryColorG", customization.primaryColor.g },
+        { "primaryColorB", customization.primaryColor.b },
+        
+        { "secondaryColorR", customization.secondaryColor.r },
+        { "secondaryColorG", customization.secondaryColor.g },
+        { "secondaryColorB", customization.secondaryColor.b },
+        
+        { "tertiaryColorR", customization.tertiaryColor.r },
+        { "tertiaryColorG", customization.tertiaryColor.g },
+        { "tertiaryColorB", customization.tertiaryColor.b },
+        
+        { "accent1ColorR", customization.accent1Color.r },
+        { "accent1ColorG", customization.accent1Color.g },
+        { "accent1ColorB", customization.accent1Color.b },
+        
+        { "accent2ColorR", customization.accent2Color.r },
+        { "accent2ColorG", customization.accent2Color.g },
+        { "accent2ColorB", customization.accent2Color.b },
+        
+        { "skinColorR", customization.skinColor.r },
+        { "skinColorG", customization.skinColor.g },
+        { "skinColorB", customization.skinColor.b },
+        
+        { "selectedEyes", customization.selectedEyes },
+        { "selectedMouth", customization.selectedMouth },
+        { "selectedFaceDecoration", customization.selectedFaceDecoration }
+    };
+
+    FirebaseManager.Instance.DbReference.Child("userProfiles").Child(currentUser.UserId)
+        .UpdateChildrenAsync(updates)
+        .ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCompleted)
+                callback?.Invoke(true, "Character customization saved");
+            else
+                callback?.Invoke(false, "Failed to save customization: " + task.Exception?.Message);
+        });
+}
+
+// ===== CURRENCY METHODS =====
+
+/// <summary>
+/// Add coins to the current user
+/// </summary>
+public void AddCoins(int amount, Action<bool, string> callback)
+{
+    FirebaseUser currentUser = FirebaseManager.Instance.CurrentUser;
+    
+    if (currentUser == null)
+    {
+        callback?.Invoke(false, "Not signed in");
+        return;
+    }
+
+    GetCurrentUserProfile((profile) =>
+    {
+        if (profile != null)
+        {
+            int newCoins = profile.coins + amount;
+
+            var updates = new System.Collections.Generic.Dictionary<string, object>
+            {
+                { "coins", newCoins }
+            };
+
+            FirebaseManager.Instance.DbReference.Child("userProfiles").Child(currentUser.UserId)
+                .UpdateChildrenAsync(updates)
+                .ContinueWithOnMainThread(task =>
+                {
+                    if (task.IsCompleted)
+                        callback?.Invoke(true, $"Added {amount} coins! Total: {newCoins}");
+                    else
+                        callback?.Invoke(false, "Failed to add coins: " + task.Exception?.Message);
+                });
+        }
+        else
+        {
+            callback?.Invoke(false, "Profile not found");
+        }
+    });
+}
+
+
+
+
     // ===== CURRENCY METHODS =====
 
     /// <summary>
     /// Add coins to the current user
     /// </summary>
-    public void AddCoins(int amount, Action<bool, string> callback)
-    {
-        FirebaseUser currentUser = FirebaseManager.Instance.CurrentUser;
-        
-        if (currentUser == null)
-        {
-            callback?.Invoke(false, "Not signed in");
-            return;
-        }
-
-        var updates = new System.Collections.Generic.Dictionary<string, object>
-        {
-            { "primaryColorR", customization.primaryColor.r },
-            { "primaryColorG", customization.primaryColor.g },
-            { "primaryColorB", customization.primaryColor.b },
-            
-            { "secondaryColorR", customization.secondaryColor.r },
-            { "secondaryColorG", customization.secondaryColor.g },
-            { "secondaryColorB", customization.secondaryColor.b },
-            
-            { "tertiaryColorR", customization.tertiaryColor.r },
-            { "tertiaryColorG", customization.tertiaryColor.g },
-            { "tertiaryColorB", customization.tertiaryColor.b },
-            
-            { "accent1ColorR", customization.accent1Color.r },
-            { "accent1ColorG", customization.accent1Color.g },
-            { "accent1ColorB", customization.accent1Color.b },
-            
-            { "accent2ColorR", customization.accent2Color.r },
-            { "accent2ColorG", customization.accent2Color.g },
-            { "accent2ColorB", customization.accent2Color.b },
-            
-            { "skinColorR", customization.skinColor.r },
-            { "skinColorG", customization.skinColor.g },
-            { "skinColorB", customization.skinColor.b },
-            
-            { "selectedEyes", customization.selectedEyes },
-            { "selectedMouth", customization.selectedMouth },
-            { "selectedFaceDecoration", customization.selectedFaceDecoration }
-        };
-
-        FirebaseManager.Instance.DbReference.Child("userProfiles").Child(currentUser.UserId)
-            .UpdateChildrenAsync(updates)
-            .ContinueWithOnMainThread(task =>
-            {
-                if (task.IsCompleted)
-                    callback?.Invoke(true, "Character customization saved");
-                else
-                    callback?.Invoke(false, "Failed to save customization: " + task.Exception?.Message);
-            });
-    }
+    
 
     // Load character customization
     public void LoadCharacterCustomization(Action<CharacterCustomization> callback)
@@ -296,6 +344,10 @@ public class UserProfileManager : MonoBehaviour
 [System.Serializable]
 public class UserProfile
 {
+
+    // === CURRENCY ===
+    public int coins;                 // In-game currency
+    public int items;                 // Number of items owned
     // === REQUIRED AT SIGNUP ===
     public string username;           // Unique username
     public string email;              // Email address
