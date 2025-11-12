@@ -9,6 +9,7 @@ public class ButtonController : MonoBehaviour
     [SerializeField] private GameObject MainScreen;
     [SerializeField] private GameObject Map;
     [SerializeField] private GameObject ARScreen;
+    [SerializeField] private GameObject SettingsScreen;
 
 
     void OnEnable()
@@ -70,6 +71,7 @@ public class ButtonController : MonoBehaviour
         Debug.Log("AR Back Button Pressed");
         ARScreen.SetActive(false);
         MainScreen.SetActive(true);
+        Map.SetActive(true);
         OnEnable();
     }
     private void OnMenuButton()

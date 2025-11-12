@@ -1,0 +1,891 @@
+fileFormatVersion: 2
+guid: 0df2bdebf6521bf419ad4f2d821ea951
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2889
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71d364eb4a1a3344fb68abd2e1cc8af8
+      internalID: -1108023086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 2889
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c2a271d07d26384abe183dc94de30d2
+      internalID: -1815595265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 2889
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb48da991a3403544ac33ff7e569a648
+      internalID: -124217180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 2889
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc9aec66f4d551441b5b6edf9cbefc85
+      internalID: -1217534156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 2889
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d59c69e2b378e964b8554510350bb534
+      internalID: -2012710770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 2160
+        y: 2889
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2248eacb3ccdc2144925d1db254512a9
+      internalID: 1724326063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_6
+      rect:
+        serializedVersion: 2
+        x: 2592
+        y: 2889
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5daeb0a7785c75468fe9b61bd035c03
+      internalID: 1367376881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_7
+      rect:
+        serializedVersion: 2
+        x: 3024
+        y: 2889
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73ec2b8907874934a85d7c284a25e8fb
+      internalID: -289627051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_8
+      rect:
+        serializedVersion: 2
+        x: 3456
+        y: 2889
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04b994a3f264f8a458609e5aef6aefc6
+      internalID: 1670613392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_9
+      rect:
+        serializedVersion: 2
+        x: 3888
+        y: 2889
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40207887a22d20e4aa6f5a10a2365637
+      internalID: -1580263146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1926
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b871a7b64109c9b4892fe9fbde028fb3
+      internalID: -1022944138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_11
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 1926
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d54cefc7a8e71fb4d89a541840dadaee
+      internalID: -1057942698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_12
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 1926
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b54cf259c14cbdf4690cfdb0fe6dfd6e
+      internalID: -1831724526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_13
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 1926
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0be4434534c6a0f4cb8e5d41557930a6
+      internalID: 1212236538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_14
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 1926
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c76984b7983c637488e6aa7c27bf0396
+      internalID: -519964025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_15
+      rect:
+        serializedVersion: 2
+        x: 2160
+        y: 1926
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cef6276f3b479a84bad3197db17b5a4f
+      internalID: 1259463187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_16
+      rect:
+        serializedVersion: 2
+        x: 2592
+        y: 1926
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3052b29d62649fd478aeec973e544337
+      internalID: 1589752545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_17
+      rect:
+        serializedVersion: 2
+        x: 3024
+        y: 1926
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0582fede23602f342a3d14812b44abe3
+      internalID: -1459594614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_18
+      rect:
+        serializedVersion: 2
+        x: 3456
+        y: 1926
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a4ec3f5b62d398488f257d1e9c500d5
+      internalID: -2118207408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_19
+      rect:
+        serializedVersion: 2
+        x: 3888
+        y: 1926
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0673122120013fc4ba53c9ab6fb81ab6
+      internalID: 2819051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 963
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e6fd05acdcc50f40988adc783f8f6c8
+      internalID: 1715681303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_21
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 963
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b520e838324f584a8ad561d6e7dc74f
+      internalID: 267343857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_22
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 963
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e10b8a1727c2e14a8f1aa2cfc6f99d6
+      internalID: -1940223941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_23
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 963
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9aa448264d7874c418d24498ace9a93e
+      internalID: -1706689130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_24
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 963
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f039e139179a2d4ca4b3c25ac67311b
+      internalID: -635961122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_25
+      rect:
+        serializedVersion: 2
+        x: 2160
+        y: 963
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36859b146b49c354a98b436c661cfc08
+      internalID: -429751587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_26
+      rect:
+        serializedVersion: 2
+        x: 2592
+        y: 963
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b373d798fd526b4fbf7046e9f7871a2
+      internalID: -986356348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_27
+      rect:
+        serializedVersion: 2
+        x: 3024
+        y: 963
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 779978e972365504a835312da94e9265
+      internalID: -2078417372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_28
+      rect:
+        serializedVersion: 2
+        x: 3456
+        y: 963
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa38ae8e803c7b541a7105d5f9246cfc
+      internalID: 367249257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_29
+      rect:
+        serializedVersion: 2
+        x: 3888
+        y: 963
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28608b19beed49d4987290e7bc3456fb
+      internalID: -855720465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e0a3fcf9f5d7414fa47c6f7be8f1e91
+      internalID: 1890906115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_31
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 0
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24ada7fa3969ead4b95d95e6bbe0d3de
+      internalID: 602534381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: quest-bg-spritesheet_32
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 0
+        width: 432
+        height: 963
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d128377b6767bcd45982b99a91181c55
+      internalID: -1585240249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 2fe031b3c38b157438494c1289622790
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":10.0,"y":4.0},"gridSpriteSize":{"x":432.0,"y":963.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      quest-bg-spritesheet_0: -1108023086
+      quest-bg-spritesheet_1: -1815595265
+      quest-bg-spritesheet_10: -1022944138
+      quest-bg-spritesheet_11: -1057942698
+      quest-bg-spritesheet_12: -1831724526
+      quest-bg-spritesheet_13: 1212236538
+      quest-bg-spritesheet_14: -519964025
+      quest-bg-spritesheet_15: 1259463187
+      quest-bg-spritesheet_16: 1589752545
+      quest-bg-spritesheet_17: -1459594614
+      quest-bg-spritesheet_18: -2118207408
+      quest-bg-spritesheet_19: 2819051
+      quest-bg-spritesheet_2: -124217180
+      quest-bg-spritesheet_20: 1715681303
+      quest-bg-spritesheet_21: 267343857
+      quest-bg-spritesheet_22: -1940223941
+      quest-bg-spritesheet_23: -1706689130
+      quest-bg-spritesheet_24: -635961122
+      quest-bg-spritesheet_25: -429751587
+      quest-bg-spritesheet_26: -986356348
+      quest-bg-spritesheet_27: -2078417372
+      quest-bg-spritesheet_28: 367249257
+      quest-bg-spritesheet_29: -855720465
+      quest-bg-spritesheet_3: -1217534156
+      quest-bg-spritesheet_30: 1890906115
+      quest-bg-spritesheet_31: 602534381
+      quest-bg-spritesheet_32: -1585240249
+      quest-bg-spritesheet_4: -2012710770
+      quest-bg-spritesheet_5: 1724326063
+      quest-bg-spritesheet_6: 1367376881
+      quest-bg-spritesheet_7: -289627051
+      quest-bg-spritesheet_8: 1670613392
+      quest-bg-spritesheet_9: -1580263146
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
