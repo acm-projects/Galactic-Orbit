@@ -57,13 +57,11 @@ public class LogInController : MonoBehaviour
         }
 
         bool success = await FirebaseManager.Instance.LoginAsync(username, password);
-        //bool success = true;
-        // for debugging
-        success = true;
+        // success = true;
         if (success)
         {
             Debug.Log("Login successful.");
-            SceneController.Instance.LoadLevel("MapScene");
+            SceneController.Instance.LoadLevel("MainScene");
         }
         else
         {

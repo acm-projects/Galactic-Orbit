@@ -7,22 +7,13 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Managers.unity
-    guid: ce1961a3bf524c54fbd78f81ea250a9c
-  - enabled: 0
-    path: Assets/Scenes/LoginScene.unity
-    guid: 7301346980df1a342a37ed1ff5b91d7f
+    guid: 78abb58d16461464da1a1702a6b9ea73
+  - enabled: 1
+    path: Assets/Scenes/MainScene.unity
+    guid: ff4d01455d4fc23419ee58cd35cf4d09
   - enabled: 1
     path: Assets/Scenes/AuthScene.unity
     guid: b524f01f01e126b4c923d8bd58182572
-  - enabled: 1
-    path: Assets/Scenes/MapScene.unity
-    guid: 67be714eb4a30bb4baa54bc916f32166
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 4755b35b590504809a7525fd2109c2e2
-  - enabled: 0
-    path: Assets/Scenes/WorldMap.unity
-    guid: 6cbfe1f337201ad4bb1c2bfe307f63fc
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 6ee72d15cf39dd748a13eac57397b9af,
       type: 2}

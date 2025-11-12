@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class ButtonController : MonoBehaviour
 {
@@ -7,52 +8,126 @@ public class ButtonController : MonoBehaviour
     [SerializeField] private GameObject ProfileScreen;
     [SerializeField] private GameObject CharacterCustomizationScreen;
     [SerializeField] private GameObject MainScreen;
-    
+    [SerializeField] private GameObject Map;
+    [SerializeField] private GameObject ARScreen;
 
     void OnEnable()
     {
-        var root = GetComponent<UIDocument>().rootVisualElement;
-
         // Main Screen
-        var profileButton = root.Q<Button>("ProfileButton");
-        if (profileButton == null) Debug.Log("ProfileButton button not found!");
-        else profileButton.clicked += OnProfileButton;
+        var root = MainScreen.GetComponentInChildren<UIDocument>().rootVisualElement;
+        if (root != null)
+        {
+            var profileButton = root.Q<Button>("ProfileButton");
+            if (profileButton == null) Debug.Log("ProfileButton button not found!");
+            else profileButton.clicked += OnProfileButton;
+
+            var MenuButton = root.Q<Button>("MenuButton");
+            if (MenuButton == null) Debug.Log("MenuButton button not found!");
+            else MenuButton.clicked += OnMenuButton;
+        }
 
         // Profile Screen
-        var exitButton = root.Q<Button>("ExitButton");
-        if (exitButton == null) Debug.Log("ExitButton button not found!");
-        else exitButton.clicked += OnExitButton;
+        root = ProfileScreen.GetComponentInChildren<UIDocument>().rootVisualElement;
+        if (root != null)
+        {
+            var exitButton = root.Q<Button>("ExitButton");
+            if (exitButton == null) Debug.Log("ExitButton button not found!");
+            else exitButton.clicked += OnExitButton;
 
-        var customizeButton = root.Q<Button>("CustomizeButton");
-        if (customizeButton == null) Debug.Log("CustomizeButton button not found!");
-        else customizeButton.clicked += OnCustomizeButton;
+
+            var customizeButton = root.Q<Button>("CustomizeButton");
+            if (customizeButton == null) Debug.Log("CustomizeButton button not found!");
+            else customizeButton.clicked += OnCustomizeButton;
+        }
 
         // Character Customization Screen
-        var backButton = root.Q<Button>("BackButton");
-        if (backButton == null) Debug.Log("BackButton button not found!");
-        else backButton.clicked += OnBackButton;
+        root = CharacterCustomizationScreen.GetComponentInChildren<UIDocument>().rootVisualElement;
+        if (root != null)
+        {
+            Debug.Log("Adding Character Customization screen button handlers");
+            var backButton = root.Q<Button>("BackButton");
+            if (backButton == null) Debug.Log("BackButton button not found!");
+            else backButton.clicked += OnBackButton;
+        }
 
+        // AR Screen
+        root = ARScreen.GetComponentInChildren<UIDocument>().rootVisualElement;
+        if (root != null)
+        {
+            root.RegisterCallback<ClickEvent>(evt =>
+            {
+                Debug.Log("Clicked: " + evt.target);
+            });
+            Debug.Log("Adding AR screen button handlers");
+            // Add AR screen button handlers here if needed
+            var arBackButton = root.Q<Button>("ARBackButton");
+            if (arBackButton == null) Debug.Log("ARBackButton button not found!");
+            else arBackButton.clicked += OnARBackButton;
+        }
     }
-
-    private void OnProfileButton()
+    private void OnARBackButton()
     {
-        ProfileScreen.SetActive(true);
-        MainScreen.SetActive(false);
+        Debug.Log("AR Back Button Pressed");
+        ARScreen.SetActive(false);
+        MainScreen.SetActive(true);
+        OnEnable();
     }
+    private void OnMenuButton()
+    {
+        ARScreen.SetActive(true);
+        MainScreen.SetActive(false);
+        Map.SetActive(false);
+        OnEnable();
+    }
+    public void OnProfileButton()
+    {
+        // Make sure the scene is in the active build profile!
+        AsyncOperation loadOp = SceneManager.LoadSceneAsync("UserProfile", LoadSceneMode.Additive);
+
+        if (loadOp == null)
+        {
+            Debug.LogError("❌ Failed to start loading UserProfile. Check that it is in the active build profile.");
+            return;
+        }
+
+        loadOp.completed += (op) =>
+        {
+            // Wait until the scene is fully loaded
+            Debug.Log("✅ UserProfile loaded successfully.");
+
+            // Now we can safely find the UserProfileController
+            var userProfile = Object.FindAnyObjectByType<UserProfileController>(FindObjectsInactive.Include);
+            if (userProfile != null)
+            {
+                userProfile.InitializeUI();
+            }
+            else
+            {
+                Debug.LogWarning("❌ No UserProfileController found on ProfileScreen");
+            }
+        };
+    }
+
+
+
     private void OnExitButton()
     {
         ProfileScreen.SetActive(false);
         MainScreen.SetActive(true);
+        Map.SetActive(true);
+        OnEnable();
     }
     private void OnCustomizeButton()
     {
         ProfileScreen.SetActive(false);
         CharacterCustomizationScreen.SetActive(true);
+        OnEnable();
     }
     private void OnBackButton()
     {
         CharacterCustomizationScreen.SetActive(false);
         ProfileScreen.SetActive(true);
+        OnEnable();
     }
 
 }

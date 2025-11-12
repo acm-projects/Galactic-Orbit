@@ -2349,6 +2349,8 @@ MonoBehaviour:
   ProfileScreen: {fileID: 1907047681}
   CharacterCustomizationScreen: {fileID: 1325418286}
   MainScreen: {fileID: 1394877568}
+  Map: {fileID: 0}
+  ARScreen: {fileID: 0}
 --- !u!114 &1387419162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4190,6 +4192,7 @@ MonoBehaviour:
   bobSpeed: 3
   bobHeight: 0.1
   itemName: Planet
+  shrinkDuration: 0.4
 --- !u!114 &1680364387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4555,7 +4558,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1855615391}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 917b6c38e65a8dd45b0f470a8e8d44e1, type: 3}
   m_Name: 
@@ -4798,6 +4801,8 @@ MonoBehaviour:
   ProfileScreen: {fileID: 1907047681}
   CharacterCustomizationScreen: {fileID: 1325418286}
   MainScreen: {fileID: 1394877568}
+  Map: {fileID: 0}
+  ARScreen: {fileID: 0}
 --- !u!1 &2071642529
 GameObject:
   m_ObjectHideFlags: 0
@@ -4950,6 +4955,7 @@ GameObject:
   - component: {fileID: 2117023418}
   - component: {fileID: 2117023419}
   - component: {fileID: 2117023420}
+  - component: {fileID: 2117023421}
   m_Layer: 5
   m_Name: ProfilePanel
   m_TagString: Untagged
@@ -5011,6 +5017,20 @@ MonoBehaviour:
   ProfileScreen: {fileID: 1907047681}
   CharacterCustomizationScreen: {fileID: 1325418286}
   MainScreen: {fileID: 1394877568}
+  Map: {fileID: 0}
+  ARScreen: {fileID: 0}
+--- !u!114 &2117023421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117023417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d36c0742286ec94e8d74fe23b7207b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UserProfileController
 --- !u!1 &2147258278
 GameObject:
   m_ObjectHideFlags: 0
@@ -5316,7 +5336,6 @@ MonoBehaviour:
   normalCamera: {fileID: 1855615391}
   arSessionOrigin: {fileID: 5559786355707313419}
   arSession: {fileID: 2963720151217060145}
-  MainMenuOObject: {fileID: 1996516601}
   arObjectPrefab: {fileID: 1680364385}
   spawnDistance: 2
   spawnDistanceMax: 4
