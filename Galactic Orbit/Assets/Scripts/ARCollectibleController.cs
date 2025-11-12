@@ -55,7 +55,7 @@ public class ARCollectible : MonoBehaviour
         CheckForTap();
     }
 
-    async Task CheckForTap()
+    async void CheckForTap()
     {
         bool tapped = false;
         Vector2 screenPos = Vector2.zero;
@@ -81,6 +81,7 @@ public class ARCollectible : MonoBehaviour
         {
             Debug.Log($"Hit: {hit.collider.name}");
             if (hit.collider.gameObject == gameObject)
+                // Might have issue bc CheckForTap method is void instead of Async
                 await Collect();
         }
         else
