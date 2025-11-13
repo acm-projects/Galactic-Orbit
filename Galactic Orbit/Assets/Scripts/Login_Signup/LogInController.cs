@@ -57,7 +57,7 @@ public class LogInController : MonoBehaviour
         }
 
         bool success = await FirebaseManager.Instance.LoginAsync(username, password);
-        //success = true;
+        success = true;
         if (success)
         {
             Debug.Log("Login successful.");

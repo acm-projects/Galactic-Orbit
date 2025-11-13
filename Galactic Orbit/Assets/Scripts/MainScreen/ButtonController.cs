@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class ButtonController : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class ButtonController : MonoBehaviour
     [SerializeField] private GameObject Map;
     [SerializeField] private GameObject ARScreen;
     [SerializeField] private GameObject SettingsScreen;
+    [SerializeField] private GameObject ShopScreen;
+    [SerializeField] private GameObject MenuScreen;
+    [SerializeField] private GameObject QuestScreen;
+
 
     void OnEnable()
     {
@@ -25,6 +30,14 @@ public class ButtonController : MonoBehaviour
             var MenuButton = root.Q<Button>("MenuButton");
             if (MenuButton == null) Debug.Log("MenuButton button not found!");
             else MenuButton.clicked += OnMenuButton;
+
+            var SettingsButton = root.Q<Button>("SettingsButton");
+            if (SettingsButton == null) Debug.Log("SettingsButton button not found!");
+            else SettingsButton.clicked += OnSettingsButton;
+
+            var QuestButton = root.Q<Button>("QuestButton");
+            if (QuestButton == null) Debug.Log("QuestButton button not found!");
+            else QuestButton.clicked += OnQuestButton;
         }
 
         // Profile Screen
@@ -65,71 +78,195 @@ public class ButtonController : MonoBehaviour
             if (arBackButton == null) Debug.Log("ARBackButton button not found!");
             else arBackButton.clicked += OnARBackButton;
         }
+
+        // Menu Screen
+        root = MenuScreen.GetComponentInChildren<UIDocument>().rootVisualElement;
+        if (root != null)
+        {
+            Debug.Log("Adding Menu screen button handlers");
+            var exitMenuButton = root.Q<Button>("exitButton");
+            if (exitMenuButton == null) Debug.Log("exitButton button not found!");
+            else exitMenuButton.clicked += OnExitMenuButton;
+
+            var cameraButton = root.Q<Button>("cameraButton");
+            if (cameraButton == null) Debug.Log("cameraButton button not found!");
+            else cameraButton.clicked += OnCameraButton;
+
+            var shopButton = root.Q<Button>("shopButton");
+            if (shopButton == null) Debug.Log("shopButton button not found!");
+            else shopButton.clicked += OnShopButton;
+
+            var questButton = root.Q<Button>("questButton");
+            if (questButton == null) Debug.Log("questButton button not found!");
+            else questButton.clicked += OnMenuToQuest;
+        }
+
+        // Settings Screen
+        root = SettingsScreen.GetComponentInChildren<UIDocument>().rootVisualElement;
+        if (root != null)
+        {
+            Debug.Log("Adding Settings screen button handlers");
+            // Add Settings screen button handlers here if needed
+            var closeButton = root.Q<Button>("closeButton");
+            if (closeButton == null) Debug.Log("closeButton button not found!");
+            else closeButton.clicked += OnCloseSettings;
+
+        }
+
+        // Shop Screen
+        root = ShopScreen.GetComponentInChildren<UIDocument>().rootVisualElement;
+        if (root != null)
+        {
+            Debug.Log("Adding Shop screen button handlers");
+            // Add Shop screen button handlers here if needed
+            var closeShopButton = root.Q<Button>("closeButton");
+            if (closeShopButton == null) Debug.Log("closeButton button not found!");
+            else closeShopButton.clicked += OnCloseShop;
+        }
     }
+    private IEnumerator DelayedScreenChange(System.Action action)
+    {
+        yield return new WaitForSeconds(0.2f); // 200ms delay
+        action?.Invoke();
+        OnEnable(); // rebind UI Toolkit buttons
+    }
+
     private void OnARBackButton()
     {
-        Debug.Log("AR Back Button Pressed");
-        ARScreen.SetActive(false);
-        MainScreen.SetActive(true);
-        Map.SetActive(true);
-        OnEnable();
+        StartCoroutine(DelayedScreenChange(() =>
+        {
+            Debug.Log("AR Back Button Pressed");
+            ARScreen.SetActive(false);
+            MainScreen.SetActive(true);
+            Map.SetActive(true);
+            OnEnable();
+        }));
+    }
+
+    private void OnCameraButton()
+    {
+        StartCoroutine(DelayedScreenChange(() =>
+        {
+            ARScreen.SetActive(true);
+            MenuScreen.SetActive(false);
+        }));
     }
     private void OnMenuButton()
     {
-        ARScreen.SetActive(true);
-        MainScreen.SetActive(false);
-        Map.SetActive(false);
-        OnEnable();
+        StartCoroutine(DelayedScreenChange(() =>
+        {
+            MenuScreen.SetActive(true);
+            MainScreen.SetActive(false);
+            Map.SetActive(false);
+        }));
     }
-    public void OnProfileButton()
+    private void OnExitMenuButton()
     {
-        // Make sure the scene is in the active build profile!
-        AsyncOperation loadOp = SceneManager.LoadSceneAsync("UserProfile", LoadSceneMode.Additive);
-
-        if (loadOp == null)
+        StartCoroutine(DelayedScreenChange(() =>
         {
-            Debug.LogError("❌ Failed to start loading UserProfile. Check that it is in the active build profile.");
-            return;
-        }
-
-        loadOp.completed += (op) =>
+            MenuScreen.SetActive(false);
+            MainScreen.SetActive(true);
+            Map.SetActive(true);
+        }));
+    }
+    private void OnProfileButton()
+    {
+        StartCoroutine(DelayedScreenChange(() =>
         {
-            // Wait until the scene is fully loaded
-            Debug.Log("✅ UserProfile loaded successfully.");
-
-            // Now we can safely find the UserProfileController
-            var userProfile = Object.FindAnyObjectByType<UserProfileController>(FindObjectsInactive.Include);
-            if (userProfile != null)
-            {
-                userProfile.InitializeUI();
-            }
-            else
-            {
-                Debug.LogWarning("❌ No UserProfileController found on ProfileScreen");
-            }
-        };
+            ProfileScreen.SetActive(true);
+            MainScreen.SetActive(false);
+            Map.SetActive(false);
+        }));
     }
 
-
+    private void OnSettingsButton()
+    {
+        StartCoroutine(DelayedScreenChange(() =>
+        {
+            SettingsScreen.SetActive(true);
+            MainScreen.SetActive(false);
+            Map.SetActive(false);
+        }));
+    }
+    private void OnCloseSettings()
+    {
+        StartCoroutine(DelayedScreenChange(() =>
+        {
+            SettingsScreen.SetActive(false);
+            MainScreen.SetActive(true);
+            Map.SetActive(true);
+        }));
+    }
+    private void OnMenuToQuest()
+    {
+        StartCoroutine(DelayedScreenChange(() =>
+        {
+            MenuScreen.SetActive(false);
+            QuestScreen.SetActive(true);
+        }));
+    }
+    private void OnShopButton()
+    {
+        StartCoroutine(DelayedScreenChange(() =>
+        {
+            ShopScreen.SetActive(true);
+            MenuScreen.SetActive(false);
+        }));
+    }
+    private void OnCloseShop()
+    {
+        StartCoroutine(DelayedScreenChange(() =>
+        {
+            ShopScreen.SetActive(false);
+            MainScreen.SetActive(true);
+            Map.SetActive(true);
+        }));
+    }
 
     private void OnExitButton()
     {
-        ProfileScreen.SetActive(false);
-        MainScreen.SetActive(true);
-        Map.SetActive(true);
-        OnEnable();
+        StartCoroutine(DelayedScreenChange(() =>
+        {
+            ProfileScreen.SetActive(false);
+            MainScreen.SetActive(true);
+            Map.SetActive(true);
+        }));
     }
     private void OnCustomizeButton()
     {
-        ProfileScreen.SetActive(false);
-        CharacterCustomizationScreen.SetActive(true);
-        OnEnable();
+        StartCoroutine(DelayedScreenChange(() =>
+        {
+            ProfileScreen.SetActive(false);
+            CharacterCustomizationScreen.SetActive(true);
+        }));
     }
     private void OnBackButton()
     {
-        CharacterCustomizationScreen.SetActive(false);
-        ProfileScreen.SetActive(true);
-        OnEnable();
+        StartCoroutine(DelayedScreenChange(() =>
+        {
+            CharacterCustomizationScreen.SetActive(false);
+            ProfileScreen.SetActive(true);
+        }));
+    }
+
+    private void OnQuestButton()
+    {
+        StartCoroutine(DelayedScreenChange(() =>
+        {
+            QuestScreen.SetActive(true);
+            MainScreen.SetActive(false);
+            Map.SetActive(false);
+        }));
+    }
+    // For Canvas-based Quest Screen
+    public void OnCloseQuest()
+    {
+        StartCoroutine(DelayedScreenChange(() =>
+        {
+            QuestScreen.SetActive(false);
+            MainScreen.SetActive(true);
+            Map.SetActive(true);
+        }));
     }
 
 }

@@ -13,8 +13,8 @@ public class SettingsScript : MonoBehaviour
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
 
-        var closeButton = root.Q<Button>("closeButton");
-        closeButton.clicked += CloseUI;
+        //var closeButton = root.Q<Button>("closeButton");
+        //closeButton.clicked += CloseUI;
 
         musicSlider = root.Q<Slider>("musicSlider");
         if (musicSlider == null) musicSlider = root.Q<Slider>("SFXSlider");

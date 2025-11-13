@@ -5,6 +5,13 @@ Button.menu-button {
     background-color: transparent;
     border-width: 0;
     color: rgb(95, 64, 0);
+    transition-timing-function: ease-in-out;
+    transition-property: opacity;
+    transition-duration: 250ms;
+}
+
+Button.menu-button:active {
+    opacity: 0.6;
 }
 
 Button.unselected {
@@ -34,6 +41,13 @@ Button.menu-item {
     margin: 10px;
     padding: 0;
     overflow: hidden;
+    transition-property: opacity;
+    transition-timing-function: ease-in-out;
+    transition-duration: 250ms;
+}
+
+Button.menu-item:active {
+    opacity: 0.6;
 }
 
 Button.item-selected {
@@ -99,4 +113,14 @@ Button.item-selected {
 .rgb-slider > Label {
     width: 30px;
     min-width: 0;
+}
+
+.button-transition {
+    transition-property: opacity;
+    transition-timing-function: ease-in-out;
+    transition-duration: 250ms;
+}
+
+.button-transition:active {
+    opacity: 0.6;
 }

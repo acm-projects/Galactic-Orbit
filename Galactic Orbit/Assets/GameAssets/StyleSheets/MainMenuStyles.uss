@@ -59,3 +59,13 @@
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
+
+.button-transition {
+    transition-property: opacity;
+    transition-timing-function: ease-in-out;
+    transition-duration: 250ms;
+}
+
+.button-transition:active {
+    opacity: 0.6;
+}

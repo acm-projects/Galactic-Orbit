@@ -60,3 +60,13 @@ Toggle #unity-checkmark {
     border-bottom-left-radius: 15px;
     background-color: rgb(255, 255, 255);
 }
+
+.button-transition {
+    transition-property: opacity;
+    transition-timing-function: ease-in-out;
+    transition-duration: 250ms;
+}
+
+.button-transition:active {
+    opacity: 0.6;
+}

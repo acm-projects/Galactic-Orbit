@@ -1,0 +1,12 @@
+:root {
+}
+
+.button-transition {
+    transition-property: opacity;
+    transition-timing-function: ease-in-out;
+    transition-duration: 250ms;
+}
+
+.button-transition:active {
+    opacity: 0.6;
+}
