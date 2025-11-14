@@ -10,11 +10,15 @@ using UnityEngine.UIElements;
 /// - Collects materials from the character
 /// - Creates and manages menu options + sub-items
 /// - Handles color editing and selection logic
+/// - Saves customization to Firebase on exit
 /// </summary>
 public class DesignMenuController : MonoBehaviour
 {
     [Header("Character Reference")]
     public GameObject Character;
+
+    [Header("UI Buttons")]
+    public Button exitButton;
 
     // --- Material Groups ---
     private readonly List<Material> PrimaryMaterial = new();
@@ -44,6 +48,18 @@ public class DesignMenuController : MonoBehaviour
         CollectCharacterMaterials();
         InitializeMenuItems();
         CreateMenuOptions(root);
+        
+        // Load saved customization
+        LoadCustomization();
+        
+        // Setup exit button
+        SetupButtons(root);
+    }
+
+    private void OnDisable()
+    {
+        if (exitButton != null)
+            exitButton.clicked -= OnExitClicked;
     }
 
     // =======================================================================
@@ -143,6 +159,102 @@ public class DesignMenuController : MonoBehaviour
         if (optionName.Contains("Mouth")) return new List<Material>{Face};
         if (optionName.Contains("Decor")) return new List<Material>{Face};
         return null;
+    }
+
+    private void SetupButtons(VisualElement root)
+    {
+        exitButton = root.Q<Button>("BackButton");
+
+        if (exitButton != null)
+            exitButton.clicked += OnExitClicked;
+    }
+
+    #endregion
+
+    // =======================================================================
+    #region --- Firebase Save/Load ---
+    // =======================================================================
+
+    private void LoadCustomization()
+    {
+        UserProfileManager.Instance.LoadCharacterCustomization((customization) =>
+        {
+            // Apply to materials
+            ApplyCustomization(customization);
+        });
+    }
+
+    private void ApplyCustomization(CharacterCustomization customization)
+    {
+        // Apply colors
+        foreach (var mat in PrimaryMaterial) mat.color = customization.primaryColor;
+        foreach (var mat in SecondaryMaterial) mat.color = customization.secondaryColor;
+        foreach (var mat in TertiaryMaterial) mat.color = customization.tertiaryColor;
+        foreach (var mat in AccentMaterial_01) mat.color = customization.accent1Color;
+        foreach (var mat in AccentMaterial_02) mat.color = customization.accent2Color;
+        foreach (var mat in SkinColor) mat.color = customization.skinColor;
+        
+        // Apply face textures
+        if (Face != null)
+        {
+            Texture2D[] faceTextures = Resources.LoadAll<Texture2D>("Faces");
+            
+            Texture2D eyesTex = Array.Find(faceTextures, t => t.name == customization.selectedEyes);
+            if (eyesTex != null) Face.SetTexture("_Eyes", eyesTex);
+            
+            Texture2D mouthTex = Array.Find(faceTextures, t => t.name == customization.selectedMouth);
+            if (mouthTex != null) Face.SetTexture("_Mouth", mouthTex);
+            
+            Texture2D decorTex = Array.Find(faceTextures, t => t.name == customization.selectedFaceDecoration);
+            if (decorTex != null) Face.SetTexture("_Decoration", decorTex);
+        }
+    }
+
+    private CharacterCustomization GetCurrentCustomization()
+    {
+        var customization = new CharacterCustomization();
+        
+        // Get colors from materials
+        if (PrimaryMaterial.Count > 0) customization.primaryColor = PrimaryMaterial[0].color;
+        if (SecondaryMaterial.Count > 0) customization.secondaryColor = SecondaryMaterial[0].color;
+        if (TertiaryMaterial.Count > 0) customization.tertiaryColor = TertiaryMaterial[0].color;
+        if (AccentMaterial_01.Count > 0) customization.accent1Color = AccentMaterial_01[0].color;
+        if (AccentMaterial_02.Count > 0) customization.accent2Color = AccentMaterial_02[0].color;
+        if (SkinColor.Count > 0) customization.skinColor = SkinColor[0].color;
+        
+        // Get selected face options from menu
+        foreach (var option in menuButtons)
+        {
+            if (option.Name == "Eyes" && option.SelectedItem != null)
+                customization.selectedEyes = option.SelectedItem.ID;
+            else if (option.Name == "Mouth" && option.SelectedItem != null)
+                customization.selectedMouth = option.SelectedItem.ID;
+            else if (option.Name == "Face Decoration" && option.SelectedItem != null)
+                customization.selectedFaceDecoration = option.SelectedItem.ID;
+        }
+        
+        return customization;
+    }
+
+    private void OnExitClicked()
+    {
+        // Get current customization and save to Firebase
+        CharacterCustomization currentCustomization = GetCurrentCustomization();
+        
+        UserProfileManager.Instance.SaveCharacterCustomization(currentCustomization, (success, message) =>
+        {
+            if (success)
+            {
+                Debug.Log("Character customization saved!");
+            }
+            else
+            {
+                Debug.LogError("Failed to save: " + message);
+            }
+            
+            // Close menu regardless of save success/failure
+            gameObject.SetActive(false);
+        });
     }
 
     #endregion

@@ -1,16 +1,36 @@
 using UnityEngine;
 using TMPro;
+using System;
 
 public class QuestButton : MonoBehaviour
 {
-    public TextMeshProUGUI questTitleText;
+    //public TextMeshProUGUI questTitleText;
+    public TextMeshProUGUI TitleText;
+    public TextMeshProUGUI DescriptionText;
+    public TextMeshProUGUI RewardText;
+
+
     public GameObject questDetailsScreen;
     private Quest myQuest;
 
     public void Setup(Quest quest)
     {
         myQuest = quest;
-        questTitleText.text = $"{myQuest.questTitle}\nReward: {myQuest.rewardPoints} XP";
+        //questTitleText.text = $"{myQuest.questTitle}\nReward: {myQuest.rewardPoints} XP";
+        string entireText = myQuest.questTitle;
+        int indexOfSeparation = entireText.IndexOf(" ");
+
+        if (indexOfSeparation < 0)
+        {
+            TitleText.text = "";
+            DescriptionText.text = entireText;
+        }
+        else
+        {
+            TitleText.text = entireText.Substring(0, indexOfSeparation);
+            DescriptionText.text = entireText.Substring(indexOfSeparation + 1);
+        }
+        RewardText.text = $"{myQuest.rewardPoints} XP";
     }
 
     public void OnButtonClick()

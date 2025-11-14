@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using TMPro;
+using System.Threading.Tasks;
 
 public class LogInController : MonoBehaviour
 {
@@ -27,7 +29,7 @@ public class LogInController : MonoBehaviour
         submitButton.clicked += OnSubmit;
 
         // Query the Sign Up button
-        var switchToSignupButton = root.Q<Button>("SwitchScreenButton");
+        var switchToSignupButton = root.Q<Button>("SwitchToSignupButton");
 
         if (switchToSignupButton != null)
         {
@@ -35,13 +37,15 @@ public class LogInController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("SwitchToSignupButton not found in the UXML!");
+            Debug.LogWarning("SwitchToSignupButton not found in the UXML!");
         }
 
     }
 
     private async void OnSubmit()
     {
+        SceneController.Instance.LoadLevel("MapScene");
+
         string username = usernameField.value;
         string password = passwordField.value;
 
@@ -49,7 +53,7 @@ public class LogInController : MonoBehaviour
         passwordField.value = "";
 
         Debug.Log($"Submitted! Username: {username}, Password: {password}");
-        
+
         if (FirebaseManager.Instance == null)
         {
             Debug.LogError("FirebaseManager not initialized yet!");
@@ -61,17 +65,15 @@ public class LogInController : MonoBehaviour
         if (success)
         {
             Debug.Log("Login successful.");
-            SceneController.Instance.LoadLevel("MainScene");
         }
         else
         {
             Debug.Log("Login failed.");
         }
     }
-
+    
     private void OnSwitchToSignup()
     {
-        Debug.Log("Switching to Sign-Up panel.");
         if (logInPanel != null && signUpPanel != null)
         {
             logInPanel.SetActive(false);   // hide login panel

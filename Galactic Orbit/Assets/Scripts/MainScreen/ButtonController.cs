@@ -5,8 +5,11 @@ using System.Collections;
 
 public class ButtonController : MonoBehaviour
 {
-    [Header("Screen References")]
+    [Header("UI Panel References")]
     [SerializeField] private GameObject ProfileScreen;
+    [SerializeField] private GameObject QuestScreen;
+    [SerializeField] private GameObject EventScreen;
+    [SerializeField] private GameObject SpecialScreen;
     [SerializeField] private GameObject CharacterCustomizationScreen;
     [SerializeField] private GameObject MainScreen;
     [SerializeField] private GameObject Map;
@@ -19,8 +22,20 @@ public class ButtonController : MonoBehaviour
 
     void OnEnable()
     {
-        // Main Screen
-        var root = MainScreen.GetComponentInChildren<UIDocument>().rootVisualElement;
+        SetupMainScreenButtons();
+        SetupProfileScreenButtons();
+        SetupCharacterCustomizationButtons();
+        SetupARScreenButtons();
+    }
+
+    void SetupMainScreenButtons()
+    {
+        if (MainScreen == null) return;
+        
+        var uiDoc = MainScreen.GetComponentInChildren<UIDocument>();
+        if (uiDoc == null) return;
+        
+        var root = uiDoc.rootVisualElement;
         if (root != null)
         {
             var profileButton = root.Q<Button>("ProfileButton");
@@ -39,41 +54,81 @@ public class ButtonController : MonoBehaviour
             if (QuestButton == null) Debug.Log("QuestButton button not found!");
             else QuestButton.clicked += OnQuestButton;
         }
+    }
 
-        // Profile Screen
-        root = ProfileScreen.GetComponentInChildren<UIDocument>().rootVisualElement;
-        if (root != null)
+    void SetupProfileScreenButtons()
+{
+    if (ProfileScreen == null)
+    {
+        Debug.LogError("ProfileScreen is null!");
+        return;
+    }
+    
+    // Try to find UIDocument anywhere in ProfileScreen's children
+    var uiDocs = ProfileScreen.GetComponentsInChildren<UIDocument>(true);
+    
+    Debug.Log($"Found {uiDocs.Length} UIDocuments in ProfileScreen");
+    
+    foreach (var uiDoc in uiDocs)
+    {
+        if (uiDoc == null) continue;
+        
+        var root = uiDoc.rootVisualElement;
+        if (root == null) continue;
+        
+        Debug.Log($"Checking UIDocument on {uiDoc.gameObject.name}");
+        
+        var exitButton = root.Q<Button>("ExitButton");
+        if (exitButton != null)
         {
-            var exitButton = root.Q<Button>("ExitButton");
-            if (exitButton == null) Debug.Log("ExitButton button not found!");
-            else exitButton.clicked += OnExitButton;
-
-
-            var customizeButton = root.Q<Button>("CustomizeButton");
-            if (customizeButton == null) Debug.Log("CustomizeButton button not found!");
-            else customizeButton.clicked += OnCustomizeButton;
+            Debug.Log("✅ Found ExitButton!");
+            exitButton.clicked += OnProfileExitButton;
         }
 
-        // Character Customization Screen
-        root = CharacterCustomizationScreen.GetComponentInChildren<UIDocument>().rootVisualElement;
+        var customizeButton = root.Q<Button>("CustomizeButton");
+        if (customizeButton != null)
+        {
+            Debug.Log("✅ Found CustomizeButton!");
+            customizeButton.clicked += OnCustomizeButton;
+        }
+    }
+}
+
+    void SetupCharacterCustomizationButtons()
+    {
+        if (CharacterCustomizationScreen == null) return;
+        
+        var uiDoc = CharacterCustomizationScreen.GetComponentInChildren<UIDocument>();
+        if (uiDoc == null) return;
+        
+        var root = uiDoc.rootVisualElement;
         if (root != null)
         {
-            Debug.Log("Adding Character Customization screen button handlers");
             var backButton = root.Q<Button>("BackButton");
-            if (backButton == null) Debug.Log("BackButton button not found!");
-            else backButton.clicked += OnBackButton;
+            if (backButton != null)
+                backButton.clicked += OnBackButton;
         }
+    }
 
-        // AR Screen
-        root = ARScreen.GetComponentInChildren<UIDocument>().rootVisualElement;
-        if (root != null)
+    void SetupARScreenButtons()
+    {
+        if (ARScreen == null)
         {
-            root.RegisterCallback<ClickEvent>(evt =>
-            {
-                Debug.Log("Clicked: " + evt.target);
-            });
-            Debug.Log("Adding AR screen button handlers");
-            // Add AR screen button handlers here if needed
+            Debug.Log("ARScreen is null - skipping AR button setup");
+            return;
+        }
+        
+        var uiDocs = ARScreen.GetComponentsInChildren<UIDocument>(true);
+        
+        Debug.Log($"Found {uiDocs.Length} UIDocuments in ARScreen");
+        
+        foreach (var uiDoc in uiDocs)
+        {
+            if (uiDoc == null) continue;
+            
+            var root = uiDoc.rootVisualElement;
+            if (root == null) continue;
+            
             var arBackButton = root.Q<Button>("ARBackButton");
             if (arBackButton == null) Debug.Log("ARBackButton button not found!");
             else arBackButton.clicked += OnARBackButton;
@@ -151,7 +206,8 @@ public class ButtonController : MonoBehaviour
             MenuScreen.SetActive(false);
         }));
     }
-    private void OnMenuButton()
+
+    void OnMenuButton()
     {
         StartCoroutine(DelayedScreenChange(() =>
         {

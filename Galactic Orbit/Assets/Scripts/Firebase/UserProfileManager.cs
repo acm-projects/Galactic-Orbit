@@ -215,164 +215,168 @@ public class UserProfileManager : MonoBehaviour
         });
     }
 
+    // Save complete character customization
+// Save complete character customization
+public void SaveCharacterCustomization(CharacterCustomization customization, Action<bool, string> callback)
+{
+    FirebaseUser currentUser = FirebaseManager.Instance.CurrentUser;
+    
+    if (currentUser == null)
+    {
+        callback?.Invoke(false, "Not signed in");
+        return;
+    }
+    
+    var updates = new System.Collections.Generic.Dictionary<string, object>
+    {
+        { "primaryColorR", customization.primaryColor.r },
+        { "primaryColorG", customization.primaryColor.g },
+        { "primaryColorB", customization.primaryColor.b },
+        
+        { "secondaryColorR", customization.secondaryColor.r },
+        { "secondaryColorG", customization.secondaryColor.g },
+        { "secondaryColorB", customization.secondaryColor.b },
+        
+        { "tertiaryColorR", customization.tertiaryColor.r },
+        { "tertiaryColorG", customization.tertiaryColor.g },
+        { "tertiaryColorB", customization.tertiaryColor.b },
+        
+        { "accent1ColorR", customization.accent1Color.r },
+        { "accent1ColorG", customization.accent1Color.g },
+        { "accent1ColorB", customization.accent1Color.b },
+        
+        { "accent2ColorR", customization.accent2Color.r },
+        { "accent2ColorG", customization.accent2Color.g },
+        { "accent2ColorB", customization.accent2Color.b },
+        
+        { "skinColorR", customization.skinColor.r },
+        { "skinColorG", customization.skinColor.g },
+        { "skinColorB", customization.skinColor.b },
+        
+        { "selectedEyes", customization.selectedEyes },
+        { "selectedMouth", customization.selectedMouth },
+        { "selectedFaceDecoration", customization.selectedFaceDecoration }
+    };
+
+    FirebaseManager.Instance.DbReference.Child("userProfiles").Child(currentUser.UserId)
+        .UpdateChildrenAsync(updates)
+        .ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCompleted)
+                callback?.Invoke(true, "Character customization saved");
+            else
+                callback?.Invoke(false, "Failed to save customization: " + task.Exception?.Message);
+        });
+}
+
+// ===== CURRENCY METHODS =====
+
+/// <summary>
+/// Add coins to the current user
+/// </summary>
+public void AddCoins(int amount, Action<bool, string> callback)
+{
+    FirebaseUser currentUser = FirebaseManager.Instance.CurrentUser;
+    
+    if (currentUser == null)
+    {
+        callback?.Invoke(false, "Not signed in");
+        return;
+    }
+
+    GetCurrentUserProfile((profile) =>
+    {
+        if (profile != null)
+        {
+            int newCoins = profile.coins + amount;
+
+            var updates = new System.Collections.Generic.Dictionary<string, object>
+            {
+                { "coins", newCoins }
+            };
+
+            FirebaseManager.Instance.DbReference.Child("userProfiles").Child(currentUser.UserId)
+                .UpdateChildrenAsync(updates)
+                .ContinueWithOnMainThread(task =>
+                {
+                    if (task.IsCompleted)
+                        callback?.Invoke(true, $"Added {amount} coins! Total: {newCoins}");
+                    else
+                        callback?.Invoke(false, "Failed to add coins: " + task.Exception?.Message);
+                });
+        }
+        else
+        {
+            callback?.Invoke(false, "Profile not found");
+        }
+    });
+}
+
+
+
+
     // ===== CURRENCY METHODS =====
 
     /// <summary>
     /// Add coins to the current user
     /// </summary>
-    public void AddCoins(int amount, Action<bool, string> callback)
-    {
-        FirebaseUser currentUser = FirebaseManager.Instance.CurrentUser;
-        
-        if (currentUser == null)
-        {
-            callback?.Invoke(false, "Not signed in");
-            return;
-        }
+    
 
+    // Load character customization
+    public void LoadCharacterCustomization(Action<CharacterCustomization> callback)
+    {
         GetCurrentUserProfile((profile) =>
         {
             if (profile != null)
             {
-                int newTotal = profile.coins + amount;
-                
-                var updates = new System.Collections.Generic.Dictionary<string, object>
-                {
-                    { "coins", newTotal }
-                };
-
-                FirebaseManager.Instance.DbReference.Child("userProfiles").Child(currentUser.UserId)
-                    .UpdateChildrenAsync(updates)
-                    .ContinueWithOnMainThread(task =>
-                    {
-                        if (task.IsCompleted)
-                            callback?.Invoke(true, $"Added {amount} coins! Total: {newTotal}");
-                        else
-                            callback?.Invoke(false, "Failed to add coins: " + task.Exception?.Message);
-                    });
+                callback?.Invoke(CharacterCustomization.FromProfile(profile));
             }
             else
             {
-                callback?.Invoke(false, "Profile not found");
-            }
-        });
-    }
-
-    /// <summary>
-    /// Add items to the current user
-    /// </summary>
-    public void AddItems(int amount, Action<bool, string> callback)
-    {
-        FirebaseUser currentUser = FirebaseManager.Instance.CurrentUser;
-        
-        if (currentUser == null)
-        {
-            callback?.Invoke(false, "Not signed in");
-            return;
-        }
-
-        GetCurrentUserProfile((profile) =>
-        {
-            if (profile != null)
-            {
-                int newTotal = profile.items + amount;
-                
-                var updates = new System.Collections.Generic.Dictionary<string, object>
-                {
-                    { "items", newTotal }
-                };
-
-                FirebaseManager.Instance.DbReference.Child("userProfiles").Child(currentUser.UserId)
-                    .UpdateChildrenAsync(updates)
-                    .ContinueWithOnMainThread(task =>
-                    {
-                        if (task.IsCompleted)
-                            callback?.Invoke(true, $"Added {amount} items! Total: {newTotal}");
-                        else
-                            callback?.Invoke(false, "Failed to add items: " + task.Exception?.Message);
-                    });
-            }
-            else
-            {
-                callback?.Invoke(false, "Profile not found");
-            }
-        });
-    }
-
-    /// <summary>
-    /// Spend coins (deduct from balance)
-    /// </summary>
-    public void SpendCoins(int amount, Action<bool, string> callback)
-    {
-        FirebaseUser currentUser = FirebaseManager.Instance.CurrentUser;
-        
-        if (currentUser == null)
-        {
-            callback?.Invoke(false, "Not signed in");
-            return;
-        }
-
-        GetCurrentUserProfile((profile) =>
-        {
-            if (profile != null)
-            {
-                // Check if user has enough coins
-                if (profile.coins < amount)
-                {
-                    callback?.Invoke(false, $"Not enough coins! Have {profile.coins}, need {amount}");
-                    return;
-                }
-
-                int newTotal = profile.coins - amount;
-                
-                var updates = new System.Collections.Generic.Dictionary<string, object>
-                {
-                    { "coins", newTotal }
-                };
-
-                FirebaseManager.Instance.DbReference.Child("userProfiles").Child(currentUser.UserId)
-                    .UpdateChildrenAsync(updates)
-                    .ContinueWithOnMainThread(task =>
-                    {
-                        if (task.IsCompleted)
-                            callback?.Invoke(true, $"Spent {amount} coins! Remaining: {newTotal}");
-                        else
-                            callback?.Invoke(false, "Failed to spend coins: " + task.Exception?.Message);
-                    });
-            }
-            else
-            {
-                callback?.Invoke(false, "Profile not found");
+                callback?.Invoke(new CharacterCustomization());
             }
         });
     }
 }
 
-// ===== USER PROFILE DATA CLASS =====
-
+// User profile data stored in Firebase Realtime Database
+// IMPORTANT: NO PASSWORD stored here - Firebase Auth handles that securely
 [System.Serializable]
 public class UserProfile
 {
+
+    // === CURRENCY ===
+    public int coins;                 // In-game currency
+    public int items;                 // Number of items owned
     // === REQUIRED AT SIGNUP ===
-    public string username;
-    public string email;
-    public long createdTimestamp;
+    public string username;           // Unique username
+    public string email;              // Email address
+    public long createdTimestamp;     // Account creation time
 
     // === OPTIONAL - CAN BE EDITED LATER ===
-    public string displayName;
-    public string bio;
-    public string avatarUrl;
+    public string displayName;        // Display name (starts as username)
+    public string bio;                // User bio/description
+    public string avatarUrl;          // Profile picture URL
+
+    // === CHARACTER CUSTOMIZATION ===
+    public float primaryColorR, primaryColorG, primaryColorB;
+    public float secondaryColorR, secondaryColorG, secondaryColorB;
+    public float tertiaryColorR, tertiaryColorG, tertiaryColorB;
+    public float accent1ColorR, accent1ColorG, accent1ColorB;
+    public float accent2ColorR, accent2ColorG, accent2ColorB;
+    public float skinColorR, skinColorG, skinColorB;
+
+    // Face customization
+    public string selectedEyes;
+    public string selectedMouth;
+    public string selectedFaceDecoration;
 
     // === GAME PROGRESS - STARTS AT ZERO ===
-    public int totalPoints;
-    public int level;
-    public int eventsAttended;
-    public int questsCompleted;
-    public int buildingsVisited;
-
-    // === CURRENCY & ITEMS ===
-    public int coins;
-    public int items;
+    public int totalPoints;           // Total points earned
+    public int level;                 // Player level (calculated from points)
+    public int eventsAttended;        // Number of events attended
+    public int questsCompleted;       // Number of quests completed
+    public int buildingsVisited;      // Number of campus buildings visited
 
     // === LISTS - TRACK DETAILED PROGRESS ===
     public string[] completedQuestIds;
@@ -388,16 +392,32 @@ public class UserProfile
         this.email = email;
         this.createdTimestamp = createdTimestamp;
 
-        this.displayName = username;
+        // Optional fields - start with defaults
+        this.displayName = username;  // Start as username
         this.bio = "";
         this.avatarUrl = "";
 
+        // Default colors (white)
+        primaryColorR = primaryColorG = primaryColorB = 1f;
+        secondaryColorR = secondaryColorG = secondaryColorB = 1f;
+        tertiaryColorR = tertiaryColorG = tertiaryColorB = 1f;
+        accent1ColorR = accent1ColorG = accent1ColorB = 1f;
+        accent2ColorR = accent2ColorG = accent2ColorB = 1f;
+        skinColorR = skinColorG = skinColorB = 1f;
+
+        // Default face options
+        selectedEyes = "Eyes1";
+        selectedMouth = "Mouth1";
+        selectedFaceDecoration = "Decor1";
+
+        // Game progress - start at zero
         this.totalPoints = 0;
         this.level = 1;
         this.eventsAttended = 0;
         this.questsCompleted = 0;
         this.buildingsVisited = 0;
 
+        // Lists - start empty
         this.coins = 0;
         this.items = 0;
 
@@ -406,5 +426,69 @@ public class UserProfile
         this.attendedEventIds = new string[0];
         this.teamIds = new string[0];
         this.scannedObjectIds = new string[0];
+    }
+}
+
+[System.Serializable]
+public class CharacterCustomization
+{
+    public Color primaryColor = Color.white;
+    public Color secondaryColor = Color.white;
+    public Color tertiaryColor = Color.white;
+    public Color accent1Color = Color.white;
+    public Color accent2Color = Color.white;
+    public Color skinColor = Color.white;
+    
+    public string selectedEyes = "Eyes1";
+    public string selectedMouth = "Mouth1";
+    public string selectedFaceDecoration = "Decor1";
+
+    // Convert to UserProfile format
+    public void ApplyToProfile(UserProfile profile)
+    {
+        profile.primaryColorR = primaryColor.r;
+        profile.primaryColorG = primaryColor.g;
+        profile.primaryColorB = primaryColor.b;
+        
+        profile.secondaryColorR = secondaryColor.r;
+        profile.secondaryColorG = secondaryColor.g;
+        profile.secondaryColorB = secondaryColor.b;
+        
+        profile.tertiaryColorR = tertiaryColor.r;
+        profile.tertiaryColorG = tertiaryColor.g;
+        profile.tertiaryColorB = tertiaryColor.b;
+        
+        profile.accent1ColorR = accent1Color.r;
+        profile.accent1ColorG = accent1Color.g;
+        profile.accent1ColorB = accent1Color.b;
+        
+        profile.accent2ColorR = accent2Color.r;
+        profile.accent2ColorG = accent2Color.g;
+        profile.accent2ColorB = accent2Color.b;
+        
+        profile.skinColorR = skinColor.r;
+        profile.skinColorG = skinColor.g;
+        profile.skinColorB = skinColor.b;
+        
+        profile.selectedEyes = selectedEyes;
+        profile.selectedMouth = selectedMouth;
+        profile.selectedFaceDecoration = selectedFaceDecoration;
+    }
+
+    // Load from UserProfile
+    public static CharacterCustomization FromProfile(UserProfile profile)
+    {
+        return new CharacterCustomization
+        {
+            primaryColor = new Color(profile.primaryColorR, profile.primaryColorG, profile.primaryColorB),
+            secondaryColor = new Color(profile.secondaryColorR, profile.secondaryColorG, profile.secondaryColorB),
+            tertiaryColor = new Color(profile.tertiaryColorR, profile.tertiaryColorG, profile.tertiaryColorB),
+            accent1Color = new Color(profile.accent1ColorR, profile.accent1ColorG, profile.accent1ColorB),
+            accent2Color = new Color(profile.accent2ColorR, profile.accent2ColorG, profile.accent2ColorB),
+            skinColor = new Color(profile.skinColorR, profile.skinColorG, profile.skinColorB),
+            selectedEyes = profile.selectedEyes ?? "Eyes1",
+            selectedMouth = profile.selectedMouth ?? "Mouth1",
+            selectedFaceDecoration = profile.selectedFaceDecoration ?? "Decor1"
+        };
     }
 }
