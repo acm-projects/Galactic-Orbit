@@ -18,6 +18,7 @@ public class EventManager : MonoBehaviour
 
     public List<EventData> GetUniqueRandomEvents(int count)
     {
+        
         if (count >= allEvents.Count)
         {
             return new List<EventData>(allEvents);
@@ -32,7 +33,6 @@ public class EventManager : MonoBehaviour
             chosenEvents.Add(availableEvents[randomIndex]);
             availableEvents.RemoveAt(randomIndex);
         }
-
         return chosenEvents;
     }
 

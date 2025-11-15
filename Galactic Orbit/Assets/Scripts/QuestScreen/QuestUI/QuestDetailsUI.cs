@@ -18,7 +18,7 @@ public class QuestDetailsUI : MonoBehaviour
         {
             titleText.text = selected.questTitle;
             descriptionText.text = selected.questDescription;
-            rewardText.text = $"Reward: {selected.rewardPoints} XP";
+            rewardText.text = $"{selected.rewardPoints} XP";
         }
     }
 

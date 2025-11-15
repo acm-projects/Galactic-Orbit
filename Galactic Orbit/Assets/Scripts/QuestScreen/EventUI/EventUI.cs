@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+//using Mono.Cecil;
 using UnityEngine;
 
 public class EventUI : MonoBehaviour
@@ -19,7 +21,7 @@ public class EventUI : MonoBehaviour
         Debug.Log($"Events in manager: {eventManager?.allEvents?.Count}");
         
         List<EventData> uniqueEvents = eventManager.GetUniqueRandomEvents(eventButtons.Count);
-
+    
         for (int i = 0; i < eventButtons.Count; i++)
         {
             if (i < uniqueEvents.Count)

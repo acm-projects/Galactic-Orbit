@@ -18,11 +18,12 @@ public class EventDetailsUI : MonoBehaviour
         if (selected != null)
         {
             titleText.text = selected.eventTitle;
-            locationText.text = $"📍 {selected.eventLocation}";
+            locationText.text = $"{selected.eventLocation}";
             dateTimeText.text = $"{selected.eventDay}\n{selected.eventTime}";
             
             // Get full description from UTDEventsSync if available
             string description = GetFullDescription(selected);
+            description = description.Substring(0, 500);
             descriptionText.text = description;
         }
     }

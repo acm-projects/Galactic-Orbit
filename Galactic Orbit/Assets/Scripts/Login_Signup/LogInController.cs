@@ -1,13 +1,15 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
-using TMPro;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
+//using UnityEditor.SearchService;
 
 public class LogInController : MonoBehaviour
 {
     [Header("Panel References")]
     [SerializeField] private GameObject signUpPanel; // Reference to the Sign-Up panel
     [SerializeField] private GameObject logInPanel;  // Reference to the Log-In panel
+    [SerializeField] private TMP_Text debugBox;  // Reference to the Log-In panel
     private TextField usernameField;
     private TextField passwordField;
     private Button submitButton;
@@ -44,7 +46,6 @@ public class LogInController : MonoBehaviour
 
     private async void OnSubmit()
     {
-        SceneController.Instance.LoadLevel("MapScene");
 
         string username = usernameField.value;
         string password = passwordField.value;
@@ -61,14 +62,17 @@ public class LogInController : MonoBehaviour
         }
 
         bool success = await FirebaseManager.Instance.LoginAsync(username, password);
-        success = true;
+        //success = true;
         if (success)
         {
             Debug.Log("Login successful.");
+            debugBox.text = "Login Successful";
+            SceneController.Instance.LoadLevel("MainScene");
         }
         else
         {
             Debug.Log("Login failed.");
+            debugBox.text = "Login Failed";
         }
     }
     

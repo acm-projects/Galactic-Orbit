@@ -8,7 +8,7 @@ using System.IO;
 public class StarSpawner : MonoBehaviour
 {
     [SerializeField] private AbstractMap map;
-    [SerializeField] private GameObject buildingPrefab;  // Assign your 3D model prefab here
+    [SerializeField] private GameObject buildingPrefab;
 
     private List<GameObject> spawnedBuildings = new List<GameObject>();
     private List<Vector2d> buildingCoordinates = new List<Vector2d>();
@@ -18,7 +18,7 @@ public class StarSpawner : MonoBehaviour
     {
         LoadCSV();
         map.OnInitialized += OnMapLoaded;
-        map.OnUpdated += OnMapLoaded; // Also update positions if map recenters
+        map.OnUpdated += OnMapLoaded; // Called on map movement/zoom/recenter
     }
 
     void LoadCSV()
@@ -53,10 +53,7 @@ public class StarSpawner : MonoBehaviour
 
     void OnMapLoaded()
     {
-        // Destroy any previously spawned buildings if needed (e.g. after recenter)
-        foreach (var b in spawnedBuildings)
-            Destroy(b);
-        spawnedBuildings.Clear();
+        float heightOffset = 5f;
 
         for (int i = 0; i < buildingCoordinates.Count; i++)
         {
@@ -65,9 +62,20 @@ public class StarSpawner : MonoBehaviour
                 map.CenterMercator,
                 map.WorldRelativeScale).ToVector3xz();
 
-            GameObject go = Instantiate(buildingPrefab, worldPos, Quaternion.identity, this.transform);
-            go.name = buildingNames[i];
-            spawnedBuildings.Add(go);
+            worldPos.y += heightOffset;
+
+            // --- If building exists, move it ---
+            if (i < spawnedBuildings.Count && spawnedBuildings[i] != null)
+            {
+                spawnedBuildings[i].transform.position = worldPos;
+            }
+            // --- Otherwise instantiate new one ---
+            else
+            {
+                GameObject go = Instantiate(buildingPrefab, worldPos, Quaternion.identity, this.transform);
+                go.name = buildingNames[i];
+                spawnedBuildings.Add(go);
+            }
         }
     }
 }

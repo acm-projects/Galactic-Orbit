@@ -7,6 +7,7 @@ using UnityEngine.XR.ARFoundation;
 
 public class ARCollectible : MonoBehaviour
 {
+    public bool CanCollect = true;
     [Header("Visual Effects")]
     public float rotationSpeed = 50f;
     public float bobSpeed = 2f;
@@ -48,11 +49,12 @@ public class ARCollectible : MonoBehaviour
         if (isCollected) return;
 
         // rotate & bob
-        transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+        Vector3 rotationDirection = Vector3.up;
+        transform.Rotate(rotationDirection, rotationSpeed * Time.deltaTime);
         float newY = startPosition.y + Mathf.Sin(Time.time * bobSpeed) * bobHeight;
         transform.position = new Vector3(transform.position.x, newY, transform.position.z);
-
-        CheckForTap();
+        if (CanCollect)
+            CheckForTap();
     }
 
     async void CheckForTap()

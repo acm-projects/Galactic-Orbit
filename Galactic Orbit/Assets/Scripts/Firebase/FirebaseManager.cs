@@ -33,6 +33,7 @@ public class FirebaseManager : MonoBehaviour
     // Unity Awake - Sets up singleton pattern and initializes Firebase
     void Awake()
     {
+        Debug.Log("Waking Up");
         // Singleton pattern: destroy duplicate instances
         if (Instance != null && Instance != this)
         {
@@ -44,6 +45,7 @@ public class FirebaseManager : MonoBehaviour
         // Keep this object alive when loading new scenes
         DontDestroyOnLoad(gameObject);
 
+        Debug.Log("Initializing Firebase");
         // Start Firebase initialization
         InitializeFirebase();
     }
@@ -163,9 +165,9 @@ public class FirebaseManager : MonoBehaviour
             return true;
 
         }
-        catch (System.Exception e)
+        catch (Exception e)
         {
-            Debug.LogError("Login failed: " + e.Message);
+            Debug.LogError("Login failed: " + e.ToString());
             return false;
         }
     }
