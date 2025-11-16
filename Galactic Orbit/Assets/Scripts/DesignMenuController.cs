@@ -253,7 +253,7 @@ public class DesignMenuController : MonoBehaviour
             }
             
             // Close menu regardless of save success/failure
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         });
     }
 

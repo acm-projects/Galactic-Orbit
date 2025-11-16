@@ -96,6 +96,10 @@ public class ButtonController : MonoBehaviour
             if (shopButton == null) Debug.Log("shopButton button not found!");
             else shopButton.clicked += OnShopButton;
 
+            var customizeButton = root.Q<Button>("customizeButton");
+            if (customizeButton == null) Debug.Log("customizeButton button not found!");
+            else customizeButton.clicked += OnMenuToCustomizeButton;
+
             var questButton = root.Q<Button>("questButton");
             if (questButton == null) Debug.Log("questButton button not found!");
             else questButton.clicked += OnMenuToQuest;
@@ -230,6 +234,14 @@ public class ButtonController : MonoBehaviour
             ProfileScreen.SetActive(false);
             MainScreen.SetActive(true);
             Map.SetActive(true);
+        }));
+    }
+    private void OnMenuToCustomizeButton()
+    {
+        StartCoroutine(DelayedScreenChange(() =>
+        {
+            MenuScreen.SetActive(false);
+            CharacterCustomizationScreen.SetActive(true);
         }));
     }
     private void OnCustomizeButton()
