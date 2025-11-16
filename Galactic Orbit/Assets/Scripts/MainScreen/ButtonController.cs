@@ -115,6 +115,10 @@ public class ButtonController : MonoBehaviour
             if (closeButton == null) Debug.Log("closeButton button not found!");
             else closeButton.clicked += OnCloseSettings;
 
+            var logoutButton = root.Q<Button>("logoutButton");
+            if (logoutButton == null) Debug.Log("logoutButton button not found!");
+            else logoutButton.clicked += OnLogout;
+
         }
 
         // Shop Screen
@@ -134,7 +138,10 @@ public class ButtonController : MonoBehaviour
         action?.Invoke();
         OnEnable(); // rebind UI Toolkit buttons
     }
-
+    private void OnLogout()
+    {
+        SceneController.Instance.LoadLevel("AuthScene");
+    }
     private void OnARBackButton()
     {
         StartCoroutine(DelayedScreenChange(() =>

@@ -222,23 +222,24 @@ public class SimpleARController : MonoBehaviour
 
     void OnGUI()
     {
-        // if (true) return; // uncomment for now bc makes everything after unreachable
-    if (!isARMode) return;
-    
-    GUIStyle style = new GUIStyle();
-    style.fontSize = 30;
-    style.normal.textColor = Color.yellow;
-    
-    string text = $"AR MODE ACTIVE\n";
-    text += $"Spawned Objects: {spawnedObjects.Count}\n";
-    text += $"Camera: {(arCamera != null ? "OK" : "NULL")}\n";
-    text += $"Prefab: {(arObjectPrefab != null ? "OK" : "NULL")}\n";
-    
-    if (arCamera != null)
-    {
-        text += $"Cam Pos: {arCamera.transform.position}\n";
+        if (true) return; // Skip debugging canvas
+        
+        if (!isARMode) return;
+        
+        GUIStyle style = new GUIStyle();
+        style.fontSize = 30;
+        style.normal.textColor = Color.yellow;
+        
+        string text = $"AR MODE ACTIVE\n";
+        text += $"Spawned Objects: {spawnedObjects.Count}\n";
+        text += $"Camera: {(arCamera != null ? "OK" : "NULL")}\n";
+        text += $"Prefab: {(arObjectPrefab != null ? "OK" : "NULL")}\n";
+        
+        if (arCamera != null)
+        {
+            text += $"Cam Pos: {arCamera.transform.position}\n";
+        }
+        
+        GUI.Label(new Rect(10, 100, 600, 300), text, style);
     }
-    
-    GUI.Label(new Rect(10, 100, 600, 300), text, style);
-}
 }

@@ -1,0 +1,85 @@
+:root {
+}
+
+Slider Label {
+    height: 20px;
+    width: 0;
+    font-size: 12px;
+    top: auto;
+    bottom: 10%;
+    position: absolute;
+}
+
+Slider #unity-tracker {
+    background-color: rgb(0, 78, 152);
+    height: 50%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    position: absolute;
+    top: 35%;
+    left: 0%;
+}
+
+Slider #unity-dragger {
+    background-color: rgb(114, 109, 168);
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    width: 0%;
+    height: 65%;
+    top: 38%;
+    position: absolute;
+}
+
+.button-transition {
+    transition-property: opacity;
+    transition-timing-function: ease-in-out;
+    transition-duration: 250ms;
+}
+
+.button-transition:active {
+    opacity: 0.6;
+}
+
+Toggle .unity-toggle__checkmark {
+    display: none;
+}
+
+Toggle {
+    -unity-background-image: none;
+    border: none;
+    padding: 0;
+    width: 50px;
+    height: 28px;
+}
+
+Toggle {
+    background-color: rgba(102, 102, 102, 0);
+    border-radius: 14px;
+}
+
+Toggle:checked {
+}
+
+Toggle {
+    background-image: resource('UI/toggle-handle');
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    background-position: 2px 2px;
+    transition: background-position 0.15s ease;
+}
+
+Toggle:checked {
+    background-position: 24px 2px;
+}
