@@ -222,9 +222,7 @@ public class SimpleARController : MonoBehaviour
 
     void OnGUI()
     {
-        if (true) return; // Skip debugging canvas
-        
-        if (!isARMode) return;
+        /*if (!isARMode) return;
         
         GUIStyle style = new GUIStyle();
         style.fontSize = 30;
@@ -240,6 +238,6 @@ public class SimpleARController : MonoBehaviour
             text += $"Cam Pos: {arCamera.transform.position}\n";
         }
         
-        GUI.Label(new Rect(10, 100, 600, 300), text, style);
+        GUI.Label(new Rect(10, 100, 600, 300), text, style);*/
     }
 }

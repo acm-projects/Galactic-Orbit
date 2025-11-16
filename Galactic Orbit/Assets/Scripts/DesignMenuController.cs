@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Numerics;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -32,7 +33,11 @@ public class DesignMenuController : MonoBehaviour
     // --- Menu Data ---
     private List<MenuOption> menuButtons;
     private MenuOption selectedOption;
-    private Dictionary<string, string[]> menuItems;
+    private Dictionary<string, List<string>> menuItems;
+
+    // --- Loading ---
+    private bool MenuItemsLoaded;
+    private bool CustomizationLoaded;
 
     // --- Unity Lifecycle ---
     private void Start()
@@ -42,18 +47,28 @@ public class DesignMenuController : MonoBehaviour
 
     private void OnEnable()
     {
+        MenuItemsLoaded = false;
+        CustomizationLoaded = false;
         var root = GetComponent<UIDocument>().rootVisualElement;
         menuButtons = new List<MenuOption>();
 
         CollectCharacterMaterials();
-        InitializeMenuItems();
-        CreateMenuOptions(root);
+        StartCoroutine(InitializeMenuItems());
         
         // Load saved customization
-        LoadCustomization();
+        StartCoroutine(LoadCustomization());
+        
+        StartCoroutine(WaitToCreateMenuOptions(root));
         
         // Setup exit button
         SetupButtons(root);
+    }
+    private IEnumerator WaitToCreateMenuOptions(VisualElement root)
+    {
+        while (!MenuItemsLoaded || !CustomizationLoaded)
+            yield return null;
+        CreateMenuOptions(root);
+        
     }
 
     private void OnDisable()
@@ -101,20 +116,54 @@ public class DesignMenuController : MonoBehaviour
         }
     }
 
-    private void InitializeMenuItems()
+    private IEnumerator InitializeMenuItems()
     {
-        menuItems = new Dictionary<string, string[]>
+        menuItems = new Dictionary<string, List<string>>
         {
-            { "Skin Color",     new[] { "rgb" } },
-            { "Primary Color",  new[] { "rgb" } },
-            { "Secondary Color",new[] { "rgb" } },
-            { "Tertiary Color", new[] { "rgb" } },
-            { "Accent Color 1", new[] { "rgb" } },
-            { "Accent Color 2", new[] { "rgb" } },
-            { "Eyes",           new[] { "Eyes1", "Eyes2", "Eyes3", "Eyes4" } },
-            { "Mouth",          new[] { "Mouth1", "Mouth2", "Mouth3", "Mouth4" } },
-            { "Face Decoration",new[] { "Decor1", "Decor2", "Decor3", "Decor4" } },
+            { "Skin Color",      new List<string> { "rgb" } },
+            { "Primary Color",   new List<string> { "rgb" } },
+            { "Secondary Color", new List<string> { "rgb" } },
+            { "Tertiary Color",  new List<string> { "rgb" } },
+            { "Accent Color 1",  new List<string> { "rgb" } },
+            { "Accent Color 2",  new List<string> { "rgb" } },
+
+            { "Eyes", new List<string>
+                { "Eyes1", "Eyes2", "Eyes3", "Eyes4" }
+            },
+
+            { "Mouth", new List<string>
+                { "Mouth1", "Mouth2", "Mouth3", "Mouth4" }
+            },
+
+            { "Face Decoration", new List<string>
+                { "Decor1", "Decor2", "Decor3", "Decor4" }
+            }
         };
+
+        bool eyesLoaded = false;
+        UserProfileManager.Instance.HasItem("Eyes5", (success) =>
+        {
+            if (success) {menuItems["Eyes"].Add("Eyes5");}
+            eyesLoaded = true;
+        });
+
+        bool mouthLoaded = false;
+        UserProfileManager.Instance.HasItem("Mouth5", (success) =>
+        {
+            if (success) {menuItems["Mouth"].Add("Mouth5");}
+             mouthLoaded = true;
+        });
+
+        bool decorLoaded = false;
+        UserProfileManager.Instance.HasItem("Decor5", (success) =>
+        {
+            if (success) {menuItems["Face Decoration"].Add("Decor5");}
+            decorLoaded = true;
+        });
+        
+        while (!eyesLoaded || !mouthLoaded || !decorLoaded)
+            yield return null;
+        MenuItemsLoaded = true;
     }
 
     private void CreateMenuOptions(VisualElement root)
@@ -175,13 +224,18 @@ public class DesignMenuController : MonoBehaviour
     #region --- Firebase Save/Load ---
     // =======================================================================
 
-    private void LoadCustomization()
+    private IEnumerator LoadCustomization()
     {
+        bool cusomizationLoaded = false;
         UserProfileManager.Instance.LoadCharacterCustomization((customization) =>
         {
             // Apply to materials
             ApplyCustomization(customization);
+            cusomizationLoaded = true;
         });
+        while (!cusomizationLoaded)
+            yield return null;
+        CustomizationLoaded = true;
     }
 
     private void ApplyCustomization(CharacterCustomization customization)
@@ -290,7 +344,7 @@ public class DesignMenuController : MonoBehaviour
         public List<Material> Materials;
         public Texture2D[] BackgroundTextures;
 
-        public MenuOption(string name, Button buttonElement, string[] items, VisualElement rootNode, List<Material> materials = null)
+        public MenuOption(string name, Button buttonElement, List<string> items, VisualElement rootNode, List<Material> materials = null)
         {
             BackgroundTextures = Resources.LoadAll<Texture2D>("Faces"); 
             Name = name;
@@ -308,8 +362,17 @@ public class DesignMenuController : MonoBehaviour
                 var menuItem = CreateMenuItem(item);
                 Items.Add(menuItem);
 
+                // get texture
+                Texture tex = null;
+                if (name.Contains("Eyes")) tex = Materials[0].GetTexture("_Eyes");
+                else if (name.Contains("Mouth")) tex = Materials[0].GetTexture("_Mouth");
+                else if (name.Contains("Decor")) tex = Materials[0].GetTexture("_Decoration");
+
+                string textureName = "";
+                if (tex != null) textureName = tex.name;
+
                 // Auto-select first sub-item
-                if (SelectedItem == null)
+                if (SelectedItem == null && textureName == item)
                 {
                     SelectedItem = menuItem;
                     menuItem.Select();
