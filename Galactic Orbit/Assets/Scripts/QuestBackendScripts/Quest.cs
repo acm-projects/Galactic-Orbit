@@ -14,7 +14,7 @@ public class Quest : ScriptableObject
     
     [Header("Location (for AR quests)")]
     public Vector2 targetLocation; // latitude, longitude
-    public float completionRadius = 20f; // meters
+    public float completionRadius = 100f; // not meters (some new unit)
     
     [Header("Rewards")]
     public int rewardPoints;
@@ -32,7 +32,7 @@ public class Quest : ScriptableObject
         newQuest.questDescription = desc;
         newQuest.targetLocation = location;
         newQuest.rewardPoints = reward;
-        newQuest.completionRadius = 20f;
+        newQuest.completionRadius = 120f;
         newQuest.isCompleted = false;
         newQuest.isActive = false;
         return newQuest;

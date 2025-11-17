@@ -148,17 +148,17 @@ public class UserProfileController : MonoBehaviour
             }
 
             // Buttons
-            exitButton = root.Q<Button>("ExitButton");
-            customizeButton = root.Q<Button>("CustomizeButton");
+            //exitButton = root.Q<Button>("ExitButton");
+            //customizeButton = root.Q<Button>("CustomizeButton");
 
             // Setup button listeners
-            if (exitButton != null)
-                exitButton.clicked += OnExitClicked;
+            //if (exitButton != null)
+            //    exitButton.clicked += OnExitClicked;
             
-            if (customizeButton != null)
-                customizeButton.clicked += OnCustomizeClicked;
+            //if (customizeButton != null)
+            //    customizeButton.clicked += OnCustomizeClicked;
 
-            Debug.Log("UI elements found successfully");
+            //Debug.Log("UI elements found successfully");
             isInitialized = true;
         }
         catch (System.Exception e)
@@ -218,12 +218,6 @@ public class UserProfileController : MonoBehaviour
 
     void OnDisable()
     {
-        // Clean up button listeners
-        if (exitButton != null)
-            exitButton.clicked -= OnExitClicked;
-        
-        if (customizeButton != null)
-            customizeButton.clicked -= OnCustomizeClicked;
 
         isInitialized = false;
     }
@@ -431,30 +425,6 @@ public class UserProfileController : MonoBehaviour
         Debug.Log("⚠️ Showing test data (user not logged in or managers not ready)");
     }
 
-    /// <summary>
-    /// Handle exit button click
-    /// </summary>
-    void OnExitClicked()
-    {
-        Debug.Log("Exit button clicked");
-        
-        // Return to main map or previous scene
-        if (SceneController.Instance != null)
-        {
-            SceneController.Instance.LoadLevel("MapScene");
-        }
-        else
-        {
-            gameObject.SetActive(false);
-        }
-    }
 
-    /// <summary>
-    /// Handle customize button click
-    /// </summary>
-    void OnCustomizeClicked()
-    {
-        Debug.Log("Customize button clicked");
-        // TODO: Implement customization system
-    }
+  
 }

@@ -313,6 +313,156 @@ public void AddCoins(int amount, Action<bool, string> callback)
 }
 
 
+    public void SubtractCoins(int amount, Action<bool, string> callback)
+    {
+        FirebaseUser currentUser = FirebaseManager.Instance.CurrentUser;
+        
+        if (currentUser == null)
+        {
+            callback?.Invoke(false, "Not signed in");
+            return;
+        }
+
+        GetCurrentUserProfile((profile) =>
+        {
+            if (profile != null)
+            {
+                int newCoins = Math.Max(profile.coins - amount, 0); // Dont let coins get below 0
+
+                var updates = new System.Collections.Generic.Dictionary<string, object>
+                {
+                    { "coins", newCoins }
+                };
+
+                FirebaseManager.Instance.DbReference.Child("userProfiles").Child(currentUser.UserId)
+                    .UpdateChildrenAsync(updates)
+                    .ContinueWithOnMainThread(task =>
+                    {
+                        if (task.IsCompleted)
+                            callback?.Invoke(true, $"Added {amount} coins! Total: {newCoins}");
+                        else
+                            callback?.Invoke(false, "Failed to add coins: " + task.Exception?.Message);
+                    });
+            }
+            else
+            {
+                callback?.Invoke(false, "Profile not found");
+            }
+        });
+    }
+    public void GetCoins(Action<int> callback)
+    {
+        FirebaseUser user = FirebaseManager.Instance.CurrentUser;
+
+        if (user == null)
+        {
+            callback?.Invoke(0); // Not signed in → return 0
+            return;
+        }
+
+        GetCurrentUserProfile(profile =>
+        {
+            if (profile == null)
+            {
+                callback?.Invoke(0); // Profile missing → return 0
+                return;
+            }
+
+            callback?.Invoke(profile.coins); // Return the player's coins
+        });
+    }
+
+
+    // ==== INVENTORY METHODS =====
+    public void BuyItem(string itemId, int price, Action<bool, string> callback)
+{
+    FirebaseUser user = FirebaseManager.Instance.CurrentUser;
+
+    if (user == null)
+    {
+        callback?.Invoke(false, "Not signed in");
+        return;
+    }
+
+    // Step 1: Get profile
+    GetCurrentUserProfile(profile =>
+    {
+        if (profile == null)
+        {
+            callback?.Invoke(false, "Profile not found");
+            return;
+        }
+
+        // Step 2: Check if enough coins
+        if (profile.coins < price)
+        {
+            callback?.Invoke(false, "Not enough coins");
+            return;
+        }
+
+        // Step 3: Check if already owns the item
+        if (profile.boughtItemIds != null &&
+            Array.Exists(profile.boughtItemIds, id => id == itemId))
+        {
+            callback?.Invoke(false, "Item already owned");
+            return;
+        }
+
+        // Step 4: Check inventory space
+        string[] inventory = profile.boughtItemIds ?? new string[3];
+
+        int emptyIndex = -1;
+        for (int i = 0; i < inventory.Length; i++)
+        {
+            if (string.IsNullOrEmpty(inventory[i]))
+            {
+                emptyIndex = i;
+                break;
+            }
+        }
+
+        if (emptyIndex == -1)
+        {
+            callback?.Invoke(false, "Inventory full");
+            return;
+        }
+
+        // Step 5: Update inventory
+        inventory[emptyIndex] = itemId;
+
+        // Step 6: Subtract coins + save both to Firebase
+        var updates = new System.Collections.Generic.Dictionary<string, object>
+        {
+            { "coins", profile.coins - price },
+            { "boughtItemIds", inventory }
+        };
+
+        FirebaseManager.Instance.DbReference.Child("userProfiles").Child(user.UserId)
+            .UpdateChildrenAsync(updates)
+            .ContinueWithOnMainThread(task =>
+            {
+                if (task.IsCompleted)
+                    callback?.Invoke(true, "Item bought successfully");
+                else
+                    callback?.Invoke(false, "Purchase failed: " + task.Exception?.Message);
+            });
+        });
+    }
+
+    public void HasItem(string itemId, Action<bool> callback)
+    {
+        GetCurrentUserProfile(profile =>
+        {
+            if (profile == null || profile.boughtItemIds == null)
+            {
+                callback(false);
+                return;
+            }
+
+            bool exists = Array.Exists(profile.boughtItemIds, id => id == itemId);
+            callback(exists);
+        });
+    }
 
 
     // ===== CURRENCY METHODS =====
@@ -357,6 +507,9 @@ public class UserProfile
     public string displayName;        // Display name (starts as username)
     public string bio;                // User bio/description
     public string avatarUrl;          // Profile picture URL
+
+    // === INVENTORY - MAX OF 3 TO START ===
+    public string[] boughtItemIds = new string[3]; // max length 3
 
     // === CHARACTER CUSTOMIZATION ===
     public float primaryColorR, primaryColorG, primaryColorB;

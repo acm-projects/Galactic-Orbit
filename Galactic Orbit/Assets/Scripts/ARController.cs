@@ -4,9 +4,14 @@ using UnityEngine.XR.ARSubsystems;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using UnityEngine.UIElements;
+using Mapbox.Utils;
+using System.Collections;
 
 public class SimpleARController : MonoBehaviour
 {
+    [Header("Quest Reference")]
+    public Quest CurrentQuest;
+
     [Header("Camera References")]
     public GameObject normalCamera; // the regular game (map view) camera
     public GameObject arSessionOrigin; // XR Origin (Mobile AR)
@@ -110,12 +115,21 @@ public class SimpleARController : MonoBehaviour
         if (enabled)
         {
             // Wait a moment for AR to initialize, then spawn
-            Invoke("SpawnRandomObject", 0.5f);
+            Vector2d location = new Vector2d(GPSManager.Instance.latitude, GPSManager.Instance.longitude);
+            List<Quest> quests = QuestManager.Instance.GetNearbyQuests(location);
+            if (quests.Count > 0) {
+                CurrentQuest = quests[0];
+                StartCoroutine(SpawnRandomObject());
+            }
         }
         else
         {
             ClearSpawnedObjects();
         }
+    }
+    private void ItemCollected(bool success)
+    {
+        QuestManager.Instance.CompleteQuest(CurrentQuest.questID);
     }
     
     void HandleARTap()
@@ -167,13 +181,14 @@ public class SimpleARController : MonoBehaviour
         SpawnObjectAt(spawnPosition, Quaternion.identity);
     }
     
-    void SpawnRandomObject()
+    private IEnumerator SpawnRandomObject()
     {
         if (arObjectPrefab == null || arCamera == null)
         {
             Debug.LogWarning("canoot spawn");
-            return;
+            yield break;
         }
+        yield return new WaitForSeconds(0.5f);
         
         float randomAngle = Random.Range(0f, 360f);
         float randomDistance = Random.Range(spawnDistance, spawnDistanceMax);
@@ -204,6 +219,8 @@ public class SimpleARController : MonoBehaviour
     void SpawnObjectAt(Vector3 position, Quaternion rotation)
     {
         GameObject spawnedObject = Instantiate(arObjectPrefab, position, rotation);
+        var collectible = spawnedObject.GetComponent<ARCollectible>();
+        collectible.callback = ItemCollected;
         spawnedObjects.Add(spawnedObject);
         
         Debug.Log($"Spawned object at {position}");
@@ -222,23 +239,22 @@ public class SimpleARController : MonoBehaviour
 
     void OnGUI()
     {
-        // if (true) return; // uncomment for now bc makes everything after unreachable
-    if (!isARMode) return;
-    
-    GUIStyle style = new GUIStyle();
-    style.fontSize = 30;
-    style.normal.textColor = Color.yellow;
-    
-    string text = $"AR MODE ACTIVE\n";
-    text += $"Spawned Objects: {spawnedObjects.Count}\n";
-    text += $"Camera: {(arCamera != null ? "OK" : "NULL")}\n";
-    text += $"Prefab: {(arObjectPrefab != null ? "OK" : "NULL")}\n";
-    
-    if (arCamera != null)
-    {
-        text += $"Cam Pos: {arCamera.transform.position}\n";
+        /*if (!isARMode) return;
+        
+        GUIStyle style = new GUIStyle();
+        style.fontSize = 30;
+        style.normal.textColor = Color.yellow;
+        
+        string text = $"AR MODE ACTIVE\n";
+        text += $"Spawned Objects: {spawnedObjects.Count}\n";
+        text += $"Camera: {(arCamera != null ? "OK" : "NULL")}\n";
+        text += $"Prefab: {(arObjectPrefab != null ? "OK" : "NULL")}\n";
+        
+        if (arCamera != null)
+        {
+            text += $"Cam Pos: {arCamera.transform.position}\n";
+        }
+        
+        GUI.Label(new Rect(10, 100, 600, 300), text, style);*/
     }
-    
-    GUI.Label(new Rect(10, 100, 600, 300), text, style);
-}
 }

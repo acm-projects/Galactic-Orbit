@@ -26,5 +26,4 @@
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:ScrollView />
 </ui:UXML>

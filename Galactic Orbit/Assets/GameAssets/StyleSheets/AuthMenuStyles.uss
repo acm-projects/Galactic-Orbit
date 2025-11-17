@@ -40,3 +40,13 @@ GradientQuad {
 .selected {
     background-color: rgba(0, 0, 0, 0.5);
 }
+
+.button-transition {
+    transition-property: opacity;
+    transition-duration: 250ms;
+    transition-timing-function: ease-in-out;
+}
+
+.button-transition:active {
+    opacity: 0.6;
+}

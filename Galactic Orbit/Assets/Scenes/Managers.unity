@@ -196,7 +196,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 809a24740c6076e46a57589f14e6cd77, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -394,6 +394,9 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: fdbe95365508d4670878629d6a473ba8, type: 2}
   musicSource: {fileID: 710822634}
   sfxSource: {fileID: 710822633}
+  ButtonSound: {fileID: 8300000, guid: 809a24740c6076e46a57589f14e6cd77, type: 3}
+  PurchaseSound: {fileID: 8300000, guid: 7399fceaf9a3a6e4eafa60a569df3edc, type: 3}
+  CollectSound: {fileID: 8300000, guid: 527ae6d83301de5448e456a5614cb25a, type: 3}
 --- !u!4 &710822636
 Transform:
   m_ObjectHideFlags: 0
@@ -952,6 +955,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1273747845}
   m_CullTransparentMesh: 1
+--- !u!1 &1757264215
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1757264217}
+  - component: {fileID: 1757264216}
+  m_Layer: 0
+  m_Name: GPSSimulator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1757264216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1757264215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3cd92853e15c6c439642f0ee6ec1bf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CycleCoordinates
+  coordinates:
+  - {x: 32.98624, y: -96.75047}
+  - {x: 32.986916, y: -96.74762}
+  latitude: 32.986237
+  longitude: -96.75047
+  delaySeconds: 5
+--- !u!4 &1757264217
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1757264215}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.03336, y: 1.97192, z: 0.15535}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1905753723
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,3 +1175,5 @@ SceneRoots:
   - {fileID: 1049088371}
   - {fileID: 2089979573}
   - {fileID: 710822636}
+  - {fileID: 977797563}
+  - {fileID: 1757264217}

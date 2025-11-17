@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System;
 
 public class EventDetailsUI : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class EventDetailsUI : MonoBehaviour
             
             // Get full description from UTDEventsSync if available
             string description = GetFullDescription(selected);
-            description = description.Substring(0, 500);
+            description = description.Substring(0, Math.Clamp(description.Length, 0, 500));
             descriptionText.text = description;
         }
     }

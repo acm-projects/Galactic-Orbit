@@ -1,0 +1,5 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; background-color: rgb(25, 255, 0);">
+        <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/GameAssets/UI/UserProfile/ModelPreviewRT.renderTexture?fileID=8400000&amp;guid=f345a9d661e644540ac92925db1675d7&amp;type=2#ModelPreviewRT&quot;); -unity-background-scale-mode: scale-and-crop;" />
+    </ui:VisualElement>
+</ui:UXML>

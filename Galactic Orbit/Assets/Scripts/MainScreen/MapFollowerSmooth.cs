@@ -34,24 +34,41 @@ public class MapFollowerSmooth : MonoBehaviour
     public float velocityDeadZone = 0.05f; // meters — tweak to your liking
 
     public Vector2d currentLocation;
+    void OnEnable()
+    {
+        InitializeMapFollower();
+    }
+
     void Start()
     {
-        currentLocation = Vector2d.zero;
-        
+        // Optional: you can remove Start entirely
+        InitializeMapFollower();
+    }
+
+    private void InitializeMapFollower()
+    {
+        // Reset flags
+        _isRecentering = false;
+
+        // Ensure location is loaded
         InitializeLocation();
 
         _mapCenter = currentLocation;
         _targetLocation = _mapCenter;
 
-        map.Initialize(_mapCenter, (int)map.Zoom);
+        // Reinitialize map ONLY if map exists
+        if (map != null)
+            map.Initialize(_mapCenter, (int)map.Zoom);
 
+        // Reset player position
         if (player != null)
             player.position = Vector3.zero;
 
-        // Initialize velocity tracking
+        // Reset velocity system
         _lastTargetPos = _targetLocation;
         _lastUpdateTime = Time.time;
-    }
+}
+
     public void InitializeLocation()
     {
         if (GPSManager.Instance != null)

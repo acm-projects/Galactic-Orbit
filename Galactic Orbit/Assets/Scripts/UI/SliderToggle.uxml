@@ -1,0 +1,5 @@
+<ui:Toggle name="slider-toggle" class="slider-toggle">
+    <ui:VisualElement name="track" class="track">
+        <ui:VisualElement name="handle" class="handle" />
+    </ui:VisualElement>
+</ui:Toggle>

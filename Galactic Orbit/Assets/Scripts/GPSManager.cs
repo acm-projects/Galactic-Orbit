@@ -28,6 +28,7 @@ public class GPSManager : MonoBehaviour
 
     IEnumerator StartLocationService()
     {
+        
         if (!Input.location.isEnabledByUser)
         {
             HasGPS = false;
