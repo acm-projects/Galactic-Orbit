@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,9 +9,45 @@ public class QuestUI : MonoBehaviour
     // This line is the main change. It's now a list of QuestButton scripts.
     public List<QuestButton> questButtons;
 
+    void Start()
+    {
+        StartCoroutine(WaitForQuestManager());
+    }
     void OnEnable()
     {
-        Invoke(nameof(PullNewQuests), 0.1f);
+        ReloadQuests();
+    }
+    // Reloading so completed quests get removed
+    private void ReloadQuests()
+    {
+        for (int i = 0; i < questButtons.Count; i++)
+        {
+            if (i < questManager.activeQuests.Count)
+            {
+                if (questManager.activeQuests[i].isCompleted == true)
+                    continue;
+
+                questButtons[i].gameObject.SetActive(true);
+                // We call the Setup function on the button's own script
+                Quest activeQuest = questManager.activeQuests[i];
+                questManager.ActivateQuest(activeQuest);
+                questButtons[i].Setup(activeQuest);
+            }
+            else
+            {
+                questButtons[i].gameObject.SetActive(false);
+            }
+        }
+    }
+    private IEnumerator WaitForQuestManager()
+    {
+        // Wait until the singleton is available
+        while (QuestManager.Instance == null)
+            yield return null; // wait one frame
+
+        questManager = QuestManager.Instance;
+
+        PullNewQuests(); // now safe
     }
 
     void Awake()
@@ -40,14 +77,20 @@ public class QuestUI : MonoBehaviour
         {
             if (i < uniqueQuests.Count)
             {
+                if (uniqueQuests[i].isCompleted == true)
+                    continue;
+
                 questButtons[i].gameObject.SetActive(true);
                 // We call the Setup function on the button's own script
-                questButtons[i].Setup(uniqueQuests[i]);
+                Quest activeQuest = uniqueQuests[i];
+                questManager.ActivateQuest(activeQuest);
+                questButtons[i].Setup(activeQuest);
             }
             else
             {
                 questButtons[i].gameObject.SetActive(false);
             }
         }
+
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using Mapbox.Utils;
 using UnityEngine;
-
+using System;
 public class QuestManager : MonoBehaviour
 {
     public static QuestManager Instance;
@@ -32,6 +33,48 @@ public class QuestManager : MonoBehaviour
             return;
         }
     }
+
+    // Quest Implementation
+    public List<Quest> GetNearbyQuests(Vector2d coordinates)
+    {
+        List<Quest> nearby = new List<Quest>();
+        Debug.Log("NUMBER OF ACTIVE: " + activeQuests.Count);
+        foreach (var quest in activeQuests)
+        {
+            double distance = HaversineDistance(
+                coordinates.x, coordinates.y,
+                quest.targetLocation.x, quest.targetLocation.y
+            );
+
+            if (distance <= quest.completionRadius)
+            {
+                nearby.Add(quest);
+            }
+        }
+
+        return nearby;
+    }
+    private const double EarthRadius = 6371000; // meters
+
+    private double HaversineDistance(double lat1, double lon1, double lat2, double lon2)
+    {
+        double dLat = Deg2Rad(lat2 - lat1);
+        double dLon = Deg2Rad(lon2 - lon1);
+
+        double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+            Math.Cos(Deg2Rad(lat1)) * Math.Cos(Deg2Rad(lat2)) *
+            Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+
+        double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+
+        return EarthRadius * c;
+    }
+
+    private double Deg2Rad(double deg)
+    {
+        return deg * Math.PI / 180.0;
+    }
+
 
     async void Start()
     {
@@ -77,6 +120,9 @@ public class QuestManager : MonoBehaviour
     {
         if (count >= allQuests.Count)
         {
+            // DEBUGGING
+            Quest testQuest = Quest.CreateRuntimeQuest("Explore ECSS", "Explore Engineering and Computer Science South Building to get the AR Object", "The ECSS Building is hiding an Item", new Vector2(32.98623806f,-96.75047024f), 56);
+            allQuests[0] = testQuest;
             return new List<Quest>(allQuests);
         }
 
@@ -85,11 +131,11 @@ public class QuestManager : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            int randomIndex = Random.Range(0, availableQuests.Count);
+            int randomIndex = UnityEngine.Random.Range(0, availableQuests.Count);
             chosenQuests.Add(availableQuests[randomIndex]);
             availableQuests.RemoveAt(randomIndex);
         }
-
+        
         return chosenQuests;
     }
 
@@ -112,6 +158,21 @@ public class QuestManager : MonoBehaviour
             Debug.LogWarning($"Quest '{quest.questTitle}' is already active!");
         }
     }
+    public void DeactivateQuest(Quest quest)
+    {
+        if (quest == null) return;
+        
+        if (activeQuests.Contains(quest))
+        {
+            quest.isActive = false;
+            activeQuests.Remove(quest);
+            Debug.Log($"✅ Quest deactivated: {quest.questTitle}");
+        }
+        else
+        {
+            Debug.LogWarning($"Quest '{quest.questTitle}' is not active!");
+        }
+    }
 
     // Select a quest (for UI details view)
     public void SelectQuest(Quest quest)
@@ -131,7 +192,7 @@ public class QuestManager : MonoBehaviour
             quest.isActive = false;
             
             Debug.Log($"🎉 Quest completed: {quest.questTitle}! Awarding {quest.rewardPoints} points...");
-            
+            DeactivateQuest(quest);
             // Award points via UserProfileManager
             if (UserProfileManager.Instance != null)
             {
@@ -144,6 +205,19 @@ public class QuestManager : MonoBehaviour
                     else
                     {
                         Debug.LogError($"❌ Failed to award points: {msg}");
+                    }
+                });
+
+                // Add 10 coins --hardcoded
+                UserProfileManager.Instance.AddCoins(10, (success, msg) => 
+                {
+                    if (success)
+                    {
+                        Debug.Log($"✅ {msg}");
+                    }
+                    else
+                    {
+                        Debug.LogError($"❌ Failed to add coins: {msg}");
                     }
                 });
             }

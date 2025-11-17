@@ -11,7 +11,7 @@ public class QuestButton : MonoBehaviour
 
 
     public GameObject questDetailsScreen;
-    private Quest myQuest;
+    public Quest myQuest;
 
     public void Setup(Quest quest)
     {
