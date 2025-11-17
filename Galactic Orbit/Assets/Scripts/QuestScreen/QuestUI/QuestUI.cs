@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mapbox.Utils;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class QuestUI : MonoBehaviour
 {
@@ -28,8 +31,38 @@ public class QuestUI : MonoBehaviour
                     continue;
 
                 questButtons[i].gameObject.SetActive(true);
+                
                 // We call the Setup function on the button's own script
                 Quest activeQuest = questManager.activeQuests[i];
+
+                // make quests that are nearby highlighted
+                Vector2d location = new Vector2d(GPSManager.Instance.latitude, GPSManager.Instance.longitude);
+
+                Button button = questButtons[i].gameObject.GetComponent<Button>();
+                
+                Debug.Log("QuestButton: " + button);
+
+                if (button != null)
+                {
+                    var colors = button.colors;
+
+                    Debug.Log(activeQuest.questTitle + "-Is Quest Nearby: " + questManager.IsNearby(activeQuest, location));
+
+                    if (questManager.IsNearby(activeQuest, location))
+                    {
+                        Debug.Log("Nearby Quest -> " + activeQuest.questTitle);
+                        Debug.Log(activeQuest.questTitle + " Nearby Color: " + new Color(1f, 237f/255f, 189f/255f));
+                        colors.normalColor = new Color(1f, 237f/255f, 189f/255f);
+                    }
+                    else
+                    {
+                        colors.normalColor = Color.white;
+                    }
+
+                    // 🔥 REQUIRED STEP — apply modified colors
+                    button.colors = colors;
+                    Debug.Log(activeQuest.questTitle + ": " + button.colors.normalColor);
+                }
                 questManager.ActivateQuest(activeQuest);
                 questButtons[i].Setup(activeQuest);
             }

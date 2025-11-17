@@ -7,21 +7,15 @@ using System.Collections;
 /// Controls the Profile Screen UI and loads real user data from Firebase
 /// Attach this to the GameObject that has the UIDocument component
 /// </summary>
-public class UserProfileController : MonoBehaviour
+public class MainScreenDataUpdater : MonoBehaviour
 {
     private UIDocument uiDocument;
     
     // UI Elements
     private Label levelLabel;
     private ProgressBar experienceBar;
-    private Label experienceText;
-    private Label coinsLabel;
-    private Label itemsLabel;
-    private Label locationsVisitedLabel;
-    private Label distanceLabel;
-    private Label friendsLabel;
-    private Button exitButton;
-    private Button customizeButton;
+    private ProgressBar questBar;
+    private Label questProgressLabel;
 
     private bool isInitialized = false;
 
@@ -69,73 +63,18 @@ public class UserProfileController : MonoBehaviour
         // Find all UI elements with null checks
         try
         {
-            var experienceLevel = root.Q<VisualElement>("ExperienceLevel");
-            if (experienceLevel != null)
-            {
-                var allLabels = experienceLevel.Query<Label>().ToList();
-                Debug.Log($"Found {allLabels.Count} total labels in ExperienceLevel");
-                
-                foreach (var label in allLabels)
-                {
-                    if (label.parent == experienceLevel)
-                    {
-                        levelLabel = label;
-                        Debug.Log($"Set levelLabel to label with text: '{label.text}'");
-                        break;
-                    }
-                }
-            }
+            levelLabel = root.Q<Label>("LevelNumber");
             
-            experienceBar = root.Q<ProgressBar>();
+            experienceBar = root.Q<ProgressBar>("XPBar");
             if (experienceBar != null)
             {
                 Debug.Log($"ProgressBar found. Children count: {experienceBar.childCount}");
-                experienceText = experienceBar.Children().OfType<Label>().FirstOrDefault();
-                
-                if (experienceText != null)
-                {
-                    Debug.Log($"Found experienceText label. Current text: '{experienceText.text}', Is visible: {experienceText.visible}");
-                }
-                else
-                {
-                    Debug.LogError("Could not find Label inside ProgressBar!");
-                }
-            }
-            
-            var coinContainer = root.Q<VisualElement>("CoinContainer");
-            if (coinContainer != null)
-            {
-                var coinLabels = coinContainer.Query<Label>().ToList();
-                if (coinLabels.Count > 0)
-                    coinsLabel = coinLabels[coinLabels.Count - 1];
-            }
-            
-            var itemsContainer = root.Q<VisualElement>("ItemsContainer");
-            if (itemsContainer != null)
-            {
-                var itemLabels = itemsContainer.Query<Label>().ToList();
-                if (itemLabels.Count > 0)
-                    itemsLabel = itemLabels[itemLabels.Count - 1];
-            }
-            
-            // Activity labels
-            var activityBox = root.Q<VisualElement>("ActivityBox");
-            if (activityBox != null)
-            {
-                var visitedData = activityBox.Query<VisualElement>("VistedData").ToList();
-                if (visitedData.Count >= 3)
-                {
-                    var loc = visitedData[0].Query<Label>().ToList();
-                    if (loc.Count > 1) locationsVisitedLabel = loc[1];
-                    
-                    var dist = visitedData[1].Query<Label>().ToList();
-                    if (dist.Count > 1) distanceLabel = dist[1];
-                    
-                    var friends = visitedData[2].Query<Label>().ToList();
-                    if (friends.Count > 1) friendsLabel = friends[1];
-                }
             }
 
+            questProgressLabel = root.Q<Label>("QuestCompletion");
+
+            questBar = root.Q<ProgressBar>("QuestCompletionBar");
+            
             // Buttons
             //exitButton = root.Q<Button>("ExitButton");
             //customizeButton = root.Q<Button>("CustomizeButton");
@@ -299,7 +238,7 @@ public class UserProfileController : MonoBehaviour
         }
 
         // Experience/Points
-        if (experienceBar != null && experienceText != null)
+        if (experienceBar != null)
         {
             // Calculate experience for current level
             int currentLevelXP = (profile.level - 1) * 100;
@@ -310,59 +249,26 @@ public class UserProfileController : MonoBehaviour
             // Update progress bar (0-100 scale)
             float progress = (float)xpInCurrentLevel / xpNeededForLevel * 100f;
             experienceBar.value = progress;
-
-            // Update text
-            experienceText.text = $"{xpInCurrentLevel}/{xpNeededForLevel}";
-            Debug.Log($"✅ Set XP to: {experienceText.text}, progress: {progress}%");
         }
         else
         {
-            Debug.LogWarning("❌ experienceBar or experienceText is null");
+            Debug.LogWarning("❌ experienceBar is null");
         }
 
-        // Coins
-        if (coinsLabel != null)
+        // Quest Completion
+        if (questBar != null && QuestManager.Instance != null)
         {
-            coinsLabel.text = profile.coins.ToString();
-            Debug.Log($"✅ Set coins to: {coinsLabel.text}");
-        }
-        else
-        {
-            Debug.LogWarning("❌ coinsLabel is null");
+            int activeQuestsCount = QuestManager.Instance.activeQuests.Count;
+            float maxQuests = 5; //Hardcoded
+            questBar.value = (maxQuests-activeQuestsCount) / maxQuests;
+
         }
 
-        // Items
-        if (itemsLabel != null)
+        if (questProgressLabel != null && QuestManager.Instance != null)
         {
-            itemsLabel.text = profile.items.ToString();
-            Debug.Log($"✅ Set items to: {itemsLabel.text}");
-        }
-        else
-        {
-            Debug.LogWarning("❌ itemsLabel is null");
-        }
-
-        // Locations Visited
-        if (locationsVisitedLabel != null)
-        {
-            locationsVisitedLabel.text = profile.buildingsVisited.ToString();
-            Debug.Log($"✅ Set locations to: {locationsVisitedLabel.text}");
-        }
-        else
-        {
-            Debug.LogWarning("❌ locationsVisitedLabel is null");
-        }
-
-        // Distance (placeholder for now)
-        if (distanceLabel != null)
-        {
-            distanceLabel.text = "0 miles";
-        }
-
-        // Friends (placeholder for now)
-        if (friendsLabel != null)
-        {
-            friendsLabel.text = "0";
+            int activeQuestsCount = QuestManager.Instance.activeQuests.Count;
+            float maxQuests = 5; //Hardcoded
+            questProgressLabel.text = $"{maxQuests-activeQuestsCount}/{maxQuests}";
         }
 
         Debug.Log($"✅✅✅ Profile UI updated successfully ✅✅✅");
@@ -386,7 +292,7 @@ public class UserProfileController : MonoBehaviour
             experienceBar.value = 37f;
             Debug.Log($"Set experience bar to: {experienceBar.value}");
         }
-
+/*
         if (experienceText != null)
         {
             experienceText.text = "120/324";
@@ -406,7 +312,7 @@ public class UserProfileController : MonoBehaviour
             distanceLabel.text = "6.7 miles";
 
         if (friendsLabel != null)
-            friendsLabel.text = "5";
+            friendsLabel.text = "5";*/
 
         Debug.Log("⚠️ Showing test data (user not logged in or managers not ready)");
     }

@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using Mapbox.Utils;
 using UnityEngine;
 using System;
+using NUnit.Framework;
+using System.Linq;
 public class QuestManager : MonoBehaviour
 {
     public static QuestManager Instance;
@@ -41,18 +43,22 @@ public class QuestManager : MonoBehaviour
         Debug.Log("NUMBER OF ACTIVE: " + activeQuests.Count);
         foreach (var quest in activeQuests)
         {
-            double distance = HaversineDistance(
-                coordinates.x, coordinates.y,
-                quest.targetLocation.x, quest.targetLocation.y
-            );
-
-            if (distance <= quest.completionRadius)
+            if (IsNearby(quest, coordinates))
             {
                 nearby.Add(quest);
             }
         }
 
         return nearby;
+    }
+    public bool IsNearby(Quest quest, Vector2d coordinates)
+    {
+        double distance = HaversineDistance(
+            coordinates.x, coordinates.y,
+            quest.targetLocation.x, quest.targetLocation.y
+        );
+        Debug.Log(quest.questTitle + "- Distance from user: " + distance);
+        return distance <= quest.completionRadius;
     }
     private const double EarthRadius = 6371000; // meters
 
@@ -123,7 +129,8 @@ public class QuestManager : MonoBehaviour
             // DEBUGGING
             Quest testQuest = Quest.CreateRuntimeQuest("Explore ECSS", "Explore Engineering and Computer Science South Building to get the AR Object", "The ECSS Building is hiding an Item", new Vector2(32.98623806f,-96.75047024f), 56);
             allQuests[0] = testQuest;
-            return new List<Quest>(allQuests);
+            
+            return allQuests.Take(count).ToList();
         }
 
         List<Quest> availableQuests = new List<Quest>(allQuests);
