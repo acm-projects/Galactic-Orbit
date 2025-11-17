@@ -4,6 +4,7 @@ using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.ARFoundation;
+using System;   // Adding the big library directly for points to be added
 
 public class ARCollectible : MonoBehaviour
 {
@@ -98,6 +99,27 @@ public class ARCollectible : MonoBehaviour
         AudioManager.Instance.PlaySFX(AudioManager.Instance.CollectSound);
         isCollected = true;
         Debug.Log($"✅ Collected: {itemName}");
+
+        // This is where points are added, hopefully reflected in Firebase
+        // Keeping 20 as a constant for now, can easily be changed later
+        if (UserProfileManager.Instance != null)
+        {
+            UserProfileManager.Instance.AddPoints(20, (success, message) =>
+            {
+                if (success)
+                {
+                    Debug.Log($"🎉 Points awarded! {message}");
+                }
+                else
+                {
+                    Debug.LogError($"❌ Failed to award points: {message}");
+                }
+            });
+        }
+        else
+        {
+            Debug.LogError("❌ UserProfileManager.Instance is null - points not awarded!");
+        }
         shrinkCompleted = false;
         StartCoroutine(LerpShrink()); // Shrinks until deleted
         while (!shrinkCompleted)
