@@ -139,7 +139,7 @@ public class ShopController : MonoBehaviour
                 Debug.LogWarning("Purchase failed: " + msg);
                 return;
             }
-
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.PurchaseSound);
             Debug.Log("Purchase successful! Refreshing UI...");
             UpdateUI(GetComponentInChildren<UIDocument>().rootVisualElement);
         });

@@ -19688,6 +19688,7 @@ MonoBehaviour:
   ShopScreen: {fileID: 407378186}
   MenuScreen: {fileID: 9090716}
   QuestScreen: {fileID: 647781793}
+  ButtonSound: {fileID: 8300000, guid: 809a24740c6076e46a57589f14e6cd77, type: 3}
 --- !u!4 &1647726228
 Transform:
   m_ObjectHideFlags: 0

@@ -11,6 +11,9 @@ public class AudioManager : MonoBehaviour
     [Header("Audio Sources")]
     public AudioSource musicSource;
     public AudioSource sfxSource;
+    public AudioClip ButtonSound;
+    public AudioClip PurchaseSound;
+    public AudioClip CollectSound;
     
     private void Awake()
     {
@@ -30,6 +33,8 @@ public class AudioManager : MonoBehaviour
         LoadVolumeSettings();
     }
     
+   
+
     public void SetMusicVolume(float volume)
     {
         // Convert linear 0-1 value to logarithmic dB scale

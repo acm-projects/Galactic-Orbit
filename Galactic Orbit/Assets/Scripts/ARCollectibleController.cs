@@ -95,6 +95,7 @@ public class ARCollectible : MonoBehaviour
     async Task Collect()
     {
         if (isCollected) return;
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.CollectSound);
         isCollected = true;
         Debug.Log($"✅ Collected: {itemName}");
         shrinkCompleted = false;

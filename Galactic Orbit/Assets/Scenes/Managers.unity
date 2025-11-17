@@ -394,6 +394,9 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: fdbe95365508d4670878629d6a473ba8, type: 2}
   musicSource: {fileID: 710822634}
   sfxSource: {fileID: 710822633}
+  ButtonSound: {fileID: 8300000, guid: 809a24740c6076e46a57589f14e6cd77, type: 3}
+  PurchaseSound: {fileID: 8300000, guid: 7399fceaf9a3a6e4eafa60a569df3edc, type: 3}
+  CollectSound: {fileID: 8300000, guid: 527ae6d83301de5448e456a5614cb25a, type: 3}
 --- !u!4 &710822636
 Transform:
   m_ObjectHideFlags: 0

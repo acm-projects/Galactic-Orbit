@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -50,6 +51,7 @@ public class SettingsScript : MonoBehaviour
                 
                 if (AudioManager.Instance != null)
                 {
+                    Debug.Log(volume);
                     
                     AudioManager.Instance.SetMusicVolume(volume);
                     
@@ -68,10 +70,15 @@ public class SettingsScript : MonoBehaviour
                 UpdateFill(sfxSlider, sfxFill);
                 
                 float volume = evt.newValue / 100f;
-                
+                volume = 1 - volume;
                 if (AudioManager.Instance != null)
                 {
+                    Debug.Log(volume);
                     AudioManager.Instance.SetSFXVolume(volume);
+                    if (AudioManager.Instance.sfxSource != null)
+                    {
+                        AudioManager.Instance.sfxSource.volume = volume;
+                    }
                 }
             });
         }

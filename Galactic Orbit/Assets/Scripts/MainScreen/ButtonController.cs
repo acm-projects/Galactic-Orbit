@@ -17,6 +17,11 @@ public class ButtonController : MonoBehaviour
     [SerializeField] private GameObject MenuScreen;
     [SerializeField] private GameObject QuestScreen;
 
+    private void PlayButtonSound()
+    {
+
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.ButtonSound);
+    }
 
     void OnEnable()
     {
@@ -135,6 +140,7 @@ public class ButtonController : MonoBehaviour
     }
     private IEnumerator DelayedScreenChange(GameObject[] toEnable, GameObject[] toDisable)
     {
+        PlayButtonSound();
         foreach (var obj in toEnable)
         {
             obj.SetActive(true);
