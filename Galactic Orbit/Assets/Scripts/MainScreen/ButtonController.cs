@@ -180,6 +180,13 @@ public class ButtonController : MonoBehaviour
             ProfileScreen.SetActive(true);
             MainScreen.SetActive(false);
             Map.SetActive(false);
+
+            // Force reinitialize the profile UI so user specific data gets added
+            var profileController = ProfileScreen.GetComponent<UserProfileController>();
+            if (profileController != null)
+            {
+                profileController.Reinitialize();
+            }
         }));
     }
 

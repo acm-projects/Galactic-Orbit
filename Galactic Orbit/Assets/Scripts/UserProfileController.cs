@@ -25,9 +25,20 @@ public class UserProfileController : MonoBehaviour
 
     private bool isInitialized = false;
 
+    void Awake()
+    {
+        Debug.Log($"🔵 UserProfileController AWAKE on {gameObject.name}");
+    }
+
+    void Start()
+    {
+        Debug.Log($"🔵 UserProfileController START on {gameObject.name}");
+    }
+
     void OnEnable()
     {
         // Use coroutine to ensure everything is ready
+        Debug.Log($"🟣 UserProfileController OnEnable() called on {gameObject.name}");
         StartCoroutine(InitializeUI());
     }
 
@@ -45,7 +56,7 @@ public class UserProfileController : MonoBehaviour
         yield return null;
         yield return null;
 
-        uiDocument = GetComponent<UIDocument>();
+        uiDocument = GetComponentInChildren<UIDocument>();
         if (uiDocument == null)
         {
             Debug.LogError("UIDocument not found! Attach this script to the GameObject with UIDocument.");
@@ -231,6 +242,9 @@ public class UserProfileController : MonoBehaviour
     void LoadUserProfile()
     {
         Debug.Log("=== LoadUserProfile called ===");
+        Debug.Log($"FirebaseManager exists: {FirebaseManager.Instance != null}");
+        Debug.Log($"CurrentUser exists: {FirebaseManager.Instance?.CurrentUser != null}");
+        Debug.Log($"UserProfileManager exists: {UserProfileManager.Instance != null}");
         
         // Check if user is logged in
         if (FirebaseManager.Instance == null)
