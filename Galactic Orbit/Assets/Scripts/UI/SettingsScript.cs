@@ -9,7 +9,7 @@ public class SettingsScript : MonoBehaviour
     private Slider musicSlider;
     private Slider sfxSlider;
 
-    private void Start()
+    private void OnEnable()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
 

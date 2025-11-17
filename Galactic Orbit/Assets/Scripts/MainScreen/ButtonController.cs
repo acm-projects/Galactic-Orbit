@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using Unity.Mathematics;
 
 public class ButtonController : MonoBehaviour
 {
@@ -132,160 +133,181 @@ public class ButtonController : MonoBehaviour
             else closeShopButton.clicked += OnCloseShop;
         }
     }
-    private IEnumerator DelayedScreenChange(System.Action action)
+    private IEnumerator DelayedScreenChange(GameObject[] toEnable, GameObject[] toDisable)
     {
-        yield return new WaitForSeconds(0.2f); // 200ms delay
-        action?.Invoke();
+        foreach (var obj in toEnable)
+        {
+            obj.SetActive(true);
+            PlayScreenAnimation(obj);
+        }
+        foreach (var obj in toDisable)
+            PlayDisableScreenAnimation(obj);
+        
+        yield return new WaitForSeconds(0.3f);
+
+        foreach (var obj in toDisable)
+            obj.SetActive(false);
+        
         OnEnable(); // rebind UI Toolkit buttons
     }
+
+    private void PlayScreenAnimation(GameObject screenObj)
+    {
+        var UIDoc = screenObj.GetComponentInChildren<UIDocument>();
+        if (UIDoc == null)
+            return;
+        var root = UIDoc.rootVisualElement;
+        if (root == null) return;
+
+        Debug.Log("Animating screen: " + screenObj.name);
+
+        // Remove any previous "show" state
+        root.RemoveFromClassList("show");
+        root.AddToClassList("screen");
+
+        // Delay 1 frame so transitions can fire
+        root.schedule.Execute(() =>
+        {
+            root.AddToClassList("show");
+            Debug.Log("Showing Screen now");
+        }).ExecuteLater(10);
+    }
+    private void PlayDisableScreenAnimation(GameObject screenObj)
+    {
+        var UIDoc = screenObj.GetComponentInChildren<UIDocument>();
+        if (UIDoc == null)
+            return;
+        var root = UIDoc.rootVisualElement;
+        if (root == null) return;
+
+        Debug.Log("Animating screen: " + screenObj.name);
+
+        // Remove any previous "show" state
+        root.RemoveFromClassList("show");
+
+    }
+
+
     private void OnLogout()
     {
         SceneController.Instance.LoadLevel("AuthScene");
     }
     private void OnARBackButton()
     {
-        StartCoroutine(DelayedScreenChange(() =>
-        {
-            Debug.Log("AR Back Button Pressed");
-            ARScreen.SetActive(false);
-            MainScreen.SetActive(true);
-            Map.SetActive(true);
-            OnEnable();
-        }));
+        StartCoroutine(DelayedScreenChange(
+            new GameObject[] {MainScreen, Map},
+            new GameObject[] {ARScreen}
+        ));
     }
 
     private void OnCameraButton()
     {
-        StartCoroutine(DelayedScreenChange(() =>
-        {
-            ARScreen.SetActive(true);
-            MenuScreen.SetActive(false);
-        }));
+        StartCoroutine(DelayedScreenChange(
+            new GameObject[] {ARScreen},
+            new GameObject[] {MenuScreen}
+        ));
     }
     private void OnMenuButton()
     {
-        StartCoroutine(DelayedScreenChange(() =>
-        {
-            MenuScreen.SetActive(true);
-            MainScreen.SetActive(false);
-            Map.SetActive(false);
-        }));
+        StartCoroutine(DelayedScreenChange(
+            new GameObject[] {MenuScreen}, 
+            new GameObject[] {MainScreen, Map}
+        ));
     }
     private void OnExitMenuButton()
     {
-        StartCoroutine(DelayedScreenChange(() =>
-        {
-            MenuScreen.SetActive(false);
-            MainScreen.SetActive(true);
-            Map.SetActive(true);
-        }));
+        StartCoroutine(DelayedScreenChange(
+            new GameObject[] {MainScreen, Map},
+            new GameObject[] {MenuScreen}
+        ));
     }
     private void OnProfileButton()
     {
-        StartCoroutine(DelayedScreenChange(() =>
-        {
-            ProfileScreen.SetActive(true);
-            MainScreen.SetActive(false);
-            Map.SetActive(false);
-        }));
+        StartCoroutine(DelayedScreenChange(
+            new GameObject[] {ProfileScreen},
+            new GameObject[] {MainScreen, Map}
+        ));
     }
 
     private void OnSettingsButton()
     {
-        StartCoroutine(DelayedScreenChange(() =>
-        {
-            SettingsScreen.SetActive(true);
-            MainScreen.SetActive(false);
-            Map.SetActive(false);
-        }));
+        StartCoroutine(DelayedScreenChange(
+            new GameObject[] {SettingsScreen},
+            new GameObject[] {MainScreen, Map}
+        ));
     }
     private void OnCloseSettings()
     {
-        StartCoroutine(DelayedScreenChange(() =>
-        {
-            SettingsScreen.SetActive(false);
-            MainScreen.SetActive(true);
-            Map.SetActive(true);
-        }));
+        StartCoroutine(DelayedScreenChange(
+            new GameObject[] {MainScreen, Map},
+            new GameObject[] {SettingsScreen}
+        ));
     }
     private void OnMenuToQuest()
     {
-        StartCoroutine(DelayedScreenChange(() =>
-        {
-            MenuScreen.SetActive(false);
-            QuestScreen.SetActive(true);
-        }));
+        StartCoroutine(DelayedScreenChange(
+            new GameObject[] {QuestScreen},
+            new GameObject[] {MenuScreen}
+        ));
     }
     private void OnShopButton()
     {
-        StartCoroutine(DelayedScreenChange(() =>
-        {
-            ShopScreen.SetActive(true);
-            MenuScreen.SetActive(false);
-        }));
+        StartCoroutine(DelayedScreenChange(
+            new GameObject[] {ShopScreen},
+            new GameObject[] {MenuScreen}
+        ));
     }
     private void OnCloseShop()
     {
-        StartCoroutine(DelayedScreenChange(() =>
-        {
-            ShopScreen.SetActive(false);
-            MainScreen.SetActive(true);
-            Map.SetActive(true);
-        }));
+        StartCoroutine(DelayedScreenChange(
+            new GameObject[] {MainScreen, Map},
+            new GameObject[] {ShopScreen}
+        ));
     }
 
     private void OnExitButton()
     {
-        StartCoroutine(DelayedScreenChange(() =>
-        {
-            ProfileScreen.SetActive(false);
-            MainScreen.SetActive(true);
-            Map.SetActive(true);
-        }));
+        StartCoroutine(DelayedScreenChange(
+            new GameObject[] {MainScreen, Map},
+            new GameObject[] {ProfileScreen}
+        ));
     }
     private void OnMenuToCustomizeButton()
     {
-        StartCoroutine(DelayedScreenChange(() =>
-        {
-            MenuScreen.SetActive(false);
-            CharacterCustomizationScreen.SetActive(true);
-        }));
+        StartCoroutine(DelayedScreenChange(
+            new GameObject[] {CharacterCustomizationScreen},
+            new GameObject[] {MenuScreen}
+        ));
     }
     private void OnCustomizeButton()
     {
-        StartCoroutine(DelayedScreenChange(() =>
-        {
-            ProfileScreen.SetActive(false);
-            CharacterCustomizationScreen.SetActive(true);
-        }));
+        StartCoroutine(DelayedScreenChange(
+            new GameObject[] {CharacterCustomizationScreen},
+            new GameObject[] {ProfileScreen}
+        ));
     }
     private void OnBackButton()
     {
-        StartCoroutine(DelayedScreenChange(() =>
-        {
-            CharacterCustomizationScreen.SetActive(false);
-            ProfileScreen.SetActive(true);
-        }));
+        StartCoroutine(DelayedScreenChange(
+            new GameObject[] {ProfileScreen},
+            new GameObject[] {CharacterCustomizationScreen}
+        ));
     }
 
     private void OnQuestButton()
     {
-        StartCoroutine(DelayedScreenChange(() =>
-        {
-            QuestScreen.SetActive(true);
-            MainScreen.SetActive(false);
-            Map.SetActive(false);
-        }));
+        StartCoroutine(DelayedScreenChange(
+            new GameObject[] {QuestScreen},
+            new GameObject[] {MainScreen, Map}
+        ));
     }
     // For Canvas-based Quest Screen
     public void OnCloseQuest()
     {
-        StartCoroutine(DelayedScreenChange(() =>
-        {
-            QuestScreen.SetActive(false);
-            MainScreen.SetActive(true);
-            Map.SetActive(true);
-        }));
+        StartCoroutine(DelayedScreenChange(
+            new GameObject[] {MainScreen, Map},
+            new GameObject[] {QuestScreen}
+        ));
     }
 
 }

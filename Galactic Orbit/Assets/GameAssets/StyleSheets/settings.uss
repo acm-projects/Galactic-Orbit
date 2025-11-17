@@ -20,6 +20,7 @@ Slider #unity-tracker {
     position: absolute;
     top: 35%;
     left: 0%;
+    overflow: hidden;
 }
 
 Slider #unity-dragger {
@@ -82,4 +83,15 @@ Toggle {
 
 Toggle:checked {
     background-position: 24px 2px;
+}
+
+.screen {
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+}
+
+.show {
+    opacity: 1;
 }

@@ -10,3 +10,17 @@
 .button-transition:active {
     opacity: 0.6;
 }
+
+.screen {
+    opacity: 0;
+    /*transform: translateY(20px);*/
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    /*, transform 0.3s ease;*/
+}
+
+.show {
+    opacity: 1;
+    /*transform: translateY(0px);*/
+}
