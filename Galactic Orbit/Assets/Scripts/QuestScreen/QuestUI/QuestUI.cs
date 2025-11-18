@@ -25,10 +25,10 @@ public class QuestUI : MonoBehaviour
     {
         for (int i = 0; i < questButtons.Count; i++)
         {
-            if (i < questManager.activeQuests.Count)
+            if (questManager.activeQuests[i].isCompleted == true)
+                Debug.Log("YAPPACHINO");
+            if (i < questManager.activeQuests.Count && questManager.activeQuests[i].isCompleted == false)
             {
-                if (questManager.activeQuests[i].isCompleted == true)
-                    continue;
 
                 questButtons[i].gameObject.SetActive(true);
                 

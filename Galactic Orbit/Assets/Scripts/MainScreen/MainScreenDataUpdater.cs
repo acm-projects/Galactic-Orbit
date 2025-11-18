@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using System.Linq;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// Controls the Profile Screen UI and loads real user data from Firebase
@@ -258,17 +259,27 @@ public class MainScreenDataUpdater : MonoBehaviour
         // Quest Completion
         if (questBar != null && QuestManager.Instance != null)
         {
-            int activeQuestsCount = QuestManager.Instance.activeQuests.Count;
-            float maxQuests = 5; //Hardcoded
-            questBar.value = (maxQuests-activeQuestsCount) / maxQuests;
+            List<Quest> activeQuests = QuestManager.Instance.activeQuests;
+            int completedQuestCount = 0;
+            foreach (Quest quest in activeQuests)
+            {
+                if (quest.isCompleted)
+                    completedQuestCount++;
+            }
+            questBar.value = (float)completedQuestCount / activeQuests.Count * 100f;
 
         }
 
         if (questProgressLabel != null && QuestManager.Instance != null)
         {
-            int activeQuestsCount = QuestManager.Instance.activeQuests.Count;
-            float maxQuests = 5; //Hardcoded
-            questProgressLabel.text = $"{maxQuests-activeQuestsCount}/{maxQuests}";
+            List<Quest> activeQuests = QuestManager.Instance.activeQuests;
+            int completedQuestCount = 0;
+            foreach (Quest quest in activeQuests)
+            {
+                if (quest.isCompleted)
+                    completedQuestCount++;
+            }
+            questProgressLabel.text = $"{completedQuestCount}/{activeQuests.Count}";
         }
 
         Debug.Log($"✅✅✅ Profile UI updated successfully ✅✅✅");

@@ -43,12 +43,12 @@ public class QuestManager : MonoBehaviour
         Debug.Log("NUMBER OF ACTIVE: " + activeQuests.Count);
         foreach (var quest in activeQuests)
         {
-            if (IsNearby(quest, coordinates))
+            if (IsNearby(quest, coordinates) && !quest.isCompleted)
             {
                 nearby.Add(quest);
             }
         }
-
+        Debug.Log("NUMBER OF NEARBY: " + nearby.Count);
         return nearby;
     }
     public bool IsNearby(Quest quest, Vector2d coordinates)
@@ -172,7 +172,7 @@ public class QuestManager : MonoBehaviour
         if (activeQuests.Contains(quest))
         {
             quest.isActive = false;
-            activeQuests.Remove(quest);
+            quest.isCompleted = true;
             Debug.Log($"✅ Quest deactivated: {quest.questTitle}");
         }
         else
