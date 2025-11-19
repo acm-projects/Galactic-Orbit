@@ -23,15 +23,16 @@ public class SettingsScript : MonoBehaviour
         sfxSlider = root.Q<Slider>("SFXSlider");
         if (sfxSlider == null) sfxSlider = root.Q<Slider>("musicSlider");
 
-        float savedMusicVolume = PlayerPrefs.GetFloat("MusicVolume", 0.7f);
-        float savedSFXVolume = PlayerPrefs.GetFloat("SFXVolume", 0.7f);
+        float savedMusicVolume = 1-AudioManager.Instance.musicSource.volume;//PlayerPrefs.GetFloat("MusicVolume", 0.7f);
+        float savedSFXVolume = 1-AudioManager.Instance.sfxSource.volume;//PlayerPrefs.GetFloat("SFXVolume", 0.7f);
 
         if (musicSlider != null) musicSlider.value = savedMusicVolume * 100f;
         if (sfxSlider != null) sfxSlider.value = savedSFXVolume * 100f;
 
-        if (AudioManager.Instance != null && AudioManager.Instance.musicSource != null)
+        if (AudioManager.Instance != null && AudioManager.Instance.musicSource != null && AudioManager.Instance.sfxSource != null)
         {
-            AudioManager.Instance.musicSource.volume = 0.1f;
+            //AudioManager.Instance.musicSource.volume = 0.1f;
+            //AudioManager.Instance.musicSource.volume = 0.1f;
         }
 
         if (musicSlider != null) InjectFill(musicSlider, out musicFill);

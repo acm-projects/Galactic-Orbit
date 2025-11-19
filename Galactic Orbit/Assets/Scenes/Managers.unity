@@ -198,7 +198,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 809a24740c6076e46a57589f14e6cd77, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -295,7 +295,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: ce45fa95b25754063ad5d145f827c55e, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -989,7 +989,7 @@ MonoBehaviour:
   - {x: 32.98634, y: -96.75004}
   latitude: 32.986237
   longitude: -96.75047
-  delaySeconds: 5
+  delaySeconds: 10
 --- !u!4 &1757264217
 Transform:
   m_ObjectHideFlags: 0
