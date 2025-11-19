@@ -372,6 +372,44 @@ public void AddCoins(int amount, Action<bool, string> callback)
         });
     }
 
+    // === distance ====
+    public void AddDistance(double amount, Action<bool, string> callback)
+{
+    FirebaseUser currentUser = FirebaseManager.Instance.CurrentUser;
+    
+    if (currentUser == null)
+    {
+        callback?.Invoke(false, "Not signed in");
+        return;
+    }
+
+    GetCurrentUserProfile((profile) =>
+    {
+        if (profile != null)
+        {
+            double newDistance = profile.distanceTraveled + amount;
+
+            var updates = new System.Collections.Generic.Dictionary<string, object>
+            {
+                { "distanceTraveled", newDistance }
+            };
+
+            FirebaseManager.Instance.DbReference.Child("userProfiles").Child(currentUser.UserId)
+                .UpdateChildrenAsync(updates)
+                .ContinueWithOnMainThread(task =>
+                {
+                    if (task.IsCompleted)
+                        callback?.Invoke(true, $"Added {amount} meters! Total: {newDistance}");
+                    else
+                        callback?.Invoke(false, "Failed to add distance: " + task.Exception?.Message);
+                });
+        }
+        else
+        {
+            callback?.Invoke(false, "Profile not found");
+        }
+    });
+}
 
     // ==== INVENTORY METHODS =====
     public void BuyItem(string itemId, int price, Action<bool, string> callback)
@@ -530,6 +568,7 @@ public class UserProfile
     public int eventsAttended;        // Number of events attended
     public int questsCompleted;       // Number of quests completed
     public int buildingsVisited;      // Number of campus buildings visited
+    public double distanceTraveled = 0; // in meters for now
 
     // === LISTS - TRACK DETAILED PROGRESS ===
     public string[] completedQuestIds;

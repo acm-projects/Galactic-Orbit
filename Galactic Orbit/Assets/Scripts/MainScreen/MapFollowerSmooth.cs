@@ -73,6 +73,35 @@ public class MapFollowerSmooth : MonoBehaviour
     {
         if (GPSManager.Instance != null)
         {
+            
+            //get distance from last location
+            var distance = GPSManager.Instance.GetMilesDistanceFromLocation(currentLocation);
+            bool addDistance = true;
+            if (distance < 0.00000001)
+                addDistance = false;
+            if (distance > 100)
+            {
+                Debug.Log($"Distance {distance} miles is too large to travel");
+                addDistance = false; // traveling 10 miles in 3 seconds??
+            }
+            if (UserProfileManager.Instance != null && addDistance)
+            {
+                UserProfileManager.Instance.AddDistance(distance, (success, msg) => 
+                {
+                    if (success)
+                    {
+                        Debug.Log($"✅ {msg}");
+                    }
+                    else
+                    {
+                        Debug.LogError($"❌ Failed to add distance: {msg}");
+                    }
+                });
+            }
+           /* else
+            {
+                Debug.LogWarning("UserProfileManager not found! distance not added.");
+            }*/
             currentLocation = new Vector2d(GPSManager.Instance.latitude, GPSManager.Instance.longitude);
         }
     }

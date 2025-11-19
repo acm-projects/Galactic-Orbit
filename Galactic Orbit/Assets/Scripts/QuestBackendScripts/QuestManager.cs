@@ -127,8 +127,11 @@ public class QuestManager : MonoBehaviour
         if (count >= allQuests.Count)
         {
             // DEBUGGING
-            Quest testQuest = Quest.CreateRuntimeQuest("Explore ECSS", "Explore Engineering and Computer Science South Building to get the AR Object", "The ECSS Building is hiding an Item", new Vector2(32.98623806f,-96.75047024f), 56);
+            Quest testQuest = Quest.CreateRuntimeQuest("Explore Engineering and Computer Science West (ECSW) for it's secrets", "Explore Engineering and Computer Science West (ECSW) Building to get the AR Object", "The Engineering and Computer Science West (ECSW) Building is hiding an AR item. Scan it to get points!", new Vector2(32.98582f, -96.75130f), 56);
+            
+            Quest testQuest1 = Quest.CreateRuntimeQuest("Explore Engineering and Computer Science Souuth (ECSS) for it's secrets", "Find the object hidden in the Engineering and Computer Science West (ECSS) Building.", "The Engineering and Computer Science South (ECSS) Building is hiding an AR item. Scan it to get points!", new Vector2(32.98634f, -96.75004f), 78);
             allQuests[0] = testQuest;
+            allQuests[1] = testQuest1;
             
             return allQuests.Take(count).ToList();
         }

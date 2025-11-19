@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using System.Linq;
 using System.Collections;
+using System;
 
 /// <summary>
 /// Controls the Profile Screen UI and loads real user data from Firebase
@@ -133,18 +134,18 @@ public class UserProfileController : MonoBehaviour
             var activityBox = root.Q<VisualElement>("ActivityBox");
             if (activityBox != null)
             {
-                var visitedData = activityBox.Query<VisualElement>("VistedData").ToList();
-                if (visitedData.Count >= 3)
-                {
-                    var loc = visitedData[0].Query<Label>().ToList();
-                    if (loc.Count > 1) locationsVisitedLabel = loc[1];
+                //var visitedData = activityBox.Query<VisualElement>("VistedData").ToList();
+                //if (visitedData.Count >= 3)
+                //{
+                    var loc = activityBox.Query<Label>("LocationsVisitedLabel");
+                    locationsVisitedLabel = loc;
                     
-                    var dist = visitedData[1].Query<Label>().ToList();
-                    if (dist.Count > 1) distanceLabel = dist[1];
+                    var dist = activityBox.Query<Label>("DistanceLabel");
+                    distanceLabel = dist;
                     
-                    var friends = visitedData[2].Query<Label>().ToList();
-                    if (friends.Count > 1) friendsLabel = friends[1];
-                }
+                    var friends = activityBox.Query<Label>("FriendsLabel");
+                    friendsLabel = friends;
+                //}
             }
 
             // Buttons
@@ -370,7 +371,7 @@ public class UserProfileController : MonoBehaviour
         // Distance (placeholder for now)
         if (distanceLabel != null)
         {
-            distanceLabel.text = "0 miles";
+            distanceLabel.text = $"{Math.Round(profile.distanceTraveled, 1)} miles";
         }
 
         // Friends (placeholder for now)
