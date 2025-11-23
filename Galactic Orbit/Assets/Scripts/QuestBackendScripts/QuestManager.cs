@@ -87,8 +87,8 @@ public class QuestManager : MonoBehaviour
         // Optional: Remove test quests if you no longer want them
         // AddRuntimeQuest("Q001", "Visit the Library", "Go to the main library and scan the AR marker.", new Vector2(40.7128f, -74.0060f), 100);
         // AddRuntimeQuest("Q002", "Attend an Event", "Check out the student fair near the main hall.", new Vector2(40.7135f, -74.0055f), 150);
-
-        if (generateAIQuestsOnStart)
+        
+        /*if (generateAIQuestsOnStart)
         {
             Debug.Log("⚙️ Auto-generating AI quests on start...");
 
@@ -115,7 +115,32 @@ public class QuestManager : MonoBehaviour
             {
                 Debug.LogWarning("⚠️ No QuestUI found to refresh UI.");
             }
-        }
+        }*/
+        FirebaseManager.Instance.GetAllQuestsAsScriptableObjects(quests =>
+        {
+            if (quests == null || quests.Count == 0)
+            {
+                Debug.LogWarning("No quests retrieved from Firebase.");
+                return;
+            }
+
+            foreach (var quest in quests)
+            {
+                allQuests.Add(quest);
+            }
+            
+            // Refresh Quest UI after all quests are generated
+            QuestUI questUI = FindFirstObjectByType<QuestUI>();
+            if (questUI != null)
+            {
+                Debug.Log("🔄 Updating quest UI...");
+                questUI.PullNewQuests();
+            }
+            else
+            {
+                Debug.LogWarning("⚠️ No QuestUI found to refresh UI.");
+            }
+        });
     }
 
 

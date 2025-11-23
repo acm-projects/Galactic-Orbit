@@ -6,7 +6,7 @@ public class SceneController : MonoBehaviour
 {
     public static SceneController Instance { get; private set; }
 
-    [SerializeField] private string persistentScene = "Managers";
+    [SerializeField] private string startScene = "MainScene";
     [SerializeField] private GameObject loadingCanvas;
     [SerializeField] private GameObject PersistentCamera;
 
@@ -25,7 +25,7 @@ public class SceneController : MonoBehaviour
     }
     public void Start()
     {
-        LoadLevel("AuthScene");
+        LoadLevel(startScene);
     }
 
     public void LoadLevel(string newSceneName)

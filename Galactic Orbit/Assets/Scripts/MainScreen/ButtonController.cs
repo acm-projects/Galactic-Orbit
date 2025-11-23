@@ -7,6 +7,8 @@ using Unity.Mathematics;
 public class ButtonController : MonoBehaviour
 {
     [Header("Screen References")]
+    
+    [SerializeField] private GameObject AuthScreen; // Reference to the Sign-Up panel
     [SerializeField] private GameObject ProfileScreen;
     [SerializeField] private GameObject CharacterCustomizationScreen;
     [SerializeField] private GameObject MainScreen;
@@ -196,7 +198,10 @@ public class ButtonController : MonoBehaviour
 
     private void OnLogout()
     {
-        SceneController.Instance.LoadLevel("AuthScene");
+        StartCoroutine(DelayedScreenChange(
+            new GameObject[] {AuthScreen},
+            new GameObject[] {SettingsScreen}
+        ));
     }
     private void OnARBackButton()
     {

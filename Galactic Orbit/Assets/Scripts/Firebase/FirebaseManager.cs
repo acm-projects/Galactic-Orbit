@@ -3,6 +3,8 @@ using Firebase.Auth;
 using Firebase.Database;
 using Firebase.Extensions;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -171,6 +173,131 @@ public class FirebaseManager : MonoBehaviour
             return false;
         }
     }
+
+    /// <summary>
+    /// Fetches all quests from Firebase and returns them as runtime Quest ScriptableObjects
+    /// </summary>
+    /// <param name="onQuestsFetched">Callback invoked with the list of Quests</param>
+    public void GetAllQuestsAsScriptableObjects(System.Action<List<Quest>> onQuestsFetched)
+    {
+        if (DbReference == null)
+        {
+            Debug.LogError("DbReference is null. Make sure Firebase is initialized.");
+            onQuestsFetched?.Invoke(null);
+            return;
+        }
+
+        DbReference.Child("quests").GetValueAsync().ContinueWithOnMainThread(task =>
+        {
+            if (task.IsFaulted)
+            {
+                Debug.LogError("Failed to fetch quests: " + task.Exception);
+                onQuestsFetched?.Invoke(null);
+            }
+            else if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+                List<Quest> questList = new List<Quest>();
+
+                foreach (DataSnapshot child in snapshot.Children)
+                {
+                    string json = child.GetRawJsonValue();
+                    // Use a temporary class to parse JSON first
+                    FirebaseQuestData data = JsonUtility.FromJson<FirebaseQuestData>(json);
+
+                    Vector2 locationData = GetLocationFromCSV(data.location);
+                    // Create runtime ScriptableObject Quest
+                    Quest runtimeQuest = Quest.CreateRuntimeQuest(
+                        child.Key,
+                        data.title,
+                        data.description,
+                        locationData,   
+                        data.xp
+                    );
+
+                    questList.Add(runtimeQuest);
+                }
+
+                onQuestsFetched?.Invoke(questList);
+            }
+        });
+    }
+
+    // Temporary class to parse Firebase JSON
+    [System.Serializable]
+    private class FirebaseQuestData
+    {
+        public string title;
+        public string description;
+        public string location;
+        public int xp;
+    }
+
+    /// <summary>
+    /// Gets the latitude and longitude of a building from BuildingLocations.csv in Resources
+    /// </summary>
+    /// <param name="locationName">Name of the building to search for</param>
+    /// <returns>Vector2(latitude, longitude) or Vector2.zero if not found</returns>
+    public static Vector2 GetLocationFromCSV(string locationName)
+    {
+        // Load the CSV file from Resources
+        TextAsset csvFile = Resources.Load<TextAsset>("BuildingLocations");
+        if (csvFile == null)
+        {
+            Debug.LogError("BuildingLocations.csv not found in Resources!");
+            return Vector2.zero;
+        }
+
+        StringReader reader = new StringReader(csvFile.text);
+        string line;
+
+        // Read the header line
+        line = reader.ReadLine();
+        if (line == null)
+        {
+            Debug.LogError("CSV file is empty!");
+            return Vector2.zero;
+        }
+
+        string[] headers = line.Split(',');
+        int buildingIndex = Array.IndexOf(headers, "Building");
+        int latIndex = Array.IndexOf(headers, "Latitude");
+        int lonIndex = Array.IndexOf(headers, "Longitude");
+
+        if (buildingIndex == -1 || latIndex == -1 || lonIndex == -1)
+        {
+            Debug.LogError("CSV missing required columns (Building, Latitude, Longitude)!");
+            return Vector2.zero;
+        }
+
+        // Read each line
+        while ((line = reader.ReadLine()) != null)
+        {
+            string[] values = line.Split(',');
+
+            if (values.Length <= Mathf.Max(buildingIndex, latIndex, lonIndex))
+                continue; // skip invalid lines
+
+            if (values[buildingIndex].Trim() == locationName)
+            {
+                if (float.TryParse(values[latIndex], out float lat) &&
+                    float.TryParse(values[lonIndex], out float lon))
+                {
+                    return new Vector2(lat, lon);
+                }
+                else
+                {
+                    Debug.LogError($"Invalid latitude/longitude for {locationName}");
+                    return Vector2.zero;
+                }
+            }
+        }
+
+        Debug.LogWarning($"Location '{locationName}' not found in CSV!");
+        return Vector2.zero;
+    }
+
+
 
     // Unity OnDestroy - Clean up event subscriptions to prevent memory leaks
     private void OnDestroy()

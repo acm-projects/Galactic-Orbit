@@ -11,6 +11,7 @@ public class SimpleARController : MonoBehaviour
 {
     [Header("Quest Reference")]
     public Quest CurrentQuest;
+    public QuestButton CurrentQuestButton;
 
     [Header("Camera References")]
     public GameObject normalCamera; // the regular game (map view) camera
@@ -119,6 +120,8 @@ public class SimpleARController : MonoBehaviour
             List<Quest> quests = QuestManager.Instance.GetNearbyQuests(location);
             if (quests.Count > 0) {
                 CurrentQuest = quests[0];
+                CurrentQuestButton.Setup(CurrentQuest);
+                CurrentQuestButton.gameObject.SetActive(true);
                 StartCoroutine(SpawnRandomObject());
             }
         }
@@ -130,6 +133,8 @@ public class SimpleARController : MonoBehaviour
     private void ItemCollected(bool success)
     {
         QuestManager.Instance.CompleteQuest(CurrentQuest.questID);
+        CurrentQuest = null;
+        CurrentQuestButton.gameObject.SetActive(false);
     }
     
     void HandleARTap()

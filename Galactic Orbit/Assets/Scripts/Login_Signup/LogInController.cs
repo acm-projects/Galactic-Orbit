@@ -7,9 +7,13 @@ using UnityEngine.UIElements;
 public class LogInController : MonoBehaviour
 {
     [Header("Panel References")]
+    
+    [SerializeField] private GameObject ButtonController; // Reference to the Sign-Up panel
+    [SerializeField] private GameObject MainScreen; // Reference to the Sign-Up panel
+    
+    [SerializeField] private GameObject AuthScreen; // Reference to the Sign-Up panel
     [SerializeField] private GameObject signUpPanel; // Reference to the Sign-Up panel
     [SerializeField] private GameObject logInPanel;  // Reference to the Log-In panel
-    [SerializeField] private TMP_Text debugBox;  // Reference to the Log-In panel
     private TextField usernameField;
     private TextField passwordField;
     private Button submitButton;
@@ -66,13 +70,15 @@ public class LogInController : MonoBehaviour
         if (success)
         {
             Debug.Log("Login successful.");
-            debugBox.text = "Login Successful";
-            SceneController.Instance.LoadLevel("MainScene");
+            AuthScreen.SetActive(false);
+            MainScreen.SetActive(true);
+            ButtonController.SetActive(true);
+            //SceneController.Instance.LoadLevel("MainScene");
+            
         }
         else
         {
             Debug.Log("Login failed.");
-            debugBox.text = "Login Failed";
         }
     }
     
